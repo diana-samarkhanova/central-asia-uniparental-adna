@@ -1,0 +1,127 @@
+{
+  "analysis_date": "2026-07-25",
+  "random_seed": 20260725,
+  "bootstrap_replicates": 2000,
+  "cluster_wild_resamples": 9999,
+  "repeated_site_permutations": 9999,
+  "date_draws": 500,
+  "primary_inference": {
+    "response": "Hellinger-transformed broad-lineage proportions",
+    "unit": "country-locality-period profile",
+    "reduced_model": "country",
+    "full_model": "country + period",
+    "resampling": "Null-model residuals divided rowwise by sqrt(1-h_ii), with one shared Rademacher sign per country-locality cluster",
+    "multiplicity": "Holm adjustment across mtDNA and Y"
+  },
+  "exploratory_within_locality_test": {
+    "subset": "localities represented in more than one period",
+    "model": "site fixed effects + period",
+    "resampling": "period-label permutation within locality"
+  },
+  "haplogroup_harmonization": {
+    "mtDNA_HV": "retained as HV, separate from H",
+    "basal_Y_compounds": "Basal/unresolved, including CF, CT, F and IJK",
+    "rare_pooling": "fewer than five primary calls pooled as Other"
+  },
+  "inputs": {
+    "data/raw/aadr_v66p1/v66.p1_2M.aadr.PUB.anno": "98eec5d897a6feedd274c91b476c4d416e60d12d171409018925522679ba316c",
+    "data/raw/amtdb_v1_009/amtdb_v1.009_metadata.csv": "531e8ee8fae181124f5a9b77b6fe8d677e64e35b815be2a3965020244fe31057",
+    "data/raw/aychr_db/a-YChr-DB_V5.xlsx": "e297110a18cba73d4044e8a95c0fae98d7f48633ad6ccfae1cd364e460eb1b3c"
+  },
+  "temporal_bins": {
+    "B1 3500-2501 BCE": [
+      -3500,
+      -2500
+    ],
+    "B2 2500-1801 BCE": [
+      -2500,
+      -1800
+    ],
+    "B3 1800-901 BCE": [
+      -1800,
+      -900
+    ],
+    "B4 900-201 BCE": [
+      -900,
+      -200
+    ],
+    "B5 200 BCE-300 CE": [
+      -200,
+      301
+    ],
+    "B6 301-650 CE": [
+      301,
+      651
+    ],
+    "B7 651-1000 CE": [
+      651,
+      1001
+    ],
+    "B8 1001-1500 CE": [
+      1001,
+      1501
+    ]
+  },
+  "source_code_sha256": "11ca1b9ab0b718434ae1f79bbdfdf4055ebb557c71bff369f2d8638c2221c8c4",
+  "code_revision_date": "2026-08-03",
+  "rng_streams": "Stable SHA-256-named NumPy SeedSequence streams; each procedure is independent of unrelated random calls",
+  "paired_bootstrap_replicates": 50000,
+  "site_cluster_bootstrap": {
+    "cluster": "country + locality",
+    "draw": "one multinomial multiplicity per cluster, shared across all periods and, in the paired analysis, both markers",
+    "empty_period_handling": "reject complete draw and redraw",
+    "marker_diagnostics": {
+      "mtDNA": {
+        "n_clusters": 133,
+        "accepted_replicates": 2000,
+        "rejected_empty_period_draws": 1
+      },
+      "Y": {
+        "n_clusters": 101,
+        "accepted_replicates": 2000,
+        "rejected_empty_period_draws": 3
+      }
+    },
+    "paired_diagnostics": {
+      "n_clusters": 98,
+      "accepted_replicates": 50000,
+      "rejected_empty_period_draws": 257
+    }
+  },
+  "recomputed_from": {
+    "file": "local-only/aadr_primary_analysis_catalogue.csv",
+    "redistributed_in_github": false,
+    "sha256": "6a861cd38b4b9a531d1b9bac96fc4834f671e400c410fbad5cf3401fa80e873a",
+    "private_frozen_catalogue_sha256": "a43a33aa2070d6339ce1dd49264fe59e721af97de822851aee926a5ab667fb86",
+    "coordinate_columns_used_in_models": false,
+    "script": "analysis/recompute_from_catalogue.py",
+    "script_sha256": "70a5fc8311b05e80bcf048c92cad7e529f7281988f14a02cf4faf831f3fa99e3",
+    "reason": "Corrected cross-period locality clustering and separated named random streams; upstream catalogue unchanged"
+  },
+  "public_coordinate_policy": {
+    "scope": "local working catalogues used to generate the aggregate release; person-level files are not redistributed in GitHub",
+    "columns": [
+      "latitude",
+      "longitude"
+    ],
+    "rounding_decimal_degrees": 1,
+    "rationale": "reduce archaeological site-location precision; coordinates are not used in statistical models",
+    "local_working_files": {
+      "aadr_central_asia_unique_individual_catalogue.csv": {
+        "private_input_sha256": "5c606606d373757703ec3a31016fa86ed3a93b12cff25744cfa4743bb88c5f88",
+        "public_output_sha256": "4099c63998dd391b8019123a79867da44877c32450715ee2ca386d75c22fab43",
+        "rows": 501
+      },
+      "aadr_primary_analysis_catalogue.csv": {
+        "private_input_sha256": "a43a33aa2070d6339ce1dd49264fe59e721af97de822851aee926a5ab667fb86",
+        "public_output_sha256": "6a861cd38b4b9a531d1b9bac96fc4834f671e400c410fbad5cf3401fa80e873a",
+        "rows": 489
+      },
+      "extended_legacy_mtdna_not_in_aadr.csv": {
+        "private_input_sha256": "a84aed488d6821b831ff82ff4e998e0426bf635d613996c9fcf2e1efdb2f888c",
+        "public_output_sha256": "9f9e42d0ddf6eef9f341dfd4e169b2b19eabd92c4d456d1234b49c5fe972bd82",
+        "rows": 19
+      }
+    }
+  }
+}

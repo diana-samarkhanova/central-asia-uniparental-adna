@@ -1,0 +1,17 @@
+analysis_bin,marker,n_calls,n_sites,largest_site_country,largest_site,largest_site_calls,largest_site_share,largest_country,largest_country_calls,largest_country_share
+B1 3500-2501 BCE,mtDNA,54,14,Turkmenistan,"Geoksyur (Ahai Region, Tejen)",24,0.4444444444444444,Turkmenistan,34,0.6296296296296297
+B1 3500-2501 BCE,Y,22,7,Turkmenistan,"Geoksyur (Ahai Region, Tejen)",10,0.45454545454545453,Turkmenistan,13,0.5909090909090909
+B2 2500-1801 BCE,mtDNA,73,16,Turkmenistan,Gonur (Mary Region),44,0.6027397260273972,Turkmenistan,45,0.6164383561643836
+B2 2500-1801 BCE,Y,27,9,Turkmenistan,Gonur (Mary Region),12,0.4444444444444444,Turkmenistan,12,0.4444444444444444
+B3 1800-901 BCE,mtDNA,96,33,Uzbekistan,"Bustan (Surxondaryo Region, Sherabod District, Sherabod)",13,0.13541666666666666,Kazakhstan,65,0.6770833333333334
+B3 1800-901 BCE,Y,48,20,Uzbekistan,"Bustan (Surxondaryo Region, Sherabod District, Sherabod)",8,0.16666666666666666,Kazakhstan,33,0.6875
+B4 900-201 BCE,mtDNA,85,51,Kyrgyzstan,"Uchkun (Tian Shan, Central Steppe, Naryn Region, Naryn)",5,0.058823529411764705,Kazakhstan,72,0.8470588235294118
+B4 900-201 BCE,Y,51,36,Kazakhstan,"Taldy-2 (Karaganda Region, Qarqaralı District)",4,0.0784313725490196,Kazakhstan,42,0.8235294117647058
+B5 200 BCE-300 CE,mtDNA,69,23,Uzbekistan,"Rabat (Surxondaryo Region, Boysun District, Boysun City)",21,0.30434782608695654,Kazakhstan,24,0.34782608695652173
+B5 200 BCE-300 CE,Y,37,17,Uzbekistan,"Rabat (Surxondaryo Region, Boysun District, Boysun City)",8,0.21621621621621623,Kyrgyzstan,13,0.35135135135135137
+B6 301-650 CE,mtDNA,33,16,Kyrgyzstan,"Kuibysheva 1 (Tian Shan, Central Steppe, Naryn Region, Naryn)",10,0.30303030303030304,Kyrgyzstan,17,0.5151515151515151
+B6 301-650 CE,Y,24,14,Kyrgyzstan,"Kuibysheva 1 (Tian Shan, Central Steppe, Naryn Region, Naryn)",4,0.16666666666666666,Kyrgyzstan,12,0.5
+B7 651-1000 CE,mtDNA,15,10,Kazakhstan,"Butakty (Almaty Region, Medeu District)",4,0.26666666666666666,Kazakhstan,14,0.9333333333333333
+B7 651-1000 CE,Y,13,9,Kazakhstan,"Butakty (Almaty Region, Medeu District)",3,0.23076923076923078,Kazakhstan,12,0.9230769230769231
+B8 1001-1500 CE,mtDNA,13,7,Kyrgyzstan,"Turasu (Tian Shan, Central Steppe, Issyk-Kul Region, Tong District)",4,0.3076923076923077,Kyrgyzstan,7,0.5384615384615384
+B8 1001-1500 CE,Y,7,6,Kazakhstan,"Karasuyr (Turkistan Region, Otyrar District)",2,0.2857142857142857,Kazakhstan,5,0.7142857142857143

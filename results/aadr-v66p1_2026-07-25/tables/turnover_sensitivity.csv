@@ -1,0 +1,23 @@
+analysis,marker,n_calls,n_sites,mean_adjacent_tv
+All marker-qualified calls,mtDNA,438,133,0.4253428518716699
+AADR assessment-positive subset,mtDNA,391,126,0.4321685431931143
+Exclude population-outlier labels,mtDNA,416,130,0.44573937966795113
+Direct dates only,mtDNA,272,109,0.48608868738970773
+One representative per <=2d kin component,mtDNA,410,131,0.4242632374304214
+Male-paired subset,mtDNA,216,98,0.5174041838957805
+Leave out country: Kazakhstan,mtDNA,214,33,0.6374103409817694
+Leave out country: Kyrgyzstan,mtDNA,383,119,0.48710861889433327
+Leave out country: Tajikistan,mtDNA,429,130,0.4237598011232465
+Leave out country: Turkmenistan,mtDNA,354,125,0.45248635379458363
+Leave out country: Uzbekistan,mtDNA,372,125,0.45196982789119644
+All marker-qualified calls,Y,229,101,0.436854186118892
+AADR assessment-positive subset,Y,198,92,0.46564514694766795
+Exclude population-outlier labels,Y,215,97,0.4072990253793825
+Direct dates only,Y,157,85,0.4874872171090659
+One representative per <=2d kin component,Y,217,100,0.4363556533724601
+Male-paired subset,Y,216,98,0.4110232982081721
+Leave out country: Kazakhstan,Y,101,29,0.5904265873015874
+Leave out country: Kyrgyzstan,Y,191,87,0.43822332594654023
+Leave out country: Tajikistan,Y,224,99,0.41882440476190474
+Leave out country: Turkmenistan,Y,202,95,0.4262125025448776
+Leave out country: Uzbekistan,Y,198,94,0.4831490929705215

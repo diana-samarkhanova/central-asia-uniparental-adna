@@ -1,0 +1,22 @@
+name: integrity
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      MPLCONFIGDIR: /tmp/matplotlib-cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+      - run: PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
+      - run: PYTHONDONTWRITEBYTECODE=1 python analysis/test_outputs.py results/aadr-v66p1_2026-07-25
+      - run: PYTHONDONTWRITEBYTECODE=1 python analysis/verify_release.py

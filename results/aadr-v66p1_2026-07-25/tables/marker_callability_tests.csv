@@ -1,0 +1,3 @@
+marker,chi2,df,p_unadjusted,note
+mtDNA,22.050983616254868,7,0.0024895048621323113,Descriptive test; does not account for site/study clustering.
+Y,21.214331343397088,7,0.003465547982093304,Descriptive test; does not account for site/study clustering.

@@ -1,0 +1,241 @@
+{
+  "aadr_catalogue_unique_archaeological_individuals": 501,
+  "primary_analysis_unique_individuals_3500BCE_to_1500CE": 489,
+  "primary_sites": 137,
+  "primary_publication_labels": 15,
+  "primary_mt_calls": 438,
+  "primary_y_calls_in_molecular_males": 229,
+  "primary_molecular_males": 246,
+  "strict_qc_individuals": 429,
+  "directly_dated_individuals": 284,
+  "reported_kin_components_le2d": 21,
+  "mt_l1_categories": [
+    "U",
+    "H",
+    "T",
+    "HV",
+    "J",
+    "C",
+    "D",
+    "W",
+    "A",
+    "I",
+    "R",
+    "F",
+    "Other",
+    "K",
+    "N",
+    "G",
+    "M"
+  ],
+  "y_l1_categories": [
+    "R",
+    "J",
+    "Q",
+    "Other",
+    "Basal/unresolved",
+    "C",
+    "N",
+    "E",
+    "L"
+  ],
+  "database_exact_crosswalk": [
+    {
+      "source": "AmtDB v1.009",
+      "match_status": "exact_unique",
+      "records": 92
+    },
+    {
+      "source": "AmtDB v1.009",
+      "match_status": "manual_verified",
+      "records": 2
+    },
+    {
+      "source": "AmtDB v1.009",
+      "match_status": "not_exactly_matched",
+      "records": 19
+    },
+    {
+      "source": "aYChr-DB v5",
+      "match_status": "exact_unique",
+      "records": 4
+    },
+    {
+      "source": "aYChr-DB v5",
+      "match_status": "manual_verified",
+      "records": 2
+    }
+  ],
+  "extended_legacy_mtdna_records_not_in_aadr": 19,
+  "extended_legacy_mtdna_valid_calls_not_in_aadr": 19,
+  "global_composition_tests": [
+    {
+      "pseudo_f": 2.2668270946928466,
+      "partial_r2": 0.13020495166728252,
+      "df_effect": 7,
+      "df_resid": 106,
+      "cluster_wild_p": 0.0012,
+      "n_input_site_period_profiles": 118,
+      "n_site_period_profiles": 118,
+      "n_dropped_singleton_country_profiles": 0,
+      "dropped_singleton_countries": "",
+      "n_site_clusters": 101,
+      "n_multiperiod_site_clusters": 14,
+      "cluster_wild_resamples": 9999,
+      "leverage_adjustment": "HC2",
+      "max_reduced_model_leverage": 0.4999999999999998,
+      "inference_valid": true,
+      "invalid_reason": "",
+      "partial_r2_jackknife_se": 0.03381566023845673,
+      "partial_r2_jackknife_ci_low": 0.06311564487411503,
+      "partial_r2_jackknife_ci_high": 0.19729425846045,
+      "partial_r2_jackknife_clusters": 101,
+      "repeated_site_pseudo_f": 1.0748711687712076,
+      "repeated_site_df_effect": 7,
+      "repeated_site_df_resid": 10,
+      "repeated_site_permutation_p": 0.6798,
+      "repeated_site_profiles": 31,
+      "repeated_sites": 14,
+      "repeated_site_permutations": 9999,
+      "marker": "Y",
+      "holm_cluster_wild_p": 0.0012,
+      "holm_repeated_site_p": 0.6798
+    },
+    {
+      "pseudo_f": 2.0304675744317358,
+      "partial_r2": 0.08253297072686801,
+      "df_effect": 7,
+      "df_resid": 158,
+      "cluster_wild_p": 0.0001,
+      "n_input_site_period_profiles": 170,
+      "n_site_period_profiles": 170,
+      "n_dropped_singleton_country_profiles": 0,
+      "dropped_singleton_countries": "",
+      "n_site_clusters": 133,
+      "n_multiperiod_site_clusters": 30,
+      "cluster_wild_resamples": 9999,
+      "leverage_adjustment": "HC2",
+      "max_reduced_model_leverage": 0.33333333333333326,
+      "inference_valid": true,
+      "invalid_reason": "",
+      "partial_r2_jackknife_se": 0.013064720805355754,
+      "partial_r2_jackknife_ci_low": 0.0566896616317317,
+      "partial_r2_jackknife_ci_high": 0.10837627982200432,
+      "partial_r2_jackknife_clusters": 133,
+      "repeated_site_pseudo_f": 1.2024903600317511,
+      "repeated_site_df_effect": 7,
+      "repeated_site_df_resid": 30,
+      "repeated_site_permutation_p": 0.1116,
+      "repeated_site_profiles": 67,
+      "repeated_sites": 30,
+      "repeated_site_permutations": 9999,
+      "marker": "mtDNA",
+      "holm_cluster_wild_p": 0.0002,
+      "holm_repeated_site_p": 0.2232
+    }
+  ],
+  "composition_dispersion_diagnostics": [
+    {
+      "pseudo_f": 4.590581371637278,
+      "partial_r2": 0.24884269271954704,
+      "df_effect": 7,
+      "df_resid": 97,
+      "cluster_wild_p": 0.0005,
+      "n_input_site_period_profiles": 108,
+      "n_site_period_profiles": 108,
+      "n_dropped_singleton_country_profiles": 0,
+      "dropped_singleton_countries": "",
+      "n_site_clusters": 92,
+      "n_multiperiod_site_clusters": 13,
+      "cluster_wild_resamples": 9999,
+      "leverage_adjustment": "HC2",
+      "max_reduced_model_leverage": 0.33333333333333326,
+      "inference_valid": true,
+      "invalid_reason": "",
+      "marker": "Y",
+      "holm_cluster_wild_p": 0.001
+    },
+    {
+      "pseudo_f": 2.2695087607408384,
+      "partial_r2": 0.09519377233874571,
+      "df_effect": 7,
+      "df_resid": 151,
+      "cluster_wild_p": 0.0304,
+      "n_input_site_period_profiles": 162,
+      "n_site_period_profiles": 162,
+      "n_dropped_singleton_country_profiles": 0,
+      "dropped_singleton_countries": "",
+      "n_site_clusters": 128,
+      "n_multiperiod_site_clusters": 28,
+      "cluster_wild_resamples": 9999,
+      "leverage_adjustment": "HC2",
+      "max_reduced_model_leverage": 0.09999999999999987,
+      "inference_valid": true,
+      "invalid_reason": "",
+      "marker": "mtDNA",
+      "holm_cluster_wild_p": 0.0304
+    }
+  ],
+  "cluster_model_diagnostics": [
+    {
+      "marker": "mtDNA",
+      "n_profiles": 170,
+      "max_reduced_leverage": 0.33333333333333326,
+      "max_full_leverage": 0.3793606442481452,
+      "pearson_full_residual_norm_vs_log1p_calls": -0.3998308289794815,
+      "spearman_full_residual_norm_vs_log1p_calls": -0.3238291483484452
+    },
+    {
+      "marker": "Y",
+      "n_profiles": 118,
+      "max_reduced_leverage": 0.4999999999999998,
+      "max_full_leverage": 0.545505124600957,
+      "pearson_full_residual_norm_vs_log1p_calls": -0.20189141561244422,
+      "spearman_full_residual_norm_vs_log1p_calls": -0.18378438427630484
+    }
+  ],
+  "paired_male_turnover_comparison": [
+    {
+      "subset": "Molecular males with both calls; shared country-locality cluster bootstrap across periods and markers",
+      "n_individuals": 216,
+      "n_sites": 98,
+      "bootstrap_replicates": 50000,
+      "mt_mean_adjacent_tv": 0.5174041838957805,
+      "y_mean_adjacent_tv": 0.4110232982081721,
+      "delta_y_minus_mt": -0.10638088568760834,
+      "bootstrap_median_delta": -0.13202954452954455,
+      "delta_ci_low": -0.26729147530224207,
+      "delta_ci_high": 0.002023866241241607,
+      "two_sided_tail_probability": 0.05332
+    }
+  ],
+  "country_period_cells_meeting_threshold": [
+    {
+      "marker": "Y",
+      "cells": 9,
+      "total_cells": 40
+    },
+    {
+      "marker": "mtDNA",
+      "cells": 14,
+      "total_cells": 40
+    }
+  ],
+  "callability_tests": [
+    {
+      "marker": "mtDNA",
+      "chi2": 22.050983616254868,
+      "df": 7,
+      "p_unadjusted": 0.0024895048621323113,
+      "note": "Descriptive test; does not account for site/study clustering."
+    },
+    {
+      "marker": "Y",
+      "chi2": 21.214331343397088,
+      "df": 7,
+      "p_unadjusted": 0.003465547982093304,
+      "note": "Descriptive test; does not account for site/study clustering."
+    }
+  ],
+  "important_estimand_warning": "Estimates describe published individuals, equal-weighted sites within descriptive bins, or equal-weighted published site-period profiles in the regression; they are not population frequencies in the past."
+}

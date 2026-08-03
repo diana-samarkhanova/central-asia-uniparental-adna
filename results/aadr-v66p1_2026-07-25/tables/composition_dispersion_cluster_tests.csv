@@ -1,0 +1,3 @@
+pseudo_f,partial_r2,df_effect,df_resid,cluster_wild_p,n_input_site_period_profiles,n_site_period_profiles,n_dropped_singleton_country_profiles,dropped_singleton_countries,n_site_clusters,n_multiperiod_site_clusters,cluster_wild_resamples,leverage_adjustment,max_reduced_model_leverage,inference_valid,invalid_reason,marker,holm_cluster_wild_p
+4.590581371637278,0.24884269271954704,7,97,0.0005,108,108,0,,92,13,9999,HC2,0.33333333333333326,True,,Y,0.001
+2.2695087607408384,0.09519377233874571,7,151,0.0304,162,162,0,,128,28,9999,HC2,0.09999999999999987,True,,mtDNA,0.0304

@@ -1,0 +1,41 @@
+country,analysis_bin,individuals,sites,studies,mt_calls,y_calls,molecular_males,direct_dates
+Kazakhstan,B1 3500-2501 BCE,21,7,4,18,8,8,12
+Kazakhstan,B2 2500-1801 BCE,11,10,4,11,5,5,11
+Kazakhstan,B3 1800-901 BCE,68,24,4,65,33,36,60
+Kazakhstan,B4 900-201 BCE,76,45,7,72,42,43,45
+Kazakhstan,B5 200 BCE-300 CE,36,11,4,24,12,12,13
+Kazakhstan,B6 301-650 CE,14,10,2,14,11,11,12
+Kazakhstan,B7 651-1000 CE,14,9,3,14,12,12,8
+Kazakhstan,B8 1001-1500 CE,6,5,1,6,5,5,3
+Kyrgyzstan,B1 3500-2501 BCE,0,0,0,0,0,0,0
+Kyrgyzstan,B2 2500-1801 BCE,2,1,1,2,2,2,2
+Kyrgyzstan,B3 1800-901 BCE,0,0,0,0,0,0,0
+Kyrgyzstan,B4 900-201 BCE,23,7,3,12,8,8,10
+Kyrgyzstan,B5 200 BCE-300 CE,19,8,2,16,13,13,14
+Kyrgyzstan,B6 301-650 CE,18,5,2,17,12,12,18
+Kyrgyzstan,B7 651-1000 CE,1,1,1,1,1,1,1
+Kyrgyzstan,B8 1001-1500 CE,11,3,2,7,2,3,6
+Tajikistan,B1 3500-2501 BCE,1,1,1,1,0,0,0
+Tajikistan,B2 2500-1801 BCE,1,1,1,0,1,1,0
+Tajikistan,B3 1800-901 BCE,3,1,1,3,0,0,2
+Tajikistan,B4 900-201 BCE,0,0,0,0,0,0,0
+Tajikistan,B5 200 BCE-300 CE,5,1,1,5,4,5,2
+Tajikistan,B6 301-650 CE,0,0,0,0,0,0,0
+Tajikistan,B7 651-1000 CE,0,0,0,0,0,0,0
+Tajikistan,B8 1001-1500 CE,0,0,0,0,0,0,0
+Turkmenistan,B1 3500-2501 BCE,37,5,3,34,13,13,11
+Turkmenistan,B2 2500-1801 BCE,49,3,2,45,12,20,26
+Turkmenistan,B3 1800-901 BCE,4,3,1,4,1,1,1
+Turkmenistan,B4 900-201 BCE,1,1,1,1,1,1,1
+Turkmenistan,B5 200 BCE-300 CE,0,0,0,0,0,0,0
+Turkmenistan,B6 301-650 CE,0,0,0,0,0,0,0
+Turkmenistan,B7 651-1000 CE,0,0,0,0,0,0,0
+Turkmenistan,B8 1001-1500 CE,0,0,0,0,0,0,0
+Uzbekistan,B1 3500-2501 BCE,1,1,1,1,1,1,1
+Uzbekistan,B2 2500-1801 BCE,16,3,2,15,7,7,12
+Uzbekistan,B3 1800-901 BCE,24,5,2,24,14,14,12
+Uzbekistan,B4 900-201 BCE,0,0,0,0,0,0,0
+Uzbekistan,B5 200 BCE-300 CE,25,3,2,24,8,11,1
+Uzbekistan,B6 301-650 CE,2,1,1,2,1,1,0
+Uzbekistan,B7 651-1000 CE,0,0,0,0,0,0,0
+Uzbekistan,B8 1001-1500 CE,0,0,0,0,0,0,0
