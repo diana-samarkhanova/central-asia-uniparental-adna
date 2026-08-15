@@ -197,6 +197,8 @@
   "paired_male_turnover_comparison": [
     {
       "subset": "Molecular males with both calls; shared country-locality cluster bootstrap across periods and markers",
+      "y_encoding": "broad_L1",
+      "y_marker_column": "y_l1_pooled",
       "n_individuals": 216,
       "n_sites": 98,
       "bootstrap_replicates": 50000,
@@ -206,7 +208,8 @@
       "bootstrap_median_delta": -0.13202954452954455,
       "delta_ci_low": -0.26729147530224207,
       "delta_ci_high": 0.002023866241241607,
-      "two_sided_tail_probability": 0.05332
+      "bootstrap_two_sided_sign_tail_probability": 0.05332,
+      "bootstrap_sign_tail_interpretation": "Bootstrap sign-stability diagnostic; not a null-hypothesis p-value"
     }
   ],
   "country_period_cells_meeting_threshold": [
@@ -223,19 +226,111 @@
   ],
   "callability_tests": [
     {
-      "marker": "mtDNA",
       "chi2": 22.050983616254868,
       "df": 7,
-      "p_unadjusted": 0.0024895048621323113,
-      "note": "Descriptive test; does not account for site/study clustering."
+      "asymptotic_p": 0.0024895048621323113,
+      "monte_carlo_p": 0.00341,
+      "monte_carlo_resamples": 99999,
+      "min_expected_count": 1.5644171779141105,
+      "n_expected_lt_5": 3,
+      "fraction_expected_lt_5": 0.1875,
+      "sparse_expected_cells": true,
+      "p_value": 0.00341,
+      "p_value_method": "fixed_margin_monte_carlo",
+      "marker": "mtDNA",
+      "note": "Descriptive Pearson test; fixed-margin Monte Carlo used for sparse expected cells. Monte Carlo, not exact; does not account for site/study clustering."
+    },
+    {
+      "chi2": 21.214331343397088,
+      "df": 7,
+      "asymptotic_p": 0.003465547982093304,
+      "monte_carlo_p": 0.0053,
+      "monte_carlo_resamples": 99999,
+      "min_expected_count": 0.5528455284552846,
+      "n_expected_lt_5": 8,
+      "fraction_expected_lt_5": 0.5,
+      "sparse_expected_cells": true,
+      "p_value": 0.0053,
+      "p_value_method": "fixed_margin_monte_carlo",
+      "marker": "Y",
+      "note": "Descriptive Pearson test; fixed-margin Monte Carlo used for sparse expected cells. Monte Carlo, not exact; does not account for site/study clustering."
+    }
+  ],
+  "important_estimand_warning": "Estimates describe published individuals, equal-weighted sites within descriptive bins, or equal-weighted published site-period profiles in the regression; they are not population frequencies in the past.",
+  "paired_male_y_resolution_sensitivity": [
+    {
+      "subset": "Molecular males with both calls; shared country-locality cluster bootstrap across periods and markers",
+      "y_encoding": "broad_L1",
+      "y_marker_column": "y_l1_pooled",
+      "n_individuals": 216,
+      "n_sites": 98,
+      "bootstrap_replicates": 50000,
+      "mt_mean_adjacent_tv": 0.5174041838957805,
+      "y_mean_adjacent_tv": 0.4110232982081721,
+      "delta_y_minus_mt": -0.10638088568760834,
+      "bootstrap_median_delta": -0.13202954452954455,
+      "delta_ci_low": -0.26729147530224207,
+      "delta_ci_high": 0.002023866241241607,
+      "bootstrap_two_sided_sign_tail_probability": 0.05332,
+      "bootstrap_sign_tail_interpretation": "Bootstrap sign-stability diagnostic; not a null-hypothesis p-value",
+      "category_count": 9,
+      "categories": "R;J;Q;Other;Basal/unresolved;C;N;E;L",
+      "mapping_source": "marker-specific AADR Y call, first-letter L1 encoding",
+      "mapping_caveat": "Broad descriptive encoding",
+      "delta_change_vs_broad": 0.0,
+      "delta_change_bootstrap_median": 0.0,
+      "delta_change_ci_low": 0.0,
+      "delta_change_ci_high": 0.0
+    },
+    {
+      "subset": "Molecular males with both calls; shared country-locality cluster bootstrap across periods and markers",
+      "y_encoding": "AADR_ISOGG_prefix_family",
+      "y_marker_column": "y_isogg_prefix_family_pooled",
+      "n_individuals": 216,
+      "n_sites": 98,
+      "bootstrap_replicates": 50000,
+      "mt_mean_adjacent_tv": 0.5174041838957805,
+      "y_mean_adjacent_tv": 0.5061118892001245,
+      "delta_y_minus_mt": -0.011292294695655958,
+      "bootstrap_median_delta": -0.03741209811532675,
+      "delta_ci_low": -0.15402192440928408,
+      "delta_ci_high": 0.07568114306662556,
+      "bootstrap_two_sided_sign_tail_probability": 0.52204,
+      "bootstrap_sign_tail_interpretation": "Bootstrap sign-stability diagnostic; not a null-hypothesis p-value",
+      "category_count": 12,
+      "categories": "R1a;Other;J2a;Q1b;R1b;Basal/unresolved;Q1a;C2a;J1a;N;R2;E1b",
+      "mapping_source": "y_isogg, first letter + integer + branch letter",
+      "mapping_caveat": "Nomenclature-prefix sensitivity only; not a phylogenetic re-call and not uniform evolutionary depth across haplogroups",
+      "delta_change_vs_broad": 0.09508859099195238,
+      "delta_change_bootstrap_median": 0.09285714285714297,
+      "delta_change_ci_low": 0.02337047235366573,
+      "delta_change_ci_high": 0.1760522471849909
+    }
+  ],
+  "date_assignment_scenario_sensitivity": [
+    {
+      "marker": "mtDNA",
+      "analysis_type": "chronological_bin_assignment_scenario_sensitivity",
+      "scenario_draws": 5000,
+      "observed_mean_adjacent_tv": 0.4253428518716699,
+      "scenario_median": 0.4216761539580759,
+      "scenario_interval_low": 0.37815203136621917,
+      "scenario_interval_high": 0.47230927288086827,
+      "shared_individual_date_scenarios_across_markers": true,
+      "is_calibrated_date_posterior": false,
+      "interpretation": "Assumption-based boundary sensitivity; not a calibrated-date posterior interval"
     },
     {
       "marker": "Y",
-      "chi2": 21.214331343397088,
-      "df": 7,
-      "p_unadjusted": 0.003465547982093304,
-      "note": "Descriptive test; does not account for site/study clustering."
+      "analysis_type": "chronological_bin_assignment_scenario_sensitivity",
+      "scenario_draws": 5000,
+      "observed_mean_adjacent_tv": 0.436854186118892,
+      "scenario_median": 0.393974812147081,
+      "scenario_interval_low": 0.34627113747545807,
+      "scenario_interval_high": 0.4530197704081632,
+      "shared_individual_date_scenarios_across_markers": true,
+      "is_calibrated_date_posterior": false,
+      "interpretation": "Assumption-based boundary sensitivity; not a calibrated-date posterior interval"
     }
-  ],
-  "important_estimand_warning": "Estimates describe published individuals, equal-weighted sites within descriptive bins, or equal-weighted published site-period profiles in the regression; they are not population frequencies in the past."
+  ]
 }

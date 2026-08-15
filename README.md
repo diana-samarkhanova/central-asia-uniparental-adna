@@ -4,7 +4,8 @@ Reproducible secondary analysis of published ancient mitochondrial and
 Y-chromosome assignments from Kazakhstan, Kyrgyzstan, Tajikistan,
 Turkmenistan and Uzbekistan.
 
-Status: private pre-submission repository, evidence frozen on 25 July 2026.
+Status: private pre-submission repository, evidence frozen on 25 July 2026 and
+statistical/literature audit corrections applied on 15 August 2026.
 This is not yet a citable public release.
 
 ## Scope
@@ -19,8 +20,13 @@ The primary interval, 3500 BCE to 1500 CE, contains 489 individuals from
 137 localities, with 438 mitochondrial and 229 Y-chromosome calls. The
 country-adjusted all-profile models detect period-associated structure, but
 repeated-locality and sensitivity analyses show that it cannot be interpreted
-as a region-wide demographic replacement. The paired male analysis does not
-support faster Y-chromosome turnover.
+as a region-wide demographic replacement. In 216 paired men from 98 sites,
+the broad-L1 contrast Δ(Y−mtDNA) is −0.106381 (95% bootstrap interval −0.267291
+to 0.002024); 0.05332 is an ordinary-bootstrap sign-stability diagnostic, not
+a null-hypothesis *P* value. A 12-category AADR ISOGG-prefix sensitivity gives
+Δ=−0.011292 (95% interval −0.154022 to 0.075681); the paired encoding-induced
+change from broad L1 is +0.095089 (95% interval 0.023370 to 0.176052). Neither
+encoding supports faster Y-chromosome turnover.
 
 ## Repository map
 
@@ -33,7 +39,8 @@ support faster Y-chromosome turnover.
   crosswalks and singleton-revealing site-lineage profiles are not committed.
 - results/post-v66-audit: citation-level audit of studies not fully represented
   in the frozen AADR release.
-- literature_audit: evidence-map search log and verified bibliography.
+- literature_audit: targeted-search log and verified bibliography. The search
+  is not a completed PRISMA systematic/scoping review.
 - tests: focused unit tests for the previously error-prone harmonization and
   resampling rules.
 
@@ -49,7 +56,7 @@ Create a Python 3.12 environment and install the frozen dependencies:
 Then run:
 
     python -m unittest discover -s tests -v
-    python analysis/test_outputs.py results/aadr-v66p1_2026-07-25
+    python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
     python analysis/verify_release.py
 
 These commands validate the aggregate release, including the frozen counts,
@@ -61,7 +68,12 @@ individual-level working tables must remain outside Git.
 ## Full reproduction
 
 Follow data/README.md to obtain the exact frozen inputs and verify their
-SHA-256 hashes. Then run:
+SHA-256 hashes. As of 15 August 2026 this route remains blocked for an
+independent user because the exact AADR Dataverse datafile locator and an
+immutable public AmtDB v1.009 archive URL have not been verified. The aYChr-DB
+workbook is pinned to commit `bc770a59ace8cd4c042c6f903d620d93ee751eb0`.
+Once the two missing locators or redistribution-cleared frozen inputs are
+available, run:
 
     MPLCONFIGDIR=.mplconfig python analysis/run_analysis.py \
       --aadr data/raw/aadr_v66p1/v66.p1_2M.aadr.PUB.anno \
@@ -71,16 +83,21 @@ SHA-256 hashes. Then run:
       --bootstrap 2000 \
       --paired-bootstrap 50000 \
       --permutations 9999 \
-      --date-draws 500 \
+      --callability-resamples 99999 \
+      --date-draws 5000 \
       --seed 20260725
 
     python analysis/run_global_sensitivities.py \
       --analysis-output results/reproduced \
       --permutations 1999
 
-    python analysis/test_outputs.py results/reproduced
+    python analysis/test_full_outputs.py results/reproduced
 
 The full run validates the three frozen input hashes before parsing them.
+Figure 4 reports original-sample site-balanced point estimates and bootstrap
+percentile intervals; bootstrap medians remain separately labelled
+diagnostics. Date outputs are assumption-based bin-assignment scenarios, not
+calibrated radiocarbon posterior draws.
 
 The original databases are not committed. Exact input hashes are recorded in
 data/SOURCES.tsv and in the analysis manifest.

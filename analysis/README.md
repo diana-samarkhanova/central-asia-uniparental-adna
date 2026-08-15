@@ -4,6 +4,8 @@ This directory contains the frozen scientific workflow for the evidence release
 dated 25 July 2026. The GitHub repository is aggregate-only: it includes the
 analysis code, figures and aggregate statistical outputs, but no individual
 catalogues, exact-ID crosswalks or singleton-revealing site-lineage profiles.
+The audited statistical revision and corrected derived outputs are dated
+15 August 2026.
 
 Exact reproduction starts from the frozen AADR, AmtDB and aYChr-DB metadata
 files. The workflow extracts, deduplicates and harmonizes person-level working
@@ -33,7 +35,7 @@ root, verify it and run the focused scientific and public-release checks:
 ```bash
 sha256sum -c SHA256SUMS.txt
 PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
-PYTHONDONTWRITEBYTECODE=1 python analysis/test_outputs.py results/aadr-v66p1_2026-07-25
+PYTHONDONTWRITEBYTECODE=1 python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
 python analysis/verify_release.py
 ```
 
@@ -56,10 +58,14 @@ The generator excludes `SHA256SUMS.txt` itself, `.git` and cache files. It does
 not make an unsafe file acceptable: the independent verifier still rejects
 raw, document, archive, temporary and cache artifacts.
 
-## Reproduce from the three frozen source databases
+## Reproduce from the three frozen source databases (blocked pending two locators)
 
 Follow `data/README.md` and `data/SOURCES.tsv` to obtain the exact files. Do not
-commit them. Expected local paths and SHA-256 values are:
+commit them. The hashes below remain authoritative, but the exact AADR
+Dataverse datafile locator and an immutable public AmtDB v1.009 archive URL
+have not been independently verified. The aYChr workbook is pinned to commit
+`bc770a59ace8cd4c042c6f903d620d93ee751eb0`. Expected local paths and SHA-256
+values are:
 
 | Resource | Expected local path | SHA-256 |
 |---|---|---|
@@ -89,7 +95,8 @@ MPLCONFIGDIR=.mplconfig python analysis/run_analysis.py \
   --bootstrap 2000 \
   --paired-bootstrap 50000 \
   --permutations 9999 \
-  --date-draws 500 \
+  --callability-resamples 99999 \
+  --date-draws 5000 \
   --seed 20260725
 
 MPLCONFIGDIR=.mplconfig python analysis/run_global_sensitivities.py \
@@ -97,14 +104,24 @@ MPLCONFIGDIR=.mplconfig python analysis/run_global_sensitivities.py \
   --permutations 1999 \
   --seed 20260726
 
-python analysis/test_outputs.py work/full-reproduction
+python analysis/test_full_outputs.py work/full-reproduction
 ```
 
-The 50,000 paired replicates are the frozen release setting. The resampling
+The frozen settings are 2,000 site-cluster bootstrap replicates, 50,000 paired
+replicates per Y encoding, 9,999 primary resamples, 99,999 fixed-margin
+callability simulations and 5,000 chronological-bin assignment scenarios. The resampling
 implementation assigns one shared draw multiplicity to each `country +
 locality` cluster across all periods; the paired analysis shares the same
 cluster draw across mtDNA and Y. Named random streams make one procedure
 independent of unrelated replicate counts.
+
+Paired tables report the original-sample Δ as the point estimate and retain
+the bootstrap median only as a diagnostic.
+`bootstrap_two_sided_sign_tail_probability` measures ordinary-bootstrap sign
+stability and is not a null-hypothesis *P* value. The ISOGG-prefix analysis is
+a nomenclature sensitivity, not a phylogenetic re-call. Files retaining
+`date_uncertainty` in their names contain assumption-based bin-assignment
+scenarios shared across markers, not calibrated-date posterior draws.
 
 The generated working directory contains person-level intermediates and must
 not be committed. `recompute_from_catalogue.py`, `run_global_sensitivities.py`
@@ -119,9 +136,11 @@ manual curation steps and are not reconstructed by these commands.
   descriptor, Dataverse DOI and original component studies.
 - **AmtDB v1.009:** the registry records CC BY 4.0. Cite the database article
   and preserve attribution.
-- **aYChr-DB v5:** the article/supplement is recorded as CC BY 4.0, but the
-  repository did not display a separate reuse license during the freeze.
-  Confirm the immutable commit and reuse terms before version 1.0.
+- **aYChr-DB v5:** the article/supplement is recorded as CC BY 4.0 and the
+  workbook is pinned to commit
+  `bc770a59ace8cd4c042c6f903d620d93ee751eb0`; the repository did not display a
+  separate reuse license during the freeze, so confirm reuse terms before
+  version 1.0.
 
 The upstream database files are intentionally excluded from Git. Original code
 is MIT-licensed. Documentation, figures and curated output tables are intended
@@ -157,6 +176,9 @@ only citation-level summaries may be released.
 - `run_global_sensitivities.py`: marker-wide sensitivity analyses.
 - `sanitize_release.py`: mask an existing output directory and regenerate its
   sampling map.
-- `test_outputs.py`: scientific release regression checks.
+- `test_aggregate_release.py`: aggregate-only release regression checks.
+- `test_full_outputs.py`: full/granular scientific regression checks.
+- `test_outputs.py`: backward-compatible alias for the aggregate check; new
+  documentation uses the explicit filenames above.
 - `generate_checksums.py`: write deterministic GNU-compatible checksums.
 - `verify_release.py`: enforce the public-release contract.

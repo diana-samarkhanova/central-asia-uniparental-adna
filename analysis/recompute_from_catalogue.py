@@ -16,13 +16,18 @@ from pathlib import Path
 import pandas as pd
 
 from run_analysis import (
+    add_y_resolution_sensitivity_encoding,
+    callability_table,
     date_uncertainty,
     dispersion_distance_table,
     figure_diversity_turnover,
     holm_adjust,
+    mean_adjacent_tv,
     model_residual_diagnostics,
     named_rng,
+    observed_profile_statistics,
     paired_marker_turnover_bootstrap,
+    profile,
     repeated_site_period_test,
     site_cluster_effect_jackknife,
     site_cluster_wild_period_test,
@@ -46,7 +51,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--bootstrap", type=int, default=2000)
     parser.add_argument("--paired-bootstrap", type=int, default=50000)
     parser.add_argument("--permutations", type=int, default=9999)
-    parser.add_argument("--date-draws", type=int, default=500)
+    parser.add_argument("--callability-resamples", type=int, default=99999)
+    parser.add_argument("--date-draws", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=20260725)
     parser.add_argument("--save-draws", action="store_true")
     return parser.parse_args()
@@ -69,6 +75,9 @@ def main() -> None:
         "Y": summary["y_l1_categories"],
     }
     columns = {"mtDNA": "mt_l1_pooled", "Y": "y_l1_pooled"}
+    resolution_data, y_family_categories, y_family_source_column = (
+        add_y_resolution_sensitivity_encoding(data, 5)
+    )
 
     diversity_parts = []
     turnover_parts = []
@@ -99,13 +108,28 @@ def main() -> None:
                 tables / f"bootstrap_turnover_{marker.lower()}_draws.csv",
                 index=False,
             )
+        observed_site_profile = profile(
+            data,
+            column,
+            marker_categories,
+            site_balanced=True,
+        )
+        observed_diversity, observed_turnover = observed_profile_statistics(
+            observed_site_profile, marker_categories
+        )
         diversity = summarize_bootstrap(
-            diversity_draws, "q1", "analysis_bin"
+            diversity_draws,
+            "q1",
+            "analysis_bin",
+            observed_diversity,
         )
         diversity["marker"] = marker
         diversity_parts.append(diversity)
         turnover = summarize_bootstrap(
-            turnover_draws, "tv", "transition"
+            turnover_draws,
+            "tv",
+            "transition",
+            observed_turnover,
         )
         turnover["marker"] = marker
         turnover_parts.append(turnover)
@@ -216,15 +240,104 @@ def main() -> None:
             categories["Y"],
             args.paired_bootstrap,
             named_rng(args.seed, "paired-marker:site-cluster-bootstrap"),
+            y_marker_col="y_l1_pooled",
+            y_encoding_label="broad_L1",
         )
     )
+    family_draws, family_summary, family_paired_diagnostics = (
+        paired_marker_turnover_bootstrap(
+            resolution_data,
+            categories["mtDNA"],
+            y_family_categories,
+            args.paired_bootstrap,
+            named_rng(args.seed, "paired-marker:site-cluster-bootstrap"),
+            y_marker_col="y_isogg_prefix_family_pooled",
+            y_encoding_label="AADR_ISOGG_prefix_family",
+        )
+    )
+    paired_resolution_sensitivity = pd.concat(
+        [paired_summary, family_summary], ignore_index=True
+    )
+    paired_resolution_sensitivity["category_count"] = [
+        len(categories["Y"]),
+        len(y_family_categories),
+    ]
+    paired_resolution_sensitivity["categories"] = [
+        ";".join(categories["Y"]),
+        ";".join(y_family_categories),
+    ]
+    paired_resolution_sensitivity["mapping_source"] = [
+        "marker-specific AADR Y call, first-letter L1 encoding",
+        f"{y_family_source_column}, first letter + integer + branch letter",
+    ]
+    paired_resolution_sensitivity["mapping_caveat"] = [
+        "Broad descriptive encoding",
+        (
+            "Nomenclature-prefix sensitivity only; not a phylogenetic re-call "
+            "and not uniform evolutionary depth across haplogroups"
+        ),
+    ]
+    broad_delta = float(paired_summary.loc[0, "delta_y_minus_mt"])
+    paired_resolution_sensitivity["delta_change_vs_broad"] = (
+        paired_resolution_sensitivity["delta_y_minus_mt"] - broad_delta
+    )
+    shared_resolution_design = (
+        int(paired_summary.loc[0, "n_individuals"])
+        == int(family_summary.loc[0, "n_individuals"])
+        and int(paired_summary.loc[0, "n_sites"])
+        == int(family_summary.loc[0, "n_sites"])
+        and paired_draws["replicate"].equals(family_draws["replicate"])
+        and paired_draws["mt_mean_adjacent_tv"].equals(
+            family_draws["mt_mean_adjacent_tv"]
+        )
+    )
+    if not shared_resolution_design:
+        raise RuntimeError(
+            "Y-resolution sensitivity requires the same paired individuals, "
+            "sites and cluster-bootstrap draws"
+        )
+    delta_change_draws = (
+        family_draws["delta_y_minus_mt"]
+        - paired_draws["delta_y_minus_mt"]
+    )
+    paired_resolution_sensitivity["delta_change_bootstrap_median"] = [
+        0.0,
+        delta_change_draws.median(),
+    ]
+    paired_resolution_sensitivity["delta_change_ci_low"] = [
+        0.0,
+        delta_change_draws.quantile(0.025),
+    ]
+    paired_resolution_sensitivity["delta_change_ci_high"] = [
+        0.0,
+        delta_change_draws.quantile(0.975),
+    ]
     if args.save_draws:
         paired_draws.to_csv(
             tables / "paired_male_turnover_bootstrap_draws.csv",
             index=False,
         )
+        family_draws.to_csv(
+            tables / "paired_male_y_resolution_family_bootstrap_draws.csv",
+            index=False,
+        )
     paired_summary.to_csv(
         tables / "paired_male_turnover_bootstrap_summary.csv", index=False
+    )
+    paired_resolution_sensitivity.to_csv(
+        tables / "paired_male_y_resolution_sensitivity.csv", index=False
+    )
+
+    callability, callability_tests = callability_table(
+        data,
+        monte_carlo_resamples=args.callability_resamples,
+        seed=args.seed,
+    )
+    callability.to_csv(
+        tables / "marker_callability_by_bin.csv", index=False
+    )
+    callability_tests.to_csv(
+        tables / "marker_callability_tests.csv", index=False
     )
 
     date_rows = []
@@ -234,8 +347,12 @@ def main() -> None:
             columns[marker],
             categories[marker],
             args.date_draws,
-            named_rng(args.seed, f"{marker}:date-uncertainty"),
+            named_rng(args.seed, "shared:date-assignment-scenarios"),
         )
+        # Match the full run_analysis.py draw schema exactly.  Keeping the
+        # marker in each file also prevents provenance from depending on its
+        # filename alone.
+        draws["marker"] = marker
         if args.save_draws:
             draws.to_csv(
                 tables / f"date_uncertainty_{marker.lower()}_draws.csv",
@@ -244,15 +361,30 @@ def main() -> None:
         date_rows.append(
             {
                 "marker": marker,
-                "draws": args.date_draws,
-                "mean_adjacent_tv_median": draws[
-                    "mean_adjacent_tv"
-                ].median(),
-                "ci_low": draws["mean_adjacent_tv"].quantile(0.025),
-                "ci_high": draws["mean_adjacent_tv"].quantile(0.975),
+                "analysis_type": (
+                    "chronological_bin_assignment_scenario_sensitivity"
+                ),
+                "scenario_draws": args.date_draws,
+                "observed_mean_adjacent_tv": mean_adjacent_tv(
+                    data, columns[marker], categories[marker]
+                ),
+                "scenario_median": draws["mean_adjacent_tv"].median(),
+                "scenario_interval_low": draws["mean_adjacent_tv"].quantile(
+                    0.025
+                ),
+                "scenario_interval_high": draws["mean_adjacent_tv"].quantile(
+                    0.975
+                ),
+                "shared_individual_date_scenarios_across_markers": True,
+                "is_calibrated_date_posterior": False,
+                "interpretation": (
+                    "Assumption-based boundary sensitivity; not a calibrated-"
+                    "date posterior interval"
+                ),
             }
         )
-    pd.DataFrame(date_rows).to_csv(
+    date_summary_table = pd.DataFrame(date_rows)
+    date_summary_table.to_csv(
         tables / "date_uncertainty_summary.csv", index=False
     )
     figure_diversity_turnover(
@@ -271,6 +403,13 @@ def main() -> None:
     summary["paired_male_turnover_comparison"] = paired_summary.to_dict(
         "records"
     )
+    summary["paired_male_y_resolution_sensitivity"] = (
+        paired_resolution_sensitivity.to_dict("records")
+    )
+    summary["callability_tests"] = callability_tests.to_dict("records")
+    summary["date_assignment_scenario_sensitivity"] = (
+        date_summary_table.to_dict("records")
+    )
     summary_path.write_text(
         json.dumps(summary, indent=2, ensure_ascii=False, default=str),
         encoding="utf-8",
@@ -278,9 +417,17 @@ def main() -> None:
 
     manifest_path = out / "analysis_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest.pop("date_draws", None)
+    manifest.setdefault("haplogroup_harmonization", {})[
+        "Y_resolution_sensitivity"
+    ] = (
+        "AADR ISOGG call prefix: first letter + first integer + immediately "
+        "following branch letter; nomenclature sensitivity only, not a "
+        "phylogenetic re-call"
+    )
     manifest.update(
         {
-            "code_revision_date": "2026-08-03",
+            "code_revision_date": "2026-08-15",
             "random_seed": args.seed,
             "rng_streams": (
                 "Stable SHA-256-named NumPy SeedSequence streams; each "
@@ -290,7 +437,21 @@ def main() -> None:
             "paired_bootstrap_replicates": args.paired_bootstrap,
             "cluster_wild_resamples": args.permutations,
             "repeated_site_permutations": args.permutations,
-            "date_draws": args.date_draws,
+            "callability_fixed_margin_monte_carlo_resamples": (
+                args.callability_resamples
+            ),
+            "date_scenario_draws": args.date_draws,
+            "date_assignment_scenario_sensitivity": {
+                "shared_across_markers": True,
+                "direct_dates": "Normal in BP using catalogue mean and SD",
+                "indirect_dates": (
+                    "Uniform in BP over mean +/- sqrt(3) times catalogue SD"
+                ),
+                "interpretation": (
+                    "Assumption-based chronological-bin boundary sensitivity; "
+                    "not calibrated radiocarbon posterior uncertainty"
+                ),
+            },
             "site_cluster_bootstrap": {
                 "cluster": "country + locality",
                 "draw": (
@@ -300,6 +461,15 @@ def main() -> None:
                 "empty_period_handling": "reject complete draw and redraw",
                 "marker_diagnostics": bootstrap_diagnostics,
                 "paired_diagnostics": paired_diagnostics,
+                "paired_y_resolution_diagnostics": {
+                    "broad_L1": paired_diagnostics,
+                    "AADR_ISOGG_prefix_family": family_paired_diagnostics,
+                    "shared_cluster_draws_across_encodings": True,
+                    "warning": (
+                        "Resolution comparison is an encoding sensitivity, "
+                        "not a demographic or phylogenetic test"
+                    ),
+                },
             },
             "recomputed_from": {
                 "file": str(catalogue_path),
@@ -307,8 +477,9 @@ def main() -> None:
                 "script": "analysis/recompute_from_catalogue.py",
                 "script_sha256": sha256(Path(__file__)),
                 "reason": (
-                    "Corrected cross-period locality clustering and separated "
-                    "named random streams; upstream catalogue unchanged"
+                    "Corrected observed/bootstrap reporting, added sparse-table "
+                    "Monte Carlo diagnostics, and relabeled date assignment as "
+                    "scenario sensitivity; upstream catalogue unchanged"
                 ),
             },
             "source_code_sha256": sha256(

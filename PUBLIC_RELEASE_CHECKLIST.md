@@ -5,6 +5,9 @@
   interests.
 - Obtain archaeology-specialist review of period and cultural interpretations.
 - Confirm package-specific Poseidon reuse terms and immutable commit.
+- Supply and verify the exact AADR v66.p1 Dataverse datafile locator.
+- Supply and verify an immutable public AmtDB v1.009 metadata-export URL, or a
+  redistribution-cleared frozen snapshot matching the recorded SHA-256.
 - Keep Ulytau person-level preprint rows excluded unless reuse permission is
   documented.
 - Confirm that no person-level, exact-ID or singleton-revealing site-lineage

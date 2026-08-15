@@ -9,7 +9,6 @@ import json
 import math
 import re
 import sys
-from decimal import Decimal, InvalidOperation
 from pathlib import Path, PurePosixPath
 
 # The verifier must not create a cache file that its own release policy rejects.
@@ -103,7 +102,6 @@ FORBIDDEN_RAW_FILENAMES = {
     "amtdb_v1.009_metadata.csv",
     "a-YChr-DB_V5.xlsx",
 }
-MISSING_COORDINATES = {"", ".", "..", "na", "n/a", "nan", "none", "unknown"}
 CHECKSUM_LINE = re.compile(r"^([0-9a-fA-F]{64}) ([ *])(.+)$")
 SESSION_PATH_PATTERNS = (
     re.compile(r"/(?:workspace)/scratch/"),
@@ -277,96 +275,6 @@ def verify_aggregate_csv_headers(root: Path, failures: list[str]) -> None:
                 "individual-level CSV header field(s) "
                 f"{prohibited} in {path.relative_to(root).as_posix()}"
             )
-
-
-def read_catalogue(path: Path, failures: list[str]) -> list[dict[str, str]]:
-    if not path.is_file():
-        failures.append(f"missing public catalogue: {path}")
-        return []
-    try:
-        with path.open("r", encoding="utf-8-sig", newline="") as stream:
-            reader = csv.DictReader(stream)
-            if reader.fieldnames is None:
-                failures.append(f"catalogue has no header: {path}")
-                return []
-            required = {"latitude", "longitude"}
-            missing = required - set(reader.fieldnames)
-            if missing:
-                failures.append(
-                    f"catalogue lacks coordinate columns {sorted(missing)}: {path}"
-                )
-            return list(reader)
-    except (OSError, csv.Error, UnicodeError) as error:
-        failures.append(f"cannot read catalogue {path}: {error}")
-        return []
-
-
-def verify_coordinate(value: str, column: str, path: Path, row_number: int) -> str | None:
-    text = str(value).strip()
-    if text.lower() in MISSING_COORDINATES:
-        return None
-    try:
-        coordinate = Decimal(text)
-    except InvalidOperation:
-        return f"invalid {column} in {path.name} row {row_number}: {text!r}"
-    if not coordinate.is_finite():
-        return f"non-finite {column} in {path.name} row {row_number}: {text!r}"
-    if coordinate != coordinate.quantize(Decimal("0.1")):
-        return (
-            f"{column} exceeds one-decimal public precision in {path.name} "
-            f"row {row_number}: {text!r}"
-        )
-    limit = Decimal("90") if column == "latitude" else Decimal("180")
-    if abs(coordinate) > limit:
-        return f"out-of-range {column} in {path.name} row {row_number}: {text!r}"
-    return None
-
-
-def verify_catalogues(
-    results: Path, failures: list[str]
-) -> tuple[list[dict[str, str]], list[dict[str, str]]]:
-    tables = results / "tables"
-    loaded: dict[str, list[dict[str, str]]] = {}
-    for name in PUBLIC_CATALOGUES:
-        path = tables / name
-        rows = read_catalogue(path, failures)
-        loaded[name] = rows
-        for row_number, row in enumerate(rows, start=2):
-            for column in ("latitude", "longitude"):
-                message = verify_coordinate(row.get(column, ""), column, path, row_number)
-                if message:
-                    failures.append(message)
-
-    catalogue = loaded[PUBLIC_CATALOGUES[0]]
-    primary = loaded[PUBLIC_CATALOGUES[1]]
-    if len(catalogue) != EXPECTED_COUNTS["catalogue"]:
-        failures.append(
-            f"catalogue row count is {len(catalogue)}, expected {EXPECTED_COUNTS['catalogue']}"
-        )
-    if len(primary) != EXPECTED_COUNTS["primary"]:
-        failures.append(
-            f"primary row count is {len(primary)}, expected {EXPECTED_COUNTS['primary']}"
-        )
-    catalogue_ids = [row.get("individual_id", "") for row in catalogue]
-    primary_ids = [row.get("individual_id", "") for row in primary]
-    if "" in catalogue_ids or len(catalogue_ids) != len(set(catalogue_ids)):
-        failures.append("full catalogue individual_id values are missing or non-unique")
-    if "" in primary_ids or len(primary_ids) != len(set(primary_ids)):
-        failures.append("primary catalogue individual_id values are missing or non-unique")
-    if not set(primary_ids).issubset(catalogue_ids):
-        failures.append("primary catalogue is not a subset of the full catalogue")
-
-    mt_calls = sum(bool(row.get("mt_call", "").strip()) for row in primary)
-    y_calls = sum(bool(row.get("y_call", "").strip()) for row in primary)
-    if mt_calls != EXPECTED_COUNTS["mt_calls"]:
-        failures.append(
-            f"primary mtDNA call count is {mt_calls}, expected {EXPECTED_COUNTS['mt_calls']}"
-        )
-    if y_calls != EXPECTED_COUNTS["y_calls"]:
-        failures.append(
-            f"primary Y call count is {y_calls}, expected {EXPECTED_COUNTS['y_calls']}"
-        )
-    return catalogue, primary
 
 
 def load_json(path: Path, failures: list[str]) -> dict[str, object]:

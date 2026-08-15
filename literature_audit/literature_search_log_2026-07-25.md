@@ -1,13 +1,27 @@
 # Ancient uniparental DNA in Central Asia: reproducible search log
 
-**Audit date:** 2026-07-25 (Asia/Almaty)
-**Primary geography:** Kazakhstan, Kyrgyzstan, Tajikistan, Turkmenistan, Uzbekistan
-**Scope:** ancient human mtDNA and Y-chromosome evidence, including genome-wide studies with extractable uniparental calls
-**Reporting standard intended:** PRISMA 2020 plus a separate person-level deduplication/QC flow
+**Audit date:** 2026-07-25 (Asia/Almaty)  
+**Targeted update check:** 2026-08-15 (Asia/Almaty)  
+**Primary geography:** Kazakhstan, Kyrgyzstan, Tajikistan, Turkmenistan, Uzbekistan  
+**Scope:** ancient human mtDNA and Y-chromosome evidence, including genome-wide studies with extractable uniparental calls  
+**Design:** targeted evidence search and verified seed bibliography; not a completed PRISMA systematic/scoping review
 
 ## Status and limitations
 
-This is a reproducible **search protocol and verified seed bibliography**, not a completed PRISMA screening flow. PubMed and Europe PMC result-set counts were measured on the audit date, but records were not exported and dual-screened in this audit. The two searches within each database overlap and must not be summed. Counts for subscription databases and Russian-language indexes are recorded as `NA—not executed/exported`, not estimated.
+This is a partly reproducible **targeted search protocol and verified seed
+bibliography**, not a completed PRISMA screening flow. PubMed and Europe PMC
+result-set counts were measured on 2026-07-25, but records were not fully
+exported, deduplicated or dual-screened. The two searches within each database
+overlap and must not be summed. Counts for subscription databases and
+Russian-language indexes are recorded as `NA—not executed/exported`, not
+estimated. The 2026-08-15 targeted update checked known key records and
+metadata corrections; it did not rerun the four API searches, so the captured
+counts below remain explicitly tied to 2026-07-25.
+
+No PRISMA flow diagram, exhaustive study count, risk-of-bias assessment or
+claim of systematic-review completeness should be derived from this log until
+all planned sources are executed and the exported records are screened as
+specified below.
 
 ## Search log
 
@@ -25,6 +39,24 @@ This is a reproducible **search protocol and verified seed bibliography**, not a
 | eLIBRARY.ru | 2026-07-25 | R1/R2 | NA—not executed/exported | Russian-language grey/legacy literature |
 | CyberLeninka | 2026-07-25 | R1/R2 | NA—not executed/exported | Russian-language grey/legacy literature |
 | bioRxiv/Research Square | 2026-07-25 | S1/S2 | NA—not executed/exported | Preprints must remain a separate evidence stream |
+
+### Targeted update after the count freeze
+
+The following records were verified or corrected on 2026-08-15. They are not
+included in the result counts above:
+
+- Askapuli et al. (2026), Golden Horde elite genomes,
+  DOI `10.1073/pnas.2531003123`, together with the terminal-Y interpretation
+  exchange by Zhabagin and Sabitov, DOI `10.1073/pnas.2607193123`, and the
+  reply by Askapuli, DOI `10.1073/pnas.2609024123`;
+- Yang et al. (2026), eastern Tianshan, DOI `10.1093/molbev/msag057`;
+- Moots et al. (2026), *Ancient DNA in motion*, arXiv `2608.09399`, a preprint
+  submitted after the 2026-07-25 search cutoff and retained only as contextual
+  methodological guidance.
+
+Jeong et al. (2019), Kumar et al. (2021) and Wang et al. (2021) were already
+present in the seed bibliography and were retained as key regional/contextual
+records.
 
 ### P1 — PubMed core
 
@@ -112,6 +144,13 @@ Exclude modern-only studies, animal/pathogen-only data without reusable human ho
 
 ## Safe gap statement
 
-> Our searches identified no up-to-date, reproducible, all-five-republic systematic synthesis and person-level catalogue of ancient mtDNA and Y-chromosome lineages that jointly accounts for duplicate genomic representations, kinship and cemetery clustering, call quality, uneven country-period coverage, legacy marker-only studies, and publications released after the latest AADR freeze.
+> Within the sources actually searched through 2026-07-25 and the targeted
+> update through 2026-08-15, we did not identify an up-to-date all-five-republic
+> synthesis accompanied by a reproducible, deduplicated person-level catalogue
+> of ancient mtDNA and Y-chromosome lineages that explicitly handles duplicate
+> genomic representations, kinship/cemetery clustering, call quality, uneven
+> country-period coverage, legacy marker-only evidence and studies released
+> after the latest AADR freeze.
 
-This is a bounded search finding, not proof that no relevant publication exists.
+This is a bounded finding from an incomplete targeted search, not proof that no
+relevant publication exists and not a PRISMA-complete systematic-review claim.

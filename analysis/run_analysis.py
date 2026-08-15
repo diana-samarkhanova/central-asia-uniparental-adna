@@ -92,7 +92,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--bootstrap", type=int, default=2000)
     p.add_argument("--paired-bootstrap", type=int, default=50000)
     p.add_argument("--permutations", type=int, default=9999)
-    p.add_argument("--date-draws", type=int, default=500)
+    p.add_argument("--callability-resamples", type=int, default=99999)
+    p.add_argument("--date-draws", type=int, default=5000)
     p.add_argument("--seed", type=int, default=20260725)
     return p.parse_args()
 
@@ -143,6 +144,13 @@ def mask_coordinates(data: pd.DataFrame, digits: int = 1) -> pd.DataFrame:
 
 
 def valid_call(value: object) -> bool:
+    # Marker calls are scalar catalogue fields.  Check scalar-ness before
+    # ``pd.isna`` so an accidentally supplied Series/array cannot trigger the
+    # ambiguous-truth-value error produced by ``if pd.isna(array)``.
+    if not pd.api.types.is_scalar(value):
+        return False
+    if pd.isna(value):
+        return False
     s = str(value).strip()
     low = s.lower()
     return low not in MISSING and not low.startswith("n/a")
@@ -193,6 +201,59 @@ def major_haplogroup(call: object, marker: str) -> str:
     if not m:
         return "Other/unresolved"
     return m.group(0)
+
+
+def y_isogg_family_prefix(call: object) -> str:
+    """Encode an AADR ISOGG-style Y call at a transparent prefix depth.
+
+    The encoding retains the first letter, first integer and the immediately
+    following branch letter (for example R1a1a1 -> R1a, J2a1a4b -> J2a).
+    Single-letter or letter-number calls are retained, while basal compound
+    roots use the same ``Basal/unresolved`` label as the primary L1 encoding.
+    This is a nomenclature-prefix sensitivity, not a phylogenetic re-call; its
+    depth is not guaranteed to be biologically uniform across haplogroups.
+    """
+    if not valid_call(call):
+        return ""
+    normalized = re.sub(r"\s+", "", str(call).upper()).rstrip("~*")
+    if normalized in {
+        "BT",
+        "CT",
+        "CF",
+        "F",
+        "GHIJK",
+        "HIJK",
+        "IJK",
+        "IJ",
+        "K",
+        "K2",
+        "K2B",
+    }:
+        return "Basal/unresolved"
+    match = re.match(r"^([A-Z])(\d+)([A-Z]?)", normalized)
+    if match:
+        branch = match.group(3).lower() if match.group(3) else ""
+        return f"{match.group(1)}{match.group(2)}{branch}"
+    match = re.match(r"^([A-Z])", normalized)
+    return match.group(1) if match else "Other/unresolved"
+
+
+def add_y_resolution_sensitivity_encoding(
+    df: pd.DataFrame,
+    minimum_category_count: int = 5,
+) -> tuple[pd.DataFrame, list[str], str]:
+    """Add a pooled ISOGG-prefix encoding without altering the primary Y call."""
+    result = df.copy()
+    source_column = (
+        "y_isogg_call" if "y_isogg_call" in result.columns else "y_isogg"
+    )
+    encoded = result[source_column].map(y_isogg_family_prefix)
+    # A family label is only eligible where the marker-specific Y call exists.
+    encoded = encoded.where(result["y_call"].map(valid_call), "")
+    result["y_isogg_prefix_family"] = encoded
+    pooled, categories = pool_rare(encoded, minimum_category_count)
+    result["y_isogg_prefix_family_pooled"] = pooled
+    return result, categories, source_column
 
 
 class UnionFind:
@@ -560,12 +621,14 @@ def paired_marker_turnover_bootstrap(
     y_categories: list[str],
     n_boot: int,
     rng: np.random.Generator,
+    y_marker_col: str = "y_l1_pooled",
+    y_encoding_label: str = "broad_L1",
 ) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, int]]:
     """Compare markers with one shared cluster draw across periods and markers."""
     paired = df[
         df["molecular_sex"].astype(str).str.startswith("M")
         & (df["mt_l1_pooled"] != "")
-        & (df["y_l1_pooled"] != "")
+        & (df[y_marker_col] != "")
     ].copy()
     paired["_cluster"] = list(zip(paired["country"], paired["locality"]))
     clusters = list(dict.fromkeys(paired["_cluster"]))
@@ -577,7 +640,7 @@ def paired_marker_turnover_bootstrap(
         ["_cluster", "analysis_bin"], sort=False, observed=True
     ):
         mt_counts = group["mt_l1_pooled"].value_counts()
-        y_counts = group["y_l1_pooled"].value_counts()
+        y_counts = group[y_marker_col].value_counts()
         mt = np.array(
             [mt_counts.get(category, 0) for category in mt_categories],
             dtype=float,
@@ -641,7 +704,7 @@ def paired_marker_turnover_bootstrap(
         )
     draws_df = pd.DataFrame(draws)
     mt_point = mean_adjacent_tv(paired, "mt_l1_pooled", mt_categories)
-    y_point = mean_adjacent_tv(paired, "y_l1_pooled", y_categories)
+    y_point = mean_adjacent_tv(paired, y_marker_col, y_categories)
     summary = pd.DataFrame(
         [
             {
@@ -649,6 +712,8 @@ def paired_marker_turnover_bootstrap(
                     "Molecular males with both calls; shared country-locality "
                     "cluster bootstrap across periods and markers"
                 ),
+                "y_encoding": y_encoding_label,
+                "y_marker_column": y_marker_col,
                 "n_individuals": len(paired),
                 "n_sites": len(clusters),
                 "bootstrap_replicates": n_boot,
@@ -660,13 +725,17 @@ def paired_marker_turnover_bootstrap(
                 ].median(),
                 "delta_ci_low": draws_df["delta_y_minus_mt"].quantile(0.025),
                 "delta_ci_high": draws_df["delta_y_minus_mt"].quantile(0.975),
-                "two_sided_tail_probability": min(
+                "bootstrap_two_sided_sign_tail_probability": min(
                     1.0,
                     2
                     * min(
                         float((draws_df["delta_y_minus_mt"] <= 0).mean()),
                         float((draws_df["delta_y_minus_mt"] >= 0).mean()),
                     ),
+                ),
+                "bootstrap_sign_tail_interpretation": (
+                    "Bootstrap sign-stability diagnostic; not a null-hypothesis "
+                    "p-value"
                 ),
             }
         ]
@@ -679,16 +748,55 @@ def paired_marker_turnover_bootstrap(
     return draws_df, summary, diagnostics
 
 
-def summarize_bootstrap(draws: pd.DataFrame, value: str, group: str) -> pd.DataFrame:
-    return (
+def observed_profile_statistics(
+    site_profile: pd.DataFrame, categories: list[str]
+) -> tuple[dict[str, float], dict[str, float]]:
+    """Return the statistics evaluated on the original site-balanced profiles."""
+    indexed = site_profile.set_index("analysis_bin").reindex(BIN_LABELS)
+    diversity = {
+        period: hill_numbers(indexed.loc[period, categories].to_numpy(float))[0]
+        for period in BIN_LABELS
+    }
+    turnover = {
+        f"{first} -> {second}": total_variation(
+            indexed.loc[first, categories].to_numpy(float),
+            indexed.loc[second, categories].to_numpy(float),
+        )
+        for first, second in zip(BIN_LABELS[:-1], BIN_LABELS[1:])
+    }
+    return diversity, turnover
+
+
+def summarize_bootstrap(
+    draws: pd.DataFrame,
+    value: str,
+    group: str,
+    observed: dict[str, float],
+) -> pd.DataFrame:
+    """Attach percentile intervals to an observed point estimate.
+
+    The median of a nonparametric cluster-bootstrap distribution need not equal
+    the statistic evaluated on the original sample. It is retained as a
+    diagnostic rather than being mislabeled as the point estimate.
+    """
+    summary = (
         draws.groupby(group)[value]
         .agg(
-            estimate="median",
+            bootstrap_median="median",
             ci_low=lambda x: x.quantile(0.025),
             ci_high=lambda x: x.quantile(0.975),
         )
         .reset_index()
     )
+    missing = set(summary[group].astype(str)) - set(observed)
+    if missing:
+        raise ValueError(f"Missing observed estimates for {group}: {sorted(missing)}")
+    summary.insert(
+        1,
+        "estimate",
+        summary[group].astype(str).map(observed).astype(float),
+    )
+    return summary
 
 
 def site_profile_table(
@@ -1113,6 +1221,18 @@ def date_uncertainty(
     draws: int,
     rng: np.random.Generator,
 ) -> pd.DataFrame:
+    """Run an assumption-based chronological-bin assignment sensitivity.
+
+    Direct dates are perturbed with a normal distribution in uncalibrated BP
+    using the catalogue mean and standard deviation. Indirect dates are
+    perturbed uniformly over a moment-matched interval. These draws are not
+    samples from calibrated radiocarbon probability distributions and must not
+    be interpreted as posterior chronological uncertainty.
+
+    Calling this function for different markers with identically initialized
+    RNG streams gives the markers the same joint individual-level date
+    scenarios, allowing like-for-like descriptive comparison.
+    """
     rows = []
     base = df.copy()
     mean = base["date_bp"].to_numpy(float)
@@ -1135,7 +1255,14 @@ def date_uncertainty(
         )
         rows.append(
             {
-                "replicate": i,
+                "scenario_draw": i,
+                "analysis_type": (
+                    "chronological_bin_assignment_scenario_sensitivity"
+                ),
+                "date_scenario_model": (
+                    "direct_normal_BP; indirect_uniform_BP_moment_matched"
+                ),
+                "is_calibrated_date_posterior": False,
                 "mean_adjacent_tv": mean_adjacent_tv(
                     tmp, marker_col, categories
                 ),
@@ -1262,7 +1389,88 @@ def extended_legacy_mtdna(
     )
 
 
-def callability_table(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def _fixed_margin_chi_square_monte_carlo(
+    yes: np.ndarray,
+    total: np.ndarray,
+    n_resamples: int,
+    rng: np.random.Generator,
+) -> dict[str, float | int | bool | str]:
+    """Pearson statistic with a reproducible fixed-margin Monte Carlo p-value.
+
+    This is a conditional simulation under independence, not an exact test.
+    Empty rows are removed before evaluating the table. The +1 correction
+    prevents a zero Monte Carlo p-value.
+    """
+    yes = np.asarray(yes, dtype=int)
+    total = np.asarray(total, dtype=int)
+    if np.any(yes < 0) or np.any(total < yes):
+        raise ValueError("Callability counts must satisfy 0 <= yes <= total")
+    keep = total > 0
+    yes = yes[keep]
+    total = total[keep]
+    total_yes = int(yes.sum())
+    grand_total = int(total.sum())
+    if (
+        len(total) < 2
+        or grand_total == 0
+        or total_yes == 0
+        or total_yes == grand_total
+    ):
+        return {
+            "chi2": np.nan,
+            "df": max(0, len(total) - 1),
+            "asymptotic_p": np.nan,
+            "monte_carlo_p": np.nan,
+            "monte_carlo_resamples": n_resamples,
+            "min_expected_count": np.nan,
+            "n_expected_lt_5": 0,
+            "fraction_expected_lt_5": np.nan,
+            "sparse_expected_cells": False,
+            "p_value": np.nan,
+            "p_value_method": "not_estimable",
+        }
+
+    contingency = np.column_stack([yes, total - yes])
+    chi2, asymptotic_p, dof, expected = chi2_contingency(
+        contingency, correction=False
+    )
+    expected_yes = expected[:, 0]
+    expected_no = expected[:, 1]
+    simulated_yes = rng.multivariate_hypergeometric(
+        total, total_yes, size=n_resamples
+    )
+    simulated_no = total[np.newaxis, :] - simulated_yes
+    simulated_statistics = (
+        ((simulated_yes - expected_yes) ** 2 / expected_yes).sum(axis=1)
+        + ((simulated_no - expected_no) ** 2 / expected_no).sum(axis=1)
+    )
+    monte_carlo_p = float(
+        (1 + np.count_nonzero(simulated_statistics >= chi2 - 1e-12))
+        / (n_resamples + 1)
+    )
+    sparse = bool(np.any(expected < 5))
+    return {
+        "chi2": float(chi2),
+        "df": int(dof),
+        "asymptotic_p": float(asymptotic_p),
+        "monte_carlo_p": monte_carlo_p,
+        "monte_carlo_resamples": int(n_resamples),
+        "min_expected_count": float(expected.min()),
+        "n_expected_lt_5": int((expected < 5).sum()),
+        "fraction_expected_lt_5": float((expected < 5).mean()),
+        "sparse_expected_cells": sparse,
+        "p_value": monte_carlo_p if sparse else float(asymptotic_p),
+        "p_value_method": (
+            "fixed_margin_monte_carlo" if sparse else "asymptotic_pearson"
+        ),
+    }
+
+
+def callability_table(
+    df: pd.DataFrame,
+    monte_carlo_resamples: int = 99999,
+    seed: int = 20260725,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     rows = []
     for period in BIN_LABELS:
         g = df[df["analysis_bin"].astype(str) == period]
@@ -1286,17 +1494,23 @@ def callability_table(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
         ("mtDNA", table["mt_calls"], table["n_individuals"]),
         ("Y", table["y_calls"], table["n_molecular_males"]),
     ]:
-        contingency = np.column_stack([yes, total - yes])
-        chi2, p, dof, _ = chi2_contingency(contingency)
-        tests.append(
+        result = _fixed_margin_chi_square_monte_carlo(
+            yes.to_numpy(int),
+            total.to_numpy(int),
+            monte_carlo_resamples,
+            named_rng(seed, f"{marker}:callability-fixed-margin-monte-carlo"),
+        )
+        result.update(
             {
                 "marker": marker,
-                "chi2": chi2,
-                "df": dof,
-                "p_unadjusted": p,
-                "note": "Descriptive test; does not account for site/study clustering.",
+                "note": (
+                    "Descriptive Pearson test; fixed-margin Monte Carlo used "
+                    "for sparse expected cells. Monte Carlo, not exact; does "
+                    "not account for site/study clustering."
+                ),
             }
         )
+        tests.append(result)
     return table, pd.DataFrame(tests)
 
 
@@ -1512,30 +1726,32 @@ def figure_diversity_turnover(
     axes[0].set_xticks(np.arange(len(BIN_LABELS)))
     axes[0].set_xticklabels(BIN_LABELS, rotation=43, ha="right")
     axes[0].set_ylabel("Effective number of L1 lineages (Hill q=1)")
-    axes[0].set_title("Site-cluster bootstrap diversity")
+    axes[0].set_title("Observed site-balanced diversity; cluster-bootstrap interval")
     axes[0].legend(frameon=False)
 
     transitions = [f"{a} -> {b}" for a, b in zip(BIN_LABELS[:-1], BIN_LABELS[1:])]
     for marker, g in tv_summary.groupby("marker"):
         g = g.set_index("transition").reindex(transitions).reset_index()
         x = np.arange(len(g))
-        axes[1].errorbar(
+        axes[1].vlines(
             x,
-            g["estimate"],
-            yerr=[
-                g["estimate"] - g["ci_low"],
-                g["ci_high"] - g["estimate"],
-            ],
-            marker="o",
-            capsize=3,
+            g["ci_low"],
+            g["ci_high"],
             lw=1.8,
             color=colors[marker],
+        )
+        axes[1].scatter(
+            x,
+            g["estimate"],
+            marker="o",
+            color=colors[marker],
             label=marker,
+            zorder=3,
         )
     axes[1].set_xticks(np.arange(len(transitions)))
     axes[1].set_xticklabels(transitions, rotation=43, ha="right")
     axes[1].set_ylabel("Total-variation turnover (0-1)")
-    axes[1].set_title("Adjacent-bin turnover; uncertainty resampled by site")
+    axes[1].set_title("Observed adjacent-bin turnover; cluster-bootstrap interval")
     axes[1].legend(frameon=False)
     fig.savefig(path, dpi=300, bbox_inches="tight")
     plt.close(fig)
@@ -1602,6 +1818,9 @@ def main() -> None:
 
     analysis["mt_l1_pooled"], mt_categories = pool_rare(analysis["mt_l1"], 5)
     analysis["y_l1_pooled"], y_categories = pool_rare(analysis["y_l1"], 5)
+    resolution_analysis, y_family_categories, y_family_source_column = (
+        add_y_resolution_sensitivity_encoding(analysis, 5)
+    )
     # Carry pooled labels back to the full catalogue where possible.
     mt_keep = set(mt_categories) - {"Other"}
     y_keep = set(y_categories) - {"Other"}
@@ -1617,7 +1836,11 @@ def main() -> None:
     counts = count_matrix(analysis)
     adequacy = analysis_cell_adequacy(analysis)
     dominance = site_dominance(analysis)
-    callability, callability_tests = callability_table(analysis)
+    callability, callability_tests = callability_table(
+        analysis,
+        monte_carlo_resamples=args.callability_resamples,
+        seed=args.seed,
+    )
     crosswalk = exact_crosswalk(canonical, amtdb, aychr)
     legacy_mt = extended_legacy_mtdna(amtdb, crosswalk)
 
@@ -1679,9 +1902,22 @@ def main() -> None:
             )
         )
         bootstrap_diagnostics[marker] = marker_bootstrap_diagnostics
-        div = summarize_bootstrap(div_draws, "q1", "analysis_bin")
+        observed_diversity, observed_turnover = observed_profile_statistics(
+            site, cats
+        )
+        div = summarize_bootstrap(
+            div_draws,
+            "q1",
+            "analysis_bin",
+            observed_diversity,
+        )
         div["marker"] = marker
-        tv = summarize_bootstrap(tv_draws, "tv", "transition")
+        tv = summarize_bootstrap(
+            tv_draws,
+            "tv",
+            "transition",
+            observed_turnover,
+        )
         tv["marker"] = marker
         div_summaries.append(div)
         tv_summaries.append(tv)
@@ -1828,8 +2064,80 @@ def main() -> None:
             y_categories,
             args.paired_bootstrap,
             named_rng(args.seed, "paired-marker:site-cluster-bootstrap"),
+            y_marker_col="y_l1_pooled",
+            y_encoding_label="broad_L1",
         )
     )
+    family_draws, family_summary, family_bootstrap_diagnostics = (
+        paired_marker_turnover_bootstrap(
+            resolution_analysis,
+            mt_categories,
+            y_family_categories,
+            args.paired_bootstrap,
+            # The identical stream isolates the effect of the encoding: the
+            # same cluster multiplicities are used for both resolution rows.
+            named_rng(args.seed, "paired-marker:site-cluster-bootstrap"),
+            y_marker_col="y_isogg_prefix_family_pooled",
+            y_encoding_label="AADR_ISOGG_prefix_family",
+        )
+    )
+    paired_resolution_sensitivity = pd.concat(
+        [paired_summary, family_summary], ignore_index=True
+    )
+    paired_resolution_sensitivity["category_count"] = [
+        len(y_categories),
+        len(y_family_categories),
+    ]
+    paired_resolution_sensitivity["categories"] = [
+        ";".join(y_categories),
+        ";".join(y_family_categories),
+    ]
+    paired_resolution_sensitivity["mapping_source"] = [
+        "marker-specific AADR Y call, first-letter L1 encoding",
+        f"{y_family_source_column}, first letter + integer + branch letter",
+    ]
+    paired_resolution_sensitivity["mapping_caveat"] = [
+        "Broad descriptive encoding",
+        (
+            "Nomenclature-prefix sensitivity only; not a phylogenetic re-call "
+            "and not uniform evolutionary depth across haplogroups"
+        ),
+    ]
+    broad_delta = float(paired_summary.loc[0, "delta_y_minus_mt"])
+    paired_resolution_sensitivity["delta_change_vs_broad"] = (
+        paired_resolution_sensitivity["delta_y_minus_mt"] - broad_delta
+    )
+    shared_resolution_design = (
+        int(paired_summary.loc[0, "n_individuals"])
+        == int(family_summary.loc[0, "n_individuals"])
+        and int(paired_summary.loc[0, "n_sites"])
+        == int(family_summary.loc[0, "n_sites"])
+        and paired_draws["replicate"].equals(family_draws["replicate"])
+        and paired_draws["mt_mean_adjacent_tv"].equals(
+            family_draws["mt_mean_adjacent_tv"]
+        )
+    )
+    if not shared_resolution_design:
+        raise RuntimeError(
+            "Y-resolution sensitivity requires the same paired individuals, "
+            "sites and cluster-bootstrap draws"
+        )
+    delta_change_draws = (
+        family_draws["delta_y_minus_mt"]
+        - paired_draws["delta_y_minus_mt"]
+    )
+    paired_resolution_sensitivity["delta_change_bootstrap_median"] = [
+        0.0,
+        delta_change_draws.median(),
+    ]
+    paired_resolution_sensitivity["delta_change_ci_low"] = [
+        0.0,
+        delta_change_draws.quantile(0.025),
+    ]
+    paired_resolution_sensitivity["delta_change_ci_high"] = [
+        0.0,
+        delta_change_draws.quantile(0.975),
+    ]
 
     date_draw_summaries = []
     for marker, col, cats in [
@@ -1841,7 +2149,7 @@ def main() -> None:
             col,
             cats,
             args.date_draws,
-            named_rng(args.seed, f"{marker}:date-uncertainty"),
+            named_rng(args.seed, "shared:date-assignment-scenarios"),
         )
         draws["marker"] = marker
         draws.to_csv(
@@ -1851,10 +2159,26 @@ def main() -> None:
         date_draw_summaries.append(
             {
                 "marker": marker,
-                "draws": args.date_draws,
-                "mean_adjacent_tv_median": draws["mean_adjacent_tv"].median(),
-                "ci_low": draws["mean_adjacent_tv"].quantile(0.025),
-                "ci_high": draws["mean_adjacent_tv"].quantile(0.975),
+                "analysis_type": (
+                    "chronological_bin_assignment_scenario_sensitivity"
+                ),
+                "scenario_draws": args.date_draws,
+                "observed_mean_adjacent_tv": mean_adjacent_tv(
+                    analysis, col, cats
+                ),
+                "scenario_median": draws["mean_adjacent_tv"].median(),
+                "scenario_interval_low": draws["mean_adjacent_tv"].quantile(
+                    0.025
+                ),
+                "scenario_interval_high": draws["mean_adjacent_tv"].quantile(
+                    0.975
+                ),
+                "shared_individual_date_scenarios_across_markers": True,
+                "is_calibrated_date_posterior": False,
+                "interpretation": (
+                    "Assumption-based boundary sensitivity; not a calibrated-"
+                    "date posterior interval"
+                ),
             }
         )
     date_uncertainty_summary = pd.DataFrame(date_draw_summaries)
@@ -1907,8 +2231,16 @@ def main() -> None:
     paired_draws.to_csv(
         tables_dir / "paired_male_turnover_bootstrap_draws.csv", index=False
     )
+    family_draws.to_csv(
+        tables_dir
+        / "paired_male_y_resolution_family_bootstrap_draws.csv",
+        index=False,
+    )
     paired_summary.to_csv(
         tables_dir / "paired_male_turnover_bootstrap_summary.csv", index=False
+    )
+    paired_resolution_sensitivity.to_csv(
+        tables_dir / "paired_male_y_resolution_sensitivity.csv", index=False
     )
     date_uncertainty_summary.to_csv(
         tables_dir / "date_uncertainty_summary.csv", index=False
@@ -1985,6 +2317,12 @@ def main() -> None:
             "records"
         ),
         "paired_male_turnover_comparison": paired_summary.to_dict("records"),
+        "paired_male_y_resolution_sensitivity": (
+            paired_resolution_sensitivity.to_dict("records")
+        ),
+        "date_assignment_scenario_sensitivity": (
+            date_uncertainty_summary.to_dict("records")
+        ),
         "country_period_cells_meeting_threshold": [
             {
                 "marker": marker,
@@ -2009,6 +2347,7 @@ def main() -> None:
     )
     manifest = {
         "analysis_date": "2026-07-25",
+        "code_revision_date": "2026-08-15",
         "random_seed": args.seed,
         "rng_streams": (
             "Stable SHA-256-named NumPy SeedSequence streams; each analysis "
@@ -2025,10 +2364,33 @@ def main() -> None:
             "empty_period_handling": "reject complete draw and redraw",
             "marker_diagnostics": bootstrap_diagnostics,
             "paired_diagnostics": paired_bootstrap_diagnostics,
+            "paired_y_resolution_diagnostics": {
+                "broad_L1": paired_bootstrap_diagnostics,
+                "AADR_ISOGG_prefix_family": family_bootstrap_diagnostics,
+                "shared_cluster_draws_across_encodings": True,
+                "warning": (
+                    "Resolution comparison is an encoding sensitivity, not a "
+                    "new demographic or phylogenetic test"
+                ),
+            },
         },
         "cluster_wild_resamples": args.permutations,
         "repeated_site_permutations": args.permutations,
-        "date_draws": args.date_draws,
+        "callability_fixed_margin_monte_carlo_resamples": (
+            args.callability_resamples
+        ),
+        "date_scenario_draws": args.date_draws,
+        "date_assignment_scenario_sensitivity": {
+            "shared_across_markers": True,
+            "direct_dates": "Normal in BP using catalogue mean and SD",
+            "indirect_dates": (
+                "Uniform in BP over mean +/- sqrt(3) times catalogue SD"
+            ),
+            "interpretation": (
+                "Assumption-based chronological-bin boundary sensitivity; "
+                "not calibrated radiocarbon posterior uncertainty"
+            ),
+        },
         "primary_inference": {
             "response": "Hellinger-transformed broad-lineage proportions",
             "unit": "country-locality-period profile",
@@ -2049,6 +2411,11 @@ def main() -> None:
             "mtDNA_HV": "retained as HV, separate from H",
             "basal_Y_compounds": "Basal/unresolved, including CF, CT, F and IJK",
             "rare_pooling": "fewer than five primary calls pooled as Other",
+            "Y_resolution_sensitivity": (
+                "AADR ISOGG call prefix: first letter + first integer + "
+                "immediately following branch letter; nomenclature sensitivity "
+                "only, not a phylogenetic re-call"
+            ),
         },
         "inputs": {
             str(args.aadr): input_hashes["aadr"],

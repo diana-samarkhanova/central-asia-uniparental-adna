@@ -9,8 +9,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "analysis"))
 
 import pandas as pd
+import numpy as np
 
-from run_analysis import major_haplogroup, mask_coordinates, named_rng, valid_call
+from run_analysis import (
+    major_haplogroup,
+    mask_coordinates,
+    named_rng,
+    valid_call,
+    y_isogg_family_prefix,
+)
 
 
 class HaplogroupHarmonizationTests(unittest.TestCase):
@@ -51,9 +58,22 @@ class HaplogroupHarmonizationTests(unittest.TestCase):
             "NA",
             "unknown",
             None,
+            pd.NA,
+            pd.NaT,
+            np.nan,
+            np.array([np.nan]),
+            pd.Series([pd.NA]),
         ):
             with self.subTest(value=value):
                 self.assertFalse(valid_call(value))
+                self.assertEqual(major_haplogroup(value, "mt"), "")
+
+    def test_y_isogg_prefix_family_encoding(self) -> None:
+        self.assertEqual(y_isogg_family_prefix("R1a1a1"), "R1a")
+        self.assertEqual(y_isogg_family_prefix("J2a1a4b"), "J2a")
+        self.assertEqual(y_isogg_family_prefix("Q1b2b1b2~"), "Q1b")
+        self.assertEqual(y_isogg_family_prefix("CF"), "Basal/unresolved")
+        self.assertEqual(y_isogg_family_prefix(pd.NA), "")
 
     def test_coordinate_masking_is_non_mutating_and_one_decimal(self) -> None:
         source = pd.DataFrame(

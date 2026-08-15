@@ -4,7 +4,6 @@
   "bootstrap_replicates": 2000,
   "cluster_wild_resamples": 9999,
   "repeated_site_permutations": 9999,
-  "date_draws": 500,
   "primary_inference": {
     "response": "Hellinger-transformed broad-lineage proportions",
     "unit": "country-locality-period profile",
@@ -21,7 +20,8 @@
   "haplogroup_harmonization": {
     "mtDNA_HV": "retained as HV, separate from H",
     "basal_Y_compounds": "Basal/unresolved, including CF, CT, F and IJK",
-    "rare_pooling": "fewer than five primary calls pooled as Other"
+    "rare_pooling": "fewer than five primary calls pooled as Other",
+    "Y_resolution_sensitivity": "AADR ISOGG call prefix: first letter + first integer + immediately following branch letter; nomenclature sensitivity only, not a phylogenetic re-call"
   },
   "inputs": {
     "data/raw/aadr_v66p1/v66.p1_2M.aadr.PUB.anno": "98eec5d897a6feedd274c91b476c4d416e60d12d171409018925522679ba316c",
@@ -62,8 +62,8 @@
       1501
     ]
   },
-  "source_code_sha256": "11ca1b9ab0b718434ae1f79bbdfdf4055ebb557c71bff369f2d8638c2221c8c4",
-  "code_revision_date": "2026-08-03",
+  "source_code_sha256": "0b7ff2f4bb2cf0ab069403064370d5f5f2ff30e8afad4ac66dd64d85fb49a375",
+  "code_revision_date": "2026-08-15",
   "rng_streams": "Stable SHA-256-named NumPy SeedSequence streams; each procedure is independent of unrelated random calls",
   "paired_bootstrap_replicates": 50000,
   "site_cluster_bootstrap": {
@@ -86,27 +86,37 @@
       "n_clusters": 98,
       "accepted_replicates": 50000,
       "rejected_empty_period_draws": 257
+    },
+    "paired_y_resolution_diagnostics": {
+      "broad_L1": {
+        "n_clusters": 98,
+        "accepted_replicates": 50000,
+        "rejected_empty_period_draws": 257
+      },
+      "AADR_ISOGG_prefix_family": {
+        "n_clusters": 98,
+        "accepted_replicates": 50000,
+        "rejected_empty_period_draws": 257
+      },
+      "shared_cluster_draws_across_encodings": true,
+      "warning": "Resolution comparison is an encoding sensitivity, not a demographic or phylogenetic test"
     }
   },
   "recomputed_from": {
-    "file": "local-only/aadr_primary_analysis_catalogue.csv",
-    "redistributed_in_github": false,
+    "file": "results/aadr-v66p1_2026-07-25/tables/aadr_primary_analysis_catalogue.csv",
     "sha256": "6a861cd38b4b9a531d1b9bac96fc4834f671e400c410fbad5cf3401fa80e873a",
-    "private_frozen_catalogue_sha256": "a43a33aa2070d6339ce1dd49264fe59e721af97de822851aee926a5ab667fb86",
-    "coordinate_columns_used_in_models": false,
     "script": "analysis/recompute_from_catalogue.py",
-    "script_sha256": "70a5fc8311b05e80bcf048c92cad7e529f7281988f14a02cf4faf831f3fa99e3",
-    "reason": "Corrected cross-period locality clustering and separated named random streams; upstream catalogue unchanged"
+    "script_sha256": "213b8f04d7de847714f0b335fb2ca00f1072d4b6b53c30bee34a0d8fbb887986",
+    "reason": "Corrected observed/bootstrap reporting, added sparse-table Monte Carlo diagnostics, and relabeled date assignment as scenario sensitivity; upstream catalogue unchanged"
   },
   "public_coordinate_policy": {
-    "scope": "local working catalogues used to generate the aggregate release; person-level files are not redistributed in GitHub",
     "columns": [
       "latitude",
       "longitude"
     ],
     "rounding_decimal_degrees": 1,
     "rationale": "reduce archaeological site-location precision; coordinates are not used in statistical models",
-    "local_working_files": {
+    "files": {
       "aadr_central_asia_unique_individual_catalogue.csv": {
         "private_input_sha256": "5c606606d373757703ec3a31016fa86ed3a93b12cff25744cfa4743bb88c5f88",
         "public_output_sha256": "4099c63998dd391b8019123a79867da44877c32450715ee2ca386d75c22fab43",
@@ -123,5 +133,13 @@
         "rows": 19
       }
     }
+  },
+  "callability_fixed_margin_monte_carlo_resamples": 99999,
+  "date_scenario_draws": 5000,
+  "date_assignment_scenario_sensitivity": {
+    "shared_across_markers": true,
+    "direct_dates": "Normal in BP using catalogue mean and SD",
+    "indirect_dates": "Uniform in BP over mean +/- sqrt(3) times catalogue SD",
+    "interpretation": "Assumption-based chronological-bin boundary sensitivity; not calibrated radiocarbon posterior uncertainty"
   }
 }

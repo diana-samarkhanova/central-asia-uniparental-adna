@@ -1,3 +1,3 @@
-marker,chi2,df,p_unadjusted,note
-mtDNA,22.050983616254868,7,0.0024895048621323113,Descriptive test; does not account for site/study clustering.
-Y,21.214331343397088,7,0.003465547982093304,Descriptive test; does not account for site/study clustering.
+chi2,df,asymptotic_p,monte_carlo_p,monte_carlo_resamples,min_expected_count,n_expected_lt_5,fraction_expected_lt_5,sparse_expected_cells,p_value,p_value_method,marker,note
+22.050983616254868,7,0.0024895048621323113,0.00341,99999,1.5644171779141105,3,0.1875,True,0.00341,fixed_margin_monte_carlo,mtDNA,"Descriptive Pearson test; fixed-margin Monte Carlo used for sparse expected cells. Monte Carlo, not exact; does not account for site/study clustering."
+21.214331343397088,7,0.003465547982093304,0.0053,99999,0.5528455284552846,8,0.5,True,0.0053,fixed_margin_monte_carlo,Y,"Descriptive Pearson test; fixed-margin Monte Carlo used for sparse expected cells. Monte Carlo, not exact; does not account for site/study clustering."

@@ -5,6 +5,6 @@
   "repeated_site_permutations_per_test": 1999,
   "number_of_tests": 57,
   "source_code_sha256": "3d72ed296b8cd5e3f4565e4bf6d553a8829b034ee7366204788c27bc3dfd8659",
-  "primary_analysis_code_sha256": "11ca1b9ab0b718434ae1f79bbdfdf4055ebb557c71bff369f2d8638c2221c8c4",
+  "primary_analysis_code_sha256": "0b7ff2f4bb2cf0ab069403064370d5f5f2ff30e8afad4ac66dd64d85fb49a375",
   "interpretation": "Exploratory sensitivity analyses. Cluster-wild tests preserve country-locality dependence; repeated-site tests use site fixed effects and within-site period-label permutations."
 }
