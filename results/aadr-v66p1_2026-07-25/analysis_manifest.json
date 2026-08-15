@@ -1,0 +1,145 @@
+{
+  "analysis_date": "2026-07-25",
+  "random_seed": 20260725,
+  "bootstrap_replicates": 2000,
+  "cluster_wild_resamples": 9999,
+  "repeated_site_permutations": 9999,
+  "primary_inference": {
+    "response": "Hellinger-transformed broad-lineage proportions",
+    "unit": "country-locality-period profile",
+    "reduced_model": "country",
+    "full_model": "country + period",
+    "resampling": "Null-model residuals divided rowwise by sqrt(1-h_ii), with one shared Rademacher sign per country-locality cluster",
+    "multiplicity": "Holm adjustment across mtDNA and Y"
+  },
+  "exploratory_within_locality_test": {
+    "subset": "localities represented in more than one period",
+    "model": "site fixed effects + period",
+    "resampling": "period-label permutation within locality"
+  },
+  "haplogroup_harmonization": {
+    "mtDNA_HV": "retained as HV, separate from H",
+    "basal_Y_compounds": "Basal/unresolved, including CF, CT, F and IJK",
+    "rare_pooling": "fewer than five primary calls pooled as Other",
+    "Y_resolution_sensitivity": "AADR ISOGG call prefix: first letter + first integer + immediately following branch letter; nomenclature sensitivity only, not a phylogenetic re-call"
+  },
+  "inputs": {
+    "data/raw/aadr_v66p1/v66.p1_2M.aadr.PUB.anno": "98eec5d897a6feedd274c91b476c4d416e60d12d171409018925522679ba316c",
+    "data/raw/amtdb_v1_009/amtdb_v1.009_metadata.csv": "531e8ee8fae181124f5a9b77b6fe8d677e64e35b815be2a3965020244fe31057",
+    "data/raw/aychr_db/a-YChr-DB_V5.xlsx": "e297110a18cba73d4044e8a95c0fae98d7f48633ad6ccfae1cd364e460eb1b3c"
+  },
+  "temporal_bins": {
+    "B1 3500-2501 BCE": [
+      -3500,
+      -2500
+    ],
+    "B2 2500-1801 BCE": [
+      -2500,
+      -1800
+    ],
+    "B3 1800-901 BCE": [
+      -1800,
+      -900
+    ],
+    "B4 900-201 BCE": [
+      -900,
+      -200
+    ],
+    "B5 200 BCE-300 CE": [
+      -200,
+      301
+    ],
+    "B6 301-650 CE": [
+      301,
+      651
+    ],
+    "B7 651-1000 CE": [
+      651,
+      1001
+    ],
+    "B8 1001-1500 CE": [
+      1001,
+      1501
+    ]
+  },
+  "source_code_sha256": "0b7ff2f4bb2cf0ab069403064370d5f5f2ff30e8afad4ac66dd64d85fb49a375",
+  "code_revision_date": "2026-08-15",
+  "rng_streams": "Stable SHA-256-named NumPy SeedSequence streams; each procedure is independent of unrelated random calls",
+  "paired_bootstrap_replicates": 50000,
+  "site_cluster_bootstrap": {
+    "cluster": "country + locality",
+    "draw": "one multinomial multiplicity per cluster, shared across all periods and, in the paired analysis, both markers",
+    "empty_period_handling": "reject complete draw and redraw",
+    "marker_diagnostics": {
+      "mtDNA": {
+        "n_clusters": 133,
+        "accepted_replicates": 2000,
+        "rejected_empty_period_draws": 1
+      },
+      "Y": {
+        "n_clusters": 101,
+        "accepted_replicates": 2000,
+        "rejected_empty_period_draws": 3
+      }
+    },
+    "paired_diagnostics": {
+      "n_clusters": 98,
+      "accepted_replicates": 50000,
+      "rejected_empty_period_draws": 257
+    },
+    "paired_y_resolution_diagnostics": {
+      "broad_L1": {
+        "n_clusters": 98,
+        "accepted_replicates": 50000,
+        "rejected_empty_period_draws": 257
+      },
+      "AADR_ISOGG_prefix_family": {
+        "n_clusters": 98,
+        "accepted_replicates": 50000,
+        "rejected_empty_period_draws": 257
+      },
+      "shared_cluster_draws_across_encodings": true,
+      "warning": "Resolution comparison is an encoding sensitivity, not a demographic or phylogenetic test"
+    }
+  },
+  "recomputed_from": {
+    "file": "results/aadr-v66p1_2026-07-25/tables/aadr_primary_analysis_catalogue.csv",
+    "sha256": "6a861cd38b4b9a531d1b9bac96fc4834f671e400c410fbad5cf3401fa80e873a",
+    "script": "analysis/recompute_from_catalogue.py",
+    "script_sha256": "213b8f04d7de847714f0b335fb2ca00f1072d4b6b53c30bee34a0d8fbb887986",
+    "reason": "Corrected observed/bootstrap reporting, added sparse-table Monte Carlo diagnostics, and relabeled date assignment as scenario sensitivity; upstream catalogue unchanged"
+  },
+  "public_coordinate_policy": {
+    "columns": [
+      "latitude",
+      "longitude"
+    ],
+    "rounding_decimal_degrees": 1,
+    "rationale": "reduce archaeological site-location precision; coordinates are not used in statistical models",
+    "files": {
+      "aadr_central_asia_unique_individual_catalogue.csv": {
+        "private_input_sha256": "5c606606d373757703ec3a31016fa86ed3a93b12cff25744cfa4743bb88c5f88",
+        "public_output_sha256": "4099c63998dd391b8019123a79867da44877c32450715ee2ca386d75c22fab43",
+        "rows": 501
+      },
+      "aadr_primary_analysis_catalogue.csv": {
+        "private_input_sha256": "a43a33aa2070d6339ce1dd49264fe59e721af97de822851aee926a5ab667fb86",
+        "public_output_sha256": "6a861cd38b4b9a531d1b9bac96fc4834f671e400c410fbad5cf3401fa80e873a",
+        "rows": 489
+      },
+      "extended_legacy_mtdna_not_in_aadr.csv": {
+        "private_input_sha256": "a84aed488d6821b831ff82ff4e998e0426bf635d613996c9fcf2e1efdb2f888c",
+        "public_output_sha256": "9f9e42d0ddf6eef9f341dfd4e169b2b19eabd92c4d456d1234b49c5fe972bd82",
+        "rows": 19
+      }
+    }
+  },
+  "callability_fixed_margin_monte_carlo_resamples": 99999,
+  "date_scenario_draws": 5000,
+  "date_assignment_scenario_sensitivity": {
+    "shared_across_markers": true,
+    "direct_dates": "Normal in BP using catalogue mean and SD",
+    "indirect_dates": "Uniform in BP over mean +/- sqrt(3) times catalogue SD",
+    "interpretation": "Assumption-based chronological-bin boundary sensitivity; not calibrated radiocarbon posterior uncertainty"
+  }
+}

@@ -1,0 +1,3 @@
+marker,n_profiles,max_reduced_leverage,max_full_leverage,pearson_full_residual_norm_vs_log1p_calls,spearman_full_residual_norm_vs_log1p_calls
+mtDNA,170,0.33333333333333326,0.3793606442481452,-0.3998308289794815,-0.3238291483484452
+Y,118,0.4999999999999998,0.545505124600957,-0.20189141561244422,-0.18378438427630484
