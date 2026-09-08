@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MPLCONFIGDIR: /tmp/matplotlib-cache
+      MPLBACKEND: Agg
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,7 +19,11 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -r requirements.txt
-      - run: PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
-      - run: PYTHONDONTWRITEBYTECODE=1 python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
-      - run: PYTHONDONTWRITEBYTECODE=1 python analysis_extensions/statistical_extensions_v4/test_results.py
-      - run: PYTHONDONTWRITEBYTECODE=1 python analysis/verify_release.py
+      - name: Run all discovered tests (upstream fixture optional)
+        run: python -m unittest discover -s tests -v
+      - name: Check frozen aggregate outputs
+        run: python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
+      - name: Check frozen extension outputs
+        run: python analysis_extensions/statistical_extensions_v4/test_results.py
+      - name: Verify release manifest and file policy
+        run: python analysis/verify_release.py

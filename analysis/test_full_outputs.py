@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 
 from run_analysis import (
+    EXPECTED_INPUT_SHA256,
     SITE_LOCALITY_ALIASES,
     apply_site_locality_aliases,
     callability_table,
@@ -25,6 +26,21 @@ def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     digest.update(path.read_bytes())
     return digest.hexdigest()
+
+
+def check_analysis_provenance(
+    manifest: dict, analysis_script: Path, recompute_script: Path
+) -> None:
+    """Accept independently verified raw extraction or catalogue rerunning."""
+    assert manifest["source_code_sha256"] == sha256(analysis_script)
+    if "recomputed_from" in manifest:
+        assert manifest["recomputed_from"]["script_sha256"] == sha256(
+            recompute_script
+        )
+    else:
+        inputs = manifest["inputs"]
+        assert len(inputs) == len(EXPECTED_INPUT_SHA256)
+        assert set(inputs.values()) == set(EXPECTED_INPUT_SHA256.values())
 
 
 def main() -> None:
@@ -456,15 +472,12 @@ def main() -> None:
         "run_global_sensitivities.py"
     )
     recompute = Path(__file__).with_name("recompute_from_catalogue.py")
-    assert analysis_manifest["source_code_sha256"] == sha256(run_analysis)
+    check_analysis_provenance(analysis_manifest, run_analysis, recompute)
     assert sensitivity_manifest["source_code_sha256"] == sha256(
         run_sensitivity
     )
     assert sensitivity_manifest["primary_analysis_code_sha256"] == sha256(
         run_analysis
-    )
-    assert analysis_manifest["recomputed_from"]["script_sha256"] == sha256(
-        recompute
     )
     assert analysis_manifest["paired_bootstrap_replicates"] == 50000
     assert (

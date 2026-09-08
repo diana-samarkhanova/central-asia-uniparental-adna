@@ -27,10 +27,13 @@ inference; the cluster-wild Hellinger analysis remains the inferential model.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
+import importlib.metadata
 import json
 import math
 from pathlib import Path
+import platform
 import re
 from typing import Callable, Iterable
 
@@ -52,6 +55,97 @@ SEED = 20260821
 N_WILD = 9_999
 N_PARAMETRIC = 10_000
 N_CLUSTER_BOOT = 10_000
+DEFAULT_INPUT = INPUT
+DEFAULT_OUT = OUT
+DEFAULT_SEED = SEED
+DEFAULT_N_WILD = N_WILD
+DEFAULT_N_PARAMETRIC = N_PARAMETRIC
+DEFAULT_N_CLUSTER_BOOT = N_CLUSTER_BOOT
+OUTPUT_NAMES = (
+    "stable_profile_cluster_tests.csv",
+    "stable_profile_vectors.csv",
+    "hierarchical_model_identifiability_audit.csv",
+    "multinomial_predictive_sensitivity.csv",
+    "paired_male_tv_adjusted_cluster_bootstrap_draws_broad.csv",
+    "paired_male_tv_adjusted_cluster_bootstrap_draws_isogg_prefix.csv",
+    "paired_male_tv_finite_sample_adjustments.csv",
+    "paired_male_tv_adjusted_cluster_bootstrap_summary.csv",
+    "equal_500y_composition.csv",
+    "equal_500y_turnover.csv",
+    "original_bin_linear_scaled_tv.csv",
+    "continuous_time_cluster_tests.csv",
+)
+
+
+def positive_int(value: str) -> int:
+    try:
+        number = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be a positive integer") from exc
+    if number <= 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
+
+
+def manifest_path(path: Path) -> str:
+    """Store repository paths portably, retaining absolute external paths."""
+    path = path.resolve()
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def same_file(first: Path, second: Path) -> bool:
+    """Detect lexical aliases, symlinks and existing hard links."""
+    return first.resolve() == second.resolve() or (
+        first.exists() and second.exists() and first.samefile(second)
+    )
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=__doc__.split("\n\n", 1)[0],
+        epilog=("With no arguments, outputs and README are regenerated at the "
+                "archived locations. Use --outdir for an isolated run."),
+    )
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT,
+                        help="Schema-locked analytical CSV (default: release input)")
+    parser.add_argument("--outdir", type=Path,
+                        help="Results directory (default: archived results directory)")
+    parser.add_argument("--readme-output", type=Path,
+                        help="Generated README; defaults to OUTDIR/README.md when --outdir is given")
+    parser.add_argument("--wild-resamples", type=positive_int, default=DEFAULT_N_WILD)
+    parser.add_argument("--parametric-draws", type=positive_int, default=DEFAULT_N_PARAMETRIC)
+    parser.add_argument("--paired-bootstrap", type=positive_int, default=DEFAULT_N_CLUSTER_BOOT)
+    parser.add_argument("--seed", type=positive_int, default=DEFAULT_SEED)
+    args = parser.parse_args(argv)
+    explicit_outdir = args.outdir is not None
+    args.input = args.input.expanduser().resolve()
+    args.outdir = (args.outdir or DEFAULT_OUT).expanduser().resolve()
+    args.readme_output = (
+        args.readme_output
+        or (args.outdir / "README.md" if explicit_outdir
+            else Path(__file__).resolve().parent / "README.md")
+    ).expanduser().resolve()
+    if not args.input.is_file():
+        parser.error(f"input is not a file: {args.input}")
+    if args.outdir.exists() and not args.outdir.is_dir():
+        parser.error(f"outdir is not a directory: {args.outdir}")
+    if args.readme_output.exists() and not args.readme_output.is_file():
+        parser.error(f"readme-output is not a file: {args.readme_output}")
+    if args.readme_output == args.outdir or args.readme_output in args.outdir.parents:
+        parser.error("readme-output must not be the results directory or its parent")
+    result_paths = [args.outdir / name for name in (*OUTPUT_NAMES, "run_manifest.json")]
+    destinations = [*result_paths, args.readme_output]
+    protected = [args.input, Path(__file__).resolve(),
+                 Path(__file__).resolve().parent / "test_results.py"]
+    for destination in destinations:
+        if any(same_file(destination, path) for path in protected):
+            parser.error(f"output would overwrite input or a script: {destination}")
+    if any(same_file(args.readme_output, path) for path in result_paths):
+        parser.error("readme-output must not collide with a generated result")
+    return args
 
 BIN_LABELS = [
     "B1 3500-2501 BCE",
@@ -958,6 +1052,7 @@ def write_readme(
     adjusted_summary: pd.DataFrame,
     equal_tv: pd.DataFrame,
     continuous: pd.DataFrame,
+    output_path: Path,
 ) -> None:
     stable_view = stable[
         [
@@ -982,6 +1077,13 @@ def write_readme(
 This directory was generated from the schema-locked, project-coded AADR-
 derived analytical input included with the release. The input SHA-256 is
 `{sha256(INPUT)}`.
+
+This run used seed {SEED}, {N_WILD:,} cluster-wild resamples,
+{N_PARAMETRIC:,} parametric draws per transition, and
+{N_CLUSTER_BOOT:,} paired-cluster bootstrap replicates. The frozen defaults
+are seed {DEFAULT_SEED}, {DEFAULT_N_WILD:,}, {DEFAULT_N_PARAMETRIC:,}, and
+{DEFAULT_N_CLUSTER_BOOT:,}, respectively. Runs with fewer replicates are for
+execution checks and should not replace the frozen analysis for inference.
 
 The input is project-coded rather than anonymous because combinations of
 public AADR-derived attributes may remain linkable to the source resource. No
@@ -1010,7 +1112,9 @@ terminal haplogroup call is required by this extension.
 
 The all-profile Y row is an extension rerun with a different fixed seed. The
 frozen 25 July 2026 analysis reported raw/Holm *P*=0.0012; the extension gave
-0.0009. This Monte Carlo difference does not affect the revised >=2/>=3 results.
+0.0009 under the frozen defaults. The result of the current run is shown above.
+The discussion below describes the frozen-default analysis; changing the seed
+or resampling counts requires reviewing the current tables before using it.
 
 The mtDNA period association in the all-profile archive is not reproduced
 after singleton exclusion. The Y result persists at >=2 calls, while the >=3
@@ -1090,10 +1194,17 @@ velocity, migration rate, or sex-biased demographic mechanism.
 * `continuous_time_cluster_tests.csv`
 * `run_manifest.json`
 """
-    (Path(__file__).resolve().parent / "README.md").write_text(text, encoding="utf-8")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(text, encoding="utf-8")
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
+    global INPUT, OUT, SEED, N_WILD, N_PARAMETRIC, N_CLUSTER_BOOT
+    args = parse_args(argv)
+    INPUT, OUT, SEED = args.input, args.outdir, args.seed
+    N_WILD = args.wild_resamples
+    N_PARAMETRIC = args.parametric_draws
+    N_CLUSTER_BOOT = args.paired_bootstrap
     OUT.mkdir(parents=True, exist_ok=True)
     data = pd.read_csv(INPUT, keep_default_na=False)
     expected_public = {
@@ -1216,25 +1327,36 @@ def main() -> None:
     continuous = continuous_time_tests(profiles)
     continuous.to_csv(OUT / "continuous_time_cluster_tests.csv", index=False)
 
-    write_readme(stable, identifiability, predictive, adjusted_summary, equal_tv, continuous)
-    readme_path = Path(__file__).resolve().parent / "README.md"
+    readme_path = args.readme_output
+    write_readme(stable, identifiability, predictive, adjusted_summary, equal_tv,
+                 continuous, readme_path)
     manifest = {
-        "input": str(INPUT.relative_to(ROOT)),
+        "input": manifest_path(INPUT),
         "input_sha256": sha256(INPUT),
+        "analysis_script": manifest_path(Path(__file__)),
         "analysis_script_sha256": sha256(Path(__file__).resolve()),
+        "readme": manifest_path(readme_path),
         "readme_sha256": sha256(readme_path),
+        "test_script": manifest_path(Path(__file__).resolve().parent / "test_results.py"),
         "test_script_sha256": sha256(Path(__file__).resolve().parent / "test_results.py"),
+        "results_dir": manifest_path(OUT),
+        "environment": {
+            "python": platform.python_version(),
+            "platform": platform.platform(),
+            **{package: importlib.metadata.version(package)
+               for package in ("numpy", "pandas", "scipy", "scikit-learn")},
+        },
         "seed": SEED,
         "wild_resamples": N_WILD,
         "parametric_tv_draws_per_transition": N_PARAMETRIC,
         "paired_cluster_bootstrap_replicates": N_CLUSTER_BOOT,
+        "predictive_site_bootstrap_replicates": 20_000,
         "n_catalogue_rows": len(data),
         "n_paired_males": len(paired),
         "outputs": {},
     }
-    for path in sorted(OUT.glob("*")):
-        if path.is_file() and path.name != "run_manifest.json":
-            manifest["outputs"][path.name] = sha256(path)
+    for name in sorted(OUTPUT_NAMES):
+        manifest["outputs"][name] = sha256(OUT / name)
     (OUT / "run_manifest.json").write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"
     )

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -24,38 +25,58 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def main() -> None:
-    manifest = json.loads((RESULTS / "run_manifest.json").read_text(encoding="utf-8"))
-    input_path = ROOT / manifest["input"]
+def declared_path(value: str) -> Path:
+    """Manifest-relative paths are rooted in the repository."""
+    path = Path(value).expanduser()
+    return path if path.is_absolute() else ROOT / path
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--results", type=Path, default=RESULTS,
+                        help="Results directory containing run_manifest.json")
+    parser.add_argument("--input", type=Path,
+                        help="Override the manifest input location; its checksum must match")
+    parser.add_argument("--readme", type=Path,
+                        help="Override the manifest README location; its checksum must match")
+    args = parser.parse_args(argv)
+    results = args.results.expanduser().resolve()
+    manifest = json.loads((results / "run_manifest.json").read_text(encoding="utf-8"))
+    input_path = (args.input.expanduser().resolve() if args.input
+                  else declared_path(manifest["input"]))
+    readme_path = (args.readme.expanduser().resolve() if args.readme
+                   else declared_path(manifest["readme"]) if "readme" in manifest
+                   else HERE / "README.md")
     assert input_path.exists()
     assert sha256(input_path) == manifest["input_sha256"]
     assert sha256(HERE / "run_stat_extensions.py") == manifest["analysis_script_sha256"]
-    assert sha256(HERE / "README.md") == manifest["readme_sha256"]
+    assert sha256(readme_path) == manifest["readme_sha256"]
     assert sha256(HERE / "test_results.py") == manifest["test_script_sha256"]
     for name, expected in manifest["outputs"].items():
-        path = RESULTS / name
+        path = results / name
         assert path.exists(), name
         assert sha256(path) == expected, name
 
-    stable = pd.read_csv(RESULTS / "stable_profile_cluster_tests.csv")
+    stable = pd.read_csv(results / "stable_profile_cluster_tests.csv")
     assert set(stable.minimum_calls) == {1, 2, 3}
     assert set(stable.marker) == {"mtDNA", "Y"}
     assert len(stable) == 6
     assert stable.valid.all()
-    assert stable.raw_cluster_wild_p.between(1 / 10_000, 1).all()
+    assert stable.raw_cluster_wild_p.between(1 / (manifest["wild_resamples"] + 1), 1).all()
+    assert stable.wild_resamples.eq(manifest["wild_resamples"]).all()
     assert np.isfinite(stable[["pseudo_f", "partial_r2"]]).all().all()
     primary = stable[stable.minimum_calls.eq(2)].set_index("marker")
     assert primary.loc["mtDNA", "n_analyzed_profiles"] == 71
     assert primary.loc["Y", "n_analyzed_profiles"] == 48
 
-    audit = pd.read_csv(RESULTS / "hierarchical_model_identifiability_audit.csv")
+    audit = pd.read_csv(results / "hierarchical_model_identifiability_audit.csv")
     assert (audit.rank_increment_period_after_site_publication <= audit.nominal_period_df).all()
     assert (
         audit.loc[audit.minimum_calls.eq(2), "rank_increment_period_after_site_publication"]
         < audit.loc[audit.minimum_calls.eq(2), "nominal_period_df"]
     ).all()
 
-    predictive = pd.read_csv(RESULTS / "multinomial_predictive_sensitivity.csv")
+    predictive = pd.read_csv(results / "multinomial_predictive_sensitivity.csv")
     assert len(predictive) == 4 and predictive.valid.all()
     assert (
         predictive.site_bootstrap_delta_ci_low
@@ -66,8 +87,9 @@ def main() -> None:
         <= predictive.site_bootstrap_delta_ci_high
     ).all()
 
-    adjusted = pd.read_csv(RESULTS / "paired_male_tv_finite_sample_adjustments.csv")
+    adjusted = pd.read_csv(results / "paired_male_tv_finite_sample_adjustments.csv")
     assert len(adjusted) == 28
+    assert adjusted.simulation_draws.eq(manifest["parametric_tv_draws_per_transition"]).all()
     assert adjusted.observed_site_balanced_tv.between(0, 1).all()
     assert adjusted.noise_floor_subtracted_tv.between(0, 1).all()
     assert adjusted.parametric_bias_corrected_tv.between(0, 1).all()
@@ -76,8 +98,9 @@ def main() -> None:
     )
     assert np.allclose(mt.iloc[:, 0], mt.iloc[:, 1], atol=0, rtol=0)
 
-    summary = pd.read_csv(RESULTS / "paired_male_tv_adjusted_cluster_bootstrap_summary.csv")
+    summary = pd.read_csv(results / "paired_male_tv_adjusted_cluster_bootstrap_summary.csv")
     assert len(summary) == 6
+    assert summary.cluster_bootstrap_replicates.eq(manifest["paired_cluster_bootstrap_replicates"]).all()
     broad_raw = summary[
         summary.y_encoding.eq("broad_L1") & summary.adjustment.eq("raw")
     ].iloc[0]
@@ -104,15 +127,16 @@ def main() -> None:
         assert (summary[f"{prefix}_delta_ci_low"] <= summary[f"{prefix}_delta_ci_high"]).all()
     assert (summary.rejected_empty_period_fraction < 0.01).all()
 
-    equal_comp = pd.read_csv(RESULTS / "equal_500y_composition.csv")
-    equal_tv = pd.read_csv(RESULTS / "equal_500y_turnover.csv")
+    equal_comp = pd.read_csv(results / "equal_500y_composition.csv")
+    equal_tv = pd.read_csv(results / "equal_500y_turnover.csv")
     assert len(equal_comp) == 40
     assert len(equal_tv) == 36
     assert equal_tv.tv.between(0, 1).all()
     assert (equal_tv.interval_years == 500).all()
 
-    continuous = pd.read_csv(RESULTS / "continuous_time_cluster_tests.csv")
+    continuous = pd.read_csv(results / "continuous_time_cluster_tests.csv")
     assert len(continuous) == 12 and continuous.valid.all()
+    assert continuous.wild_resamples.eq(manifest["wild_resamples"]).all()
     assert np.isfinite(
         continuous[["pseudo_f", "partial_r2", "raw_cluster_wild_p"]]
     ).all().all()

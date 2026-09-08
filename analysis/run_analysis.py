@@ -149,6 +149,28 @@ def apply_site_locality_aliases(df: pd.DataFrame) -> pd.DataFrame:
     return result
 
 
+def frozen_catalogue_order(df: pd.DataFrame) -> pd.DataFrame:
+    """Use the released country/date order before allocating random draws.
+
+    The original extraction selected canonical rows in individual-ID order,
+    then wrote the catalogue in country/date order.  All subsequent catalogue
+    reruns used that written order.  The individual-ID tie-break preserves the
+    original stable ordering for records with the same country and date.
+    Broad-category pooling must still precede this reorder: tied category
+    counts in the frozen definition used canonical individual-ID order.
+    """
+    required = {"country", "date_bp", "individual_id"}
+    if not required.issubset(df.columns):
+        raise ValueError(
+            f"Frozen catalogue order requires columns: {sorted(required)}"
+        )
+    return df.sort_values(
+        ["country", "date_bp", "individual_id"],
+        ascending=[True, False, True],
+        kind="stable",
+    ).reset_index(drop=True)
+
+
 def validate_frozen_inputs(args: argparse.Namespace) -> dict[str, str]:
     observed = {}
     for name, expected in EXPECTED_INPUT_SHA256.items():
@@ -507,6 +529,33 @@ def pool_rare(series: pd.Series, minimum: int = 5) -> tuple[pd.Series, list[str]
         pooled[pooled != ""].value_counts().sort_values(ascending=False).index.tolist()
     )
     return pooled, ordered
+
+
+def prepare_aadr_catalogues(
+    aadr: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, list[str], list[str]]:
+    """Extract the frozen AADR study input independently of legacy databases."""
+    canonical, dedup_audit = choose_canonical_aadr(aadr)
+    canonical = apply_site_locality_aliases(canonical)
+    analysis = canonical[canonical["analysis_included"]].copy()
+    analysis["mt_l1_pooled"], mt_categories = pool_rare(analysis["mt_l1"], 5)
+    analysis["y_l1_pooled"], y_categories = pool_rare(analysis["y_l1"], 5)
+    # Broad-category tie order is part of the original extraction definition.
+    # Pool before sorting records into their subsequently released order.
+    for marker, categories in (("mt", mt_categories), ("y", y_categories)):
+        keep = set(categories) - {"Other"}
+        column = f"{marker}_l1"
+        canonical[f"{column}_pooled"] = canonical[column].where(
+            canonical[column].isin(keep),
+            np.where(canonical[column].eq(""), "", "Other"),
+        )
+    return (
+        frozen_catalogue_order(canonical),
+        frozen_catalogue_order(analysis),
+        dedup_audit,
+        mt_categories,
+        y_categories,
+    )
 
 
 def profile(
@@ -1856,25 +1905,11 @@ def main() -> None:
     aadr = pd.read_csv(args.aadr, sep="\t", dtype=str, keep_default_na=False)
     amtdb = pd.read_csv(args.amtdb, dtype=str, keep_default_na=False)
     aychr = pd.read_excel(args.aychr, dtype=str).fillna("")
-    canonical, dedup_audit = choose_canonical_aadr(aadr)
-    canonical = apply_site_locality_aliases(canonical)
-    analysis = canonical[canonical["analysis_included"]].copy()
-
-    analysis["mt_l1_pooled"], mt_categories = pool_rare(analysis["mt_l1"], 5)
-    analysis["y_l1_pooled"], y_categories = pool_rare(analysis["y_l1"], 5)
+    canonical, analysis, dedup_audit, mt_categories, y_categories = (
+        prepare_aadr_catalogues(aadr)
+    )
     resolution_analysis, y_family_categories, y_family_source_column = (
         add_y_resolution_sensitivity_encoding(analysis, 5)
-    )
-    # Carry pooled labels back to the full catalogue where possible.
-    mt_keep = set(mt_categories) - {"Other"}
-    y_keep = set(y_categories) - {"Other"}
-    canonical["mt_l1_pooled"] = canonical["mt_l1"].where(
-        canonical["mt_l1"].isin(mt_keep),
-        np.where(canonical["mt_l1"].eq(""), "", "Other"),
-    )
-    canonical["y_l1_pooled"] = canonical["y_l1"].where(
-        canonical["y_l1"].isin(y_keep),
-        np.where(canonical["y_l1"].eq(""), "", "Other"),
     )
 
     counts = count_matrix(analysis)
@@ -2411,6 +2446,12 @@ def main() -> None:
             "Stable SHA-256-named NumPy SeedSequence streams; each analysis "
             "is invariant to changes in unrelated random procedures"
         ),
+        "analytical_row_order": {
+            "keys": ["country", "date_bp", "individual_id"],
+            "ascending": [True, False, True],
+            "broad_category_order": "canonical individual-ID order before row sorting",
+            "y_prefix_category_order": "frozen catalogue row order",
+        },
         "bootstrap_replicates": args.bootstrap,
         "paired_bootstrap_replicates": args.paired_bootstrap,
         "site_cluster_bootstrap": {

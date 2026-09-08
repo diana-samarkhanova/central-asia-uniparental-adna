@@ -4,6 +4,13 @@ This directory was generated from the schema-locked, project-coded AADR-
 derived analytical input included with the release. The input SHA-256 is
 `692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3`.
 
+This run used seed 20260821, 9,999 cluster-wild resamples,
+10,000 parametric draws per transition, and
+10,000 paired-cluster bootstrap replicates. The frozen defaults
+are seed 20260821, 9,999, 10,000, and
+10,000, respectively. Runs with fewer replicates are for
+execution checks and should not replace the frozen analysis for inference.
+
 The input is project-coded rather than anonymous because combinations of
 public AADR-derived attributes may remain linkable to the source resource. No
 source person identifier, locality string, skeletal field, exact coordinate or
@@ -38,7 +45,9 @@ terminal haplogroup call is required by this extension.
 
 The all-profile Y row is an extension rerun with a different fixed seed. The
 frozen 25 July 2026 analysis reported raw/Holm *P*=0.0012; the extension gave
-0.0009. This Monte Carlo difference does not affect the revised ≥2/≥3 results.
+0.0009 under the frozen defaults. The result of the current run is shown above.
+The discussion below describes the frozen-default analysis; changing the seed
+or resampling counts requires reviewing the current tables before using it.
 
 The mtDNA period association in the all-profile archive is not reproduced
 after singleton exclusion. The Y result persists at >=2 calls, while the >=3

@@ -10,6 +10,13 @@ field-level contract and linkage warning.
 The instructions below are needed only for a new extraction from the three
 upstream databases.
 
+`python analysis/fetch_sources.py --output-root ../central-asia-sources`
+downloads and verifies every source with a pinned `download_url` in
+`SOURCES.tsv`; AmtDB remains explicitly blocked unless the original CSV is
+provided with `--local amtdb=PATH`. Use `--resource aadr --resource aychr` to
+acquire the two resolved sources. See `../REPRODUCTION.md` for a complete
+isolated run and the independent raw-AADR extraction route.
+
 The full analysis uses three public metadata resources. They are intentionally
 excluded from Git because they are upstream-maintained datasets.
 

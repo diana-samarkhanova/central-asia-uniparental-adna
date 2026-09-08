@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -33,7 +34,13 @@ def sha256(path: Path) -> str:
 
 
 def main() -> None:
-    out = Path(sys.argv[1] if len(sys.argv) > 1 else "outputs/adna_central_asia_final")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("out", nargs="?", type=Path,
+                        default=Path("outputs/adna_central_asia_final"))
+    parser.add_argument("--input", type=Path,
+                        help="Require this input path in the sensitivity provenance")
+    args = parser.parse_args()
+    out = args.out
     tables = out / "tables"
     summary = json.loads((out / "results_summary.json").read_text(encoding="utf-8"))
 
@@ -193,13 +200,15 @@ def main() -> None:
         run_analysis
     )
     sensitivity_input = sensitivity_manifest["analytical_input"]
-    assert sensitivity_input["file"] == (
-        "data/derived/central_asia_analysis_input_v1.csv"
-    )
+    recorded_input = Path(sensitivity_input["file"])
+    if not recorded_input.is_absolute():
+        recorded_input = Path(__file__).resolve().parents[1] / recorded_input
+    if args.input is not None:
+        assert recorded_input.resolve() == args.input.resolve()
     assert sensitivity_input["public_project_coded_input"] is True
-    assert sensitivity_input["sha256"] == sha256(
-        Path("data/derived/central_asia_analysis_input_v1.csv")
-    )
+    frozen_input_sha256 = "692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3"
+    assert sensitivity_input["sha256"] == frozen_input_sha256
+    assert sha256(recorded_input) == frozen_input_sha256
     assert analysis_manifest["paired_bootstrap_replicates"] == 50000
     assert analysis_manifest["callability_fixed_margin_monte_carlo_resamples"] == 99999
     assert analysis_manifest["date_scenario_draws"] == 5000

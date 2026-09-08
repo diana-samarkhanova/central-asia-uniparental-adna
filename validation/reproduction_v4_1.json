@@ -1,0 +1,453 @@
+{
+  "schema_version": "1.0",
+  "verified_at": "2026-09-08T19:28:51.564786+00:00",
+  "release_candidate": "v4.1",
+  "status": "passed_with_explicit_scope",
+  "verification_design": "Two verified steps: independently rebuild the frozen primary input from exact original AADR bytes; rerun all primary statistics and extensions from that byte-identical input. No complete three-source rerun is claimed.",
+  "aadr_extraction": {
+    "route": "verified_aadr_to_frozen_primary_input",
+    "source_sha256": "98eec5d897a6feedd274c91b476c4d416e60d12d171409018925522679ba316c",
+    "output_sha256": "692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3",
+    "matches_frozen_input_byte_for_byte": true,
+    "aadr_canonical_records": 501,
+    "primary_records": 489,
+    "primary_sites": 136,
+    "mt_calls": 438,
+    "y_calls": 229,
+    "mt_l1_categories": [
+      "U",
+      "H",
+      "T",
+      "HV",
+      "J",
+      "C",
+      "D",
+      "W",
+      "A",
+      "I",
+      "R",
+      "F",
+      "Other",
+      "K",
+      "N",
+      "G",
+      "M"
+    ],
+    "y_l1_categories": [
+      "R",
+      "J",
+      "Q",
+      "Other",
+      "Basal/unresolved",
+      "C",
+      "N",
+      "E",
+      "L"
+    ],
+    "source_code_sha256": "ccc8a1e0f181fd75e676cb972ad3bb7e07d1e79e089cfe4733aef091cc597b57",
+    "extractor_code_sha256": "95313c16f7d1705f4226585dad0feed53d7b49c643c0a0fb5391d694ddc8cac8",
+    "builder_code_sha256": "69819a042cae34bf2a0abec31902a6714ea16f8012450843917337e8cf6b7d2e",
+    "cross_database_audits_recomputed": false,
+    "scope": "Rebuilds AADR primary study input; AmtDB/aYChr legacy cross-database audits require the separate full route."
+  },
+  "statistical_reproduction": {
+    "mode": "derived",
+    "elapsed_seconds": 1202.241,
+    "stages": [
+      {
+        "name": "derived_analysis",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 996.134
+      },
+      {
+        "name": "global_sensitivities",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 65.412
+      },
+      {
+        "name": "aggregate_output_checks",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 0.751
+      },
+      {
+        "name": "statistical_extensions",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 138.51
+      },
+      {
+        "name": "extension_output_checks",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 0.481
+      }
+    ],
+    "comparison_tolerance": {
+      "rtol": 1e-09,
+      "atol": 1e-12
+    },
+    "table_count": 32,
+    "byte_identical_table_count": 32,
+    "comparisons": [
+      {
+        "group": "main",
+        "file": "cluster_model_diagnostic_summary.csv",
+        "status": "match",
+        "rows": 2,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "composition_dispersion_by_period.csv",
+        "status": "match",
+        "rows": 16,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "composition_dispersion_cluster_tests.csv",
+        "status": "match",
+        "rows": 2,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "composition_mtdna_individual_weighted.csv",
+        "status": "match",
+        "rows": 8,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "composition_mtdna_site_balanced.csv",
+        "status": "match",
+        "rows": 8,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "composition_y_individual_weighted.csv",
+        "status": "match",
+        "rows": 8,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "composition_y_site_balanced.csv",
+        "status": "match",
+        "rows": 8,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "country_period_marker_adequacy.csv",
+        "status": "match",
+        "rows": 80,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "counts_country_by_bin.csv",
+        "status": "match",
+        "rows": 40,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "date_uncertainty_summary.csv",
+        "status": "match",
+        "rows": 2,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "diversity_site_bootstrap_summary.csv",
+        "status": "match",
+        "rows": 16,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "global_composition_cluster_tests.csv",
+        "status": "match",
+        "rows": 2,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "global_composition_sensitivity_tests.csv",
+        "status": "match",
+        "rows": 57,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "marker_callability_by_bin.csv",
+        "status": "match",
+        "rows": 8,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "marker_callability_tests.csv",
+        "status": "match",
+        "rows": 2,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "paired_male_turnover_bootstrap_summary.csv",
+        "status": "match",
+        "rows": 1,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "paired_male_y_resolution_sensitivity.csv",
+        "status": "match",
+        "rows": 2,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "site_and_country_dominance.csv",
+        "status": "match",
+        "rows": 16,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "turnover_sensitivity.csv",
+        "status": "match",
+        "rows": 22,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "main",
+        "file": "turnover_site_bootstrap_summary.csv",
+        "status": "match",
+        "rows": 14,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "continuous_time_cluster_tests.csv",
+        "status": "match",
+        "rows": 12,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "equal_500y_composition.csv",
+        "status": "match",
+        "rows": 40,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "equal_500y_turnover.csv",
+        "status": "match",
+        "rows": 36,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "hierarchical_model_identifiability_audit.csv",
+        "status": "match",
+        "rows": 6,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "multinomial_predictive_sensitivity.csv",
+        "status": "match",
+        "rows": 4,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "original_bin_linear_scaled_tv.csv",
+        "status": "match",
+        "rows": 28,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "paired_male_tv_adjusted_cluster_bootstrap_draws_broad.csv",
+        "status": "match",
+        "rows": 10000,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "paired_male_tv_adjusted_cluster_bootstrap_draws_isogg_prefix.csv",
+        "status": "match",
+        "rows": 10000,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "paired_male_tv_adjusted_cluster_bootstrap_summary.csv",
+        "status": "match",
+        "rows": 6,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "paired_male_tv_finite_sample_adjustments.csv",
+        "status": "match",
+        "rows": 28,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "stable_profile_cluster_tests.csv",
+        "status": "match",
+        "rows": 6,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      },
+      {
+        "group": "extensions",
+        "file": "stable_profile_vectors.csv",
+        "status": "match",
+        "rows": 471,
+        "different_columns": [],
+        "maximum_absolute_numeric_difference": 0.0,
+        "byte_identical": true
+      }
+    ],
+    "original_full_report_sha256": "e3378c6dd166233237da9db2eb6fd4b9ea99135401b83bd2409ebbdfcf1a1762"
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "packages": {
+      "matplotlib": {
+        "expected": "3.10.8",
+        "installed": "3.10.8"
+      },
+      "numpy": {
+        "expected": "2.3.5",
+        "installed": "2.3.5"
+      },
+      "openpyxl": {
+        "expected": "3.1.5",
+        "installed": "3.1.5"
+      },
+      "pandas": {
+        "expected": "2.2.3",
+        "installed": "2.2.3"
+      },
+      "scipy": {
+        "expected": "1.17.0",
+        "installed": "1.17.0"
+      },
+      "scikit-learn": {
+        "expected": "1.8.0",
+        "installed": "1.8.0"
+      },
+      "seaborn": {
+        "expected": "0.13.2",
+        "installed": "0.13.2"
+      }
+    }
+  },
+  "unit_tests": {
+    "command": "ADNA_AADR_FIXTURE=/path/to/v66.p1_2M.aadr.PUB.anno python -m unittest discover -s tests -v",
+    "passed": 39,
+    "skipped": 0,
+    "log_sha256": "d208628c73815f4001262a877669e893e1c2c7c3d0230ba2fc46f7a86d012425"
+  },
+  "source_acquisition": {
+    "AADR": {
+      "status": "downloaded_and_hash_verified",
+      "sha256": "98eec5d897a6feedd274c91b476c4d416e60d12d171409018925522679ba316c"
+    },
+    "aYChr-DB": {
+      "status": "downloaded_and_hash_verified",
+      "sha256": "e297110a18cba73d4044e8a95c0fae98d7f48633ad6ccfae1cd364e460eb1b3c"
+    },
+    "AmtDB": {
+      "status": "blocked_missing_v1.009_original_export",
+      "required_sha256": "531e8ee8fae181124f5a9b77b6fe8d677e64e35b815be2a3965020244fe31057",
+      "raw_route_preflight": "correctly rejected missing source before analysis"
+    }
+  },
+  "figure_5_v4": {
+    "status": "regenerated_and_visually_checked_locally",
+    "publication_status": "The newly rendered PNG and its provenance are withheld from this code-only GitHub update pending publication approval. Existing public figures are preserved byte for byte.",
+    "execution": "Additional rendering step after the statistical run; included in reproduce.py for future local runs."
+  },
+  "inherited_not_recomputed": [
+    "AmtDB/aYChr cross-database coverage table and Figure 6",
+    "literature/source-scope audits",
+    "separate wild-bootstrap calibration simulation and Figure S1"
+  ],
+  "release_state": "draft; no merge, version tag or DOI publication",
+  "path_relocation": "Release manifests use repository-relative paths for identical files; the original isolated run records are retained separately."
+}

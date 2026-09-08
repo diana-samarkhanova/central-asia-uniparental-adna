@@ -4,9 +4,10 @@ Reproducible secondary analysis of published ancient mitochondrial and
 Y-chromosome assignments from Kazakhstan, Kyrgyzstan, Tajikistan,
 Turkmenistan and Uzbekistan.
 
-Status: private pre-submission repository, evidence frozen on 25 July 2026 and
-statistical/literature/site-normalization corrections synchronized on 21
-August 2026.
+Status: public repository with an unmerged pre-submission candidate. Evidence
+is frozen on 25 July 2026; statistical/literature/site-normalization corrections
+are synchronized to 21 August 2026. Reproduction tooling was updated on
+8 September 2026 (v4.1 candidate).
 This is not yet a citable public release.
 
 ## Scope
@@ -60,8 +61,8 @@ exploratory checks; exact revised results are in
   in the frozen AADR release.
 - literature_audit: targeted-search log and verified bibliography. The search
   is not a completed PRISMA systematic/scoping review.
-- tests: focused unit tests for the previously error-prone harmonization and
-  resampling rules.
+- tests: focused tests for harmonization, resampling, source acquisition,
+  verified extraction, provenance, and preservation of existing outputs.
 
 The unpublished manuscript is deliberately excluded until authorship,
 affiliations and coauthor approval are confirmed.
@@ -74,53 +75,78 @@ Create a Python 3.12 environment and install the frozen dependencies:
 
 Then run:
 
-    python -m unittest discover -s tests -v
-    python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
-    python analysis_extensions/statistical_extensions_v4/test_results.py
-    python analysis/verify_release.py
+    PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
+    PYTHONDONTWRITEBYTECODE=1 python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
+    PYTHONDONTWRITEBYTECODE=1 python analysis_extensions/statistical_extensions_v4/test_results.py
+    PYTHONDONTWRITEBYTECODE=1 python analysis/verify_release.py
 
 These commands validate the project-coded input and aggregate release,
 including the frozen counts, statistical summaries, code hashes and
 50,000-replicate paired bootstrap.
 
-## Recompute the released analysis from the included input
+The 8 September 2026 local validation passed all 39 tests with the verified
+AADR fixture enabled. Independent AADR extraction reproduced the frozen
+489-row input byte for byte, and a complete isolated `derived` run reproduced
+all 32 compared CSVs byte for byte: 20 main tables and 12 extension tables.
+Live AADR and aYChr downloads also matched their frozen hashes. The complete
+three-source route remains blocked by the missing AmtDB v1.009 export.
+See `validation/reproduction_v4_1.json` for the recorded validation and
+`REPRODUCTION.md` for the optional AADR fixture test.
 
-The public workflow can reproduce the headline analyses without any
-person-level source catalogue or private rows. Copy the released result
-directory so that the fixed category definitions and non-recomputed audit
-table are available, then run:
+## Reproduce in an isolated output directory
 
-    cp -R results/aadr-v66p1_2026-07-25 work/reproduced
-    MPLCONFIGDIR=.mplconfig python analysis/recompute_from_catalogue.py \
-      --catalogue data/derived/central_asia_analysis_input_v1.csv \
-      --analysis-output work/reproduced \
-      --bootstrap 2000 \
-      --paired-bootstrap 50000 \
-      --permutations 9999 \
-      --callability-resamples 99999 \
-      --date-draws 5000 \
-      --seed 20260725 \
-      --aggregate-only
+The recommended command downloads the exact AADR annotation, independently
+rebuilds the 489-row analytical input, requires a byte-for-byte match to the
+frozen input, and then recomputes the main statistics and v4 extensions:
 
-    MPLCONFIGDIR=.mplconfig python analysis/run_global_sensitivities.py \
-      --catalogue data/derived/central_asia_analysis_input_v1.csv \
-      --analysis-output work/reproduced \
-      --permutations 1999 \
-      --seed 20260726
+    python analysis/reproduce.py --mode aadr --fetch \
+      --source-root ../central-asia-sources \
+      --output ../central-asia-aadr-reproduction
 
-    python analysis/test_aggregate_release.py work/reproduced
+Install `requirements.txt` first. It includes the scikit-learn dependency used
+by the v4 predictive sensitivity. The runner checks exact package versions;
+uses the frozen seeds and replicate counts; records every command, log and
+failure; and compares all regenerated statistical CSVs to the reference with
+rtol=1e-9 and atol=1e-12. Outputs must go into an empty directory outside this
+repository. Existing results are never overwritten by the runner.
+
+For an offline statistical rerun from the included input:
+
+    python analysis/reproduce.py --mode derived \
+      --output ../central-asia-derived-reproduction
+
+`aadr` verifies raw AADR extraction; `derived` begins with the included input.
+Neither route redoes the AmtDB/aYChr cross-database audit or Figure 6. The
+runner explicitly records inherited category definitions, summary metadata
+and database-coverage counts. It does not copy previously calculated
+statistical CSVs or figures into a new run. Literature/source-scope audits and
+the separate wild-bootstrap calibration simulation are outside these reruns.
+See `REPRODUCTION.md` for the complete three-source route and remaining AmtDB
+requirement. A passing local release verifier is not publication approval.
+
+## Run the statistical extensions separately
 
 The revised >=2 primary-profile analysis and associated TV/time-grid
-extensions consume the same included input:
+extensions can also be regenerated in a new external directory:
 
-    python analysis_extensions/statistical_extensions_v4/run_stat_extensions.py
-    python analysis_extensions/statistical_extensions_v4/test_results.py
+    PYTHONDONTWRITEBYTECODE=1 python analysis_extensions/statistical_extensions_v4/run_stat_extensions.py \
+      --input data/derived/central_asia_analysis_input_v1.csv \
+      --outdir ../central-asia-extensions \
+      --readme-output ../central-asia-extensions/README.md
+
+    PYTHONDONTWRITEBYTECODE=1 python analysis_extensions/statistical_extensions_v4/test_results.py \
+      --input data/derived/central_asia_analysis_input_v1.csv \
+      --results ../central-asia-extensions \
+      --readme ../central-asia-extensions/README.md
+
+Choose a new extension directory. Use the `derived` runner above for the
+complete statistical rerun and comparison with the frozen reference.
 
 The included file is project-coded, not anonymous: combinations of public
 AADR-derived attributes can remain linkable to the source resource. It is
 therefore limited to fields actually needed by the released analyses.
 
-## Full reproduction
+## Complete three-source reproduction
 
 Follow data/README.md to obtain the exact frozen inputs and verify their
 SHA-256 hashes. AADR is pinned to Dataverse version 14.0 (version id 735358),
@@ -130,23 +156,10 @@ raw-source blocker is AmtDB v1.009: an independent user needs either an
 immutable archive URL or a deposit of the original hash-matching CSV. Once it
 is available, run:
 
-    MPLCONFIGDIR=.mplconfig python analysis/run_analysis.py \
-      --aadr data/raw/aadr_v66p1/v66.p1_2M.aadr.PUB.anno \
-      --amtdb data/raw/amtdb_v1_009/amtdb_v1.009_metadata.csv \
-      --aychr data/raw/aychr_db/a-YChr-DB_V5.xlsx \
-      --outdir results/reproduced \
-      --bootstrap 2000 \
-      --paired-bootstrap 50000 \
-      --permutations 9999 \
-      --callability-resamples 99999 \
-      --date-draws 5000 \
-      --seed 20260725
-
-    python analysis/run_global_sensitivities.py \
-      --analysis-output results/reproduced \
-      --permutations 1999
-
-    python analysis/test_full_outputs.py results/reproduced
+    python analysis/reproduce.py --mode raw --fetch \
+      --source-root ../central-asia-sources \
+      --amtdb /absolute/path/to/original-v1.009.csv \
+      --output ../central-asia-three-source-reproduction
 
 The full run validates the three frozen input hashes before parsing them.
 Figure 4 reports original-sample site-balanced point estimates and bootstrap
