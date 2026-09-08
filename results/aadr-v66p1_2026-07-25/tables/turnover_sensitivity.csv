@@ -1,15 +1,15 @@
 analysis,marker,n_calls,n_sites,mean_adjacent_tv
-All marker-qualified calls,mtDNA,438,133,0.4253428518716699
-AADR assessment-positive subset,mtDNA,391,126,0.4321685431931143
-Exclude population-outlier labels,mtDNA,416,130,0.44573937966795113
+All marker-qualified calls,mtDNA,438,132,0.4253428518716699
+AADR assessment-positive subset,mtDNA,391,125,0.4321685431931143
+Exclude population-outlier labels,mtDNA,416,129,0.44573937966795113
 Direct dates only,mtDNA,272,109,0.48608868738970773
-One representative per <=2d kin component,mtDNA,410,131,0.4242632374304214
+One representative per <=2d kin component,mtDNA,410,131,0.42182181602446905
 Male-paired subset,mtDNA,216,98,0.5174041838957805
 Leave out country: Kazakhstan,mtDNA,214,33,0.6374103409817694
-Leave out country: Kyrgyzstan,mtDNA,383,119,0.48710861889433327
-Leave out country: Tajikistan,mtDNA,429,130,0.4237598011232465
-Leave out country: Turkmenistan,mtDNA,354,125,0.45248635379458363
-Leave out country: Uzbekistan,mtDNA,372,125,0.45196982789119644
+Leave out country: Kyrgyzstan,mtDNA,383,118,0.48710861889433327
+Leave out country: Tajikistan,mtDNA,429,129,0.4237598011232465
+Leave out country: Turkmenistan,mtDNA,354,124,0.45248635379458363
+Leave out country: Uzbekistan,mtDNA,372,124,0.45196982789119644
 All marker-qualified calls,Y,229,101,0.436854186118892
 AADR assessment-positive subset,Y,198,92,0.46564514694766795
 Exclude population-outlier labels,Y,215,97,0.4072990253793825

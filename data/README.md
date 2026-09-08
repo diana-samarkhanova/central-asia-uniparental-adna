@@ -1,12 +1,24 @@
-# Frozen input acquisition
+# Released analytical input and frozen-source acquisition
+
+`derived/central_asia_analysis_input_v1.csv` is the schema-locked input for
+the public recomputation route. It contains 489 project-coded AADR-derived
+rows from 136 normalized sites, 438 broad mtDNA calls and 229 broad Y calls.
+It omits source person IDs, locality strings, skeletal fields, exact
+coordinates and terminal haplogroup calls; see `derived/README.md` for the
+field-level contract and linkage warning.
+
+The instructions below are needed only for a new extraction from the three
+upstream databases.
 
 The full analysis uses three public metadata resources. They are intentionally
 excluded from Git because they are upstream-maintained datasets.
 
-1. Open AADR DOI 10.7910/DVN/FFIDCW, select **Dataverse version 14.0 / AADR
-   v66.p1**, and obtain `v66.p1_2M.aadr.PUB.anno`. Before release, record the
-   Dataverse datafile ID and direct immutable URL; neither was independently
-   verified during this audit.
+1. Open AADR DOI 10.7910/DVN/FFIDCW, select **Dataverse version 14.0 (version
+   id 735358) / AADR v66.p1**, and obtain `v66.p1_2M.aadr.PUB.anno` from the
+   immutable datafile endpoint
+   `https://dataverse.harvard.edu/api/access/datafile/13994518`. The verified
+   file is 13,450,350 bytes, has MD5 `02a75f75de319829e89dd10a0d0f62c5`,
+   matches the SHA-256 in `SOURCES.tsv`, and is distributed as CC0 1.0.
 2. Obtain the **frozen AmtDB v1.009 (2024-02-28) metadata CSV**. Do not silently
    substitute the live download: AmtDB moved to v1.010 on 2026-08-11, and no
    immutable public archive URL for the v1.009 export was verified. Use a
@@ -25,8 +37,9 @@ excluded from Git because they are upstream-maintained datasets.
          --aychr data/raw/aychr_db/a-YChr-DB_V5.xlsx
 
 The expected hashes identify the files actually used; a matching filename or
-landing page alone is insufficient. Stop if any hash differs. The AADR landing
-page is the authoritative release record, but this repository does not invent
-an unverified Dataverse file ID. Likewise, the interactive AmtDB download
-endpoint is not an immutable v1.009 archive. Both locators are explicit release
-blockers in `SOURCES.tsv`.
+landing page alone is insufficient. Stop if any hash differs. The AADR DOI,
+Dataverse version and datafile endpoint are now pinned. The remaining upstream
+identity blocker is AmtDB: its interactive download endpoint is not an
+immutable v1.009 archive, so the original hash-matching CSV must be deposited
+or an immutable archival locator supplied before end-to-end raw-source
+reproduction is claimed.

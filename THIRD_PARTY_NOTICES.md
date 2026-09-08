@@ -6,8 +6,11 @@ Raw source databases and downloaded publication supplements are not included.
 
 The Allen Ancient DNA Resource v66.p1 is the inferential core. The Harvard
 Dataverse record declares CC0 1.0. Cite DOI 10.7910/DVN/FFIDCW and the AADR
-data descriptor. This repository redistributes only aggregate derived outputs;
-person-level AADR catalogues are intentionally excluded.
+data descriptor. The immutable input is Dataverse version 14.0 (version id
+735358), datafile id 13994518. This repository includes one minimized AADR-
+derived project-coded analytical input under the source CC0 terms. It omits
+source person IDs, locality strings, skeletal fields, exact coordinates and
+terminal haplogroup calls. Source-identified AADR catalogues remain excluded.
 
 ## AmtDB
 

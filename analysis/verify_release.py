@@ -58,6 +58,33 @@ EXPECTED_COUNTS = {
     "y_calls": 229,
     "paired_bootstrap": 50000,
 }
+PUBLIC_INPUT = Path("data/derived/central_asia_analysis_input_v1.csv")
+EXTENSION_PROFILE_VECTORS = Path(
+    "analysis_extensions/statistical_extensions_v4/results/"
+    "stable_profile_vectors.csv"
+)
+PUBLIC_INPUT_COLUMNS = (
+    "project_record_id",
+    "country",
+    "site_key",
+    "analysis_bin",
+    "study_key",
+    "molecular_sex",
+    "mt_category",
+    "y_category",
+    "y_prefix_category",
+    "mt_called",
+    "y_called",
+    "strict_qc",
+    "population_outlier",
+    "direct_date",
+    "date_bp",
+    "date_sd_bp",
+    "kin_representative_mt",
+    "kin_representative_y",
+    "latitude_0_1deg",
+    "longitude_0_1deg",
+)
 RESTRICTED_IDENTIFIERS = tuple(f"CKZ{index:03d}" for index in range(1, 5))
 
 FORBIDDEN_DOCUMENT_SUFFIXES = {
@@ -277,6 +304,117 @@ def verify_aggregate_csv_headers(root: Path, failures: list[str]) -> None:
             )
 
 
+def verify_public_analysis_input(root: Path, failures: list[str]) -> None:
+    """Validate the sole schema-locked, project-coded individual-level input."""
+    path = root / PUBLIC_INPUT
+    rows = read_catalogue_without_coordinates(path, failures)
+    if not rows:
+        return
+    observed_columns = tuple(rows[0])
+    if observed_columns != PUBLIC_INPUT_COLUMNS:
+        failures.append(
+            "public analytical-input schema mismatch: "
+            f"{observed_columns!r}"
+        )
+        return
+    if len(rows) != EXPECTED_COUNTS["primary"]:
+        failures.append(
+            f"public analytical input has {len(rows)} rows, expected 489"
+        )
+    record_ids = [row["project_record_id"] for row in rows]
+    if len(set(record_ids)) != len(record_ids) or any(
+        re.fullmatch(r"CAU[0-9]{6}", value) is None for value in record_ids
+    ):
+        failures.append("project_record_id values are not unique CAU###### codes")
+    if any(
+        re.fullmatch(r"SITE[0-9]{4}", row["site_key"]) is None for row in rows
+    ):
+        failures.append("site_key values are not project SITE#### codes")
+    if any(
+        re.fullmatch(r"STUDY[0-9]{3}", row["study_key"]) is None for row in rows
+    ):
+        failures.append("study_key values are not project STUDY### codes")
+    sites = {(row["country"], row["site_key"]) for row in rows}
+    if len(sites) != 136:
+        failures.append(f"public analytical input has {len(sites)} sites, expected 136")
+    if {row["molecular_sex"] for row in rows} - {"M", "F", "U"}:
+        failures.append("public analytical input has an unexpected molecular-sex code")
+    boolean_fields = (
+        "mt_called",
+        "y_called",
+        "strict_qc",
+        "population_outlier",
+        "direct_date",
+        "kin_representative_mt",
+        "kin_representative_y",
+    )
+    if any(
+        row[field].lower() not in {"true", "false"}
+        for row in rows
+        for field in boolean_fields
+    ):
+        failures.append("public analytical input contains a non-Boolean flag")
+    mt_calls = sum(row["mt_called"].lower() == "true" for row in rows)
+    y_calls = sum(row["y_called"].lower() == "true" for row in rows)
+    if mt_calls != EXPECTED_COUNTS["mt_calls"] or y_calls != EXPECTED_COUNTS["y_calls"]:
+        failures.append(
+            f"public analytical input has {mt_calls}/{y_calls} mtDNA/Y calls, "
+            "expected 438/229"
+        )
+    if any(
+        row["y_called"].lower() == "true" and row["molecular_sex"] != "M"
+        for row in rows
+    ):
+        failures.append("a released Y call is assigned to a non-M row")
+    if any(
+        (row["latitude_0_1deg"] == "")
+        != (row["longitude_0_1deg"] == "")
+        for row in rows
+    ):
+        failures.append(
+            "public analytical input has an unpaired missing coordinate"
+        )
+    for coordinate in ("latitude_0_1deg", "longitude_0_1deg"):
+        for row in rows:
+            if row[coordinate] == "":
+                continue
+            try:
+                value = float(row[coordinate])
+            except ValueError:
+                failures.append(f"non-numeric {coordinate} in public analytical input")
+                break
+            if not math.isclose(value, round(value, 1), abs_tol=1e-12):
+                failures.append(
+                    f"{coordinate} is not rounded to 0.1 degree in public analytical input"
+                )
+                break
+
+
+def verify_project_coded_extension_profiles(
+    root: Path, failures: list[str]
+) -> None:
+    rows = read_catalogue_without_coordinates(
+        root / EXTENSION_PROFILE_VECTORS, failures
+    )
+    if not rows:
+        return
+    if any(
+        re.fullmatch(r"SITE[0-9]{4}", row.get("site", "")) is None
+        for row in rows
+    ):
+        failures.append("extension profile vectors contain a non-project site key")
+    publications = {
+        token
+        for row in rows
+        for token in row.get("publication", "").split("|")
+        if token
+    }
+    if any(re.fullmatch(r"STUDY[0-9]{3}", value) is None for value in publications):
+        failures.append(
+            "extension profile vectors contain a non-project study key"
+        )
+
+
 def load_json(path: Path, failures: list[str]) -> dict[str, object]:
     if not path.is_file():
         failures.append(f"missing JSON file: {path}")
@@ -340,6 +478,8 @@ def verify_manifests_and_counts(
             failures.append(
                 f"results_summary.json {field} is {observed!r}, expected {expected}"
             )
+    if integer_value(summary.get("primary_sites")) != 136:
+        failures.append("results_summary.json primary_sites must equal 136")
 
     run_analysis = root / "analysis" / "run_analysis.py"
     run_sensitivity = root / "analysis" / "run_global_sensitivities.py"
@@ -365,6 +505,31 @@ def verify_manifests_and_counts(
         "global_sensitivity_manifest.json",
         failures,
     )
+    sensitivity_input = sensitivity_manifest.get("analytical_input")
+    public_input_path = root / PUBLIC_INPUT
+    if not isinstance(sensitivity_input, dict):
+        failures.append(
+            "global_sensitivity_manifest.json must record its analytical input"
+        )
+    else:
+        if sensitivity_input.get("file") != PUBLIC_INPUT.as_posix():
+            failures.append(
+                "global_sensitivity_manifest.json analytical_input.file must "
+                f"be {PUBLIC_INPUT.as_posix()}"
+            )
+        if sensitivity_input.get("public_project_coded_input") is not True:
+            failures.append(
+                "global_sensitivity_manifest.json must record use of the "
+                "project-coded public input"
+            )
+        if (
+            public_input_path.is_file()
+            and sensitivity_input.get("sha256") != sha256(public_input_path)
+        ):
+            failures.append(
+                "global_sensitivity_manifest.json analytical-input SHA-256 "
+                "does not match the released file"
+            )
 
     recomputed = analysis_manifest.get("recomputed_from")
     if isinstance(recomputed, dict):
@@ -380,6 +545,20 @@ def verify_manifests_and_counts(
                 "analysis_manifest.json recomputed_from.script must be the "
                 "repository-relative path analysis/recompute_from_catalogue.py"
             )
+        if recomputed.get("file") != PUBLIC_INPUT.as_posix():
+            failures.append(
+                "analysis_manifest.json recomputed_from.file must be "
+                f"{PUBLIC_INPUT.as_posix()}"
+            )
+        expected_input_hash = recomputed.get("sha256")
+        if not isinstance(expected_input_hash, str) or (
+            public_input_path.is_file()
+            and expected_input_hash != sha256(public_input_path)
+        ):
+            failures.append(
+                "analysis_manifest.json public analytical-input SHA-256 "
+                "does not match the released file"
+            )
 
     paired_expected = EXPECTED_COUNTS["paired_bootstrap"]
     manifest_paired = integer_value(
@@ -389,6 +568,22 @@ def verify_manifests_and_counts(
         failures.append(
             "analysis_manifest.json paired_bootstrap_replicates is "
             f"{manifest_paired!r}, expected {paired_expected}"
+        )
+    public_section = analysis_manifest.get("public_project_coded_input")
+    if not isinstance(public_section, dict) or not public_section.get(
+        "used_for_this_run"
+    ):
+        failures.append(
+            "analysis_manifest.json must record recomputation from the "
+            "project-coded public analytical input"
+        )
+    surrogate_policy = analysis_manifest.get("paired_surrogate_probability_policy")
+    if not isinstance(surrogate_policy, dict) or not surrogate_policy.get(
+        "removed_from_user_facing_outputs"
+    ):
+        failures.append(
+            "analysis_manifest.json must record removal of the surrogate "
+            "bootstrap probability from user-facing outputs"
         )
     bootstrap_section = analysis_manifest.get("site_cluster_bootstrap")
     paired_diagnostics = (
@@ -464,6 +659,8 @@ def main() -> None:
     verify_forbidden_files(root, failures)
     verify_sensitive_content(root, checksum_path, failures)
     verify_aggregate_csv_headers(root, failures)
+    verify_public_analysis_input(root, failures)
+    verify_project_coded_extension_profiles(root, failures)
     verify_manifests_and_counts(root, results, failures)
 
     if failures:
@@ -476,7 +673,7 @@ def main() -> None:
             print(f"- {failure}", file=sys.stderr)
         raise SystemExit(1)
     print(
-        "Aggregate-only release verification passed: "
+        "Project-coded-input public release verification passed: "
         f"{checksum_entries} checksums; 501/489 individuals; "
         "438 mtDNA calls; 229 Y calls; 50,000 paired bootstrap replicates."
     )

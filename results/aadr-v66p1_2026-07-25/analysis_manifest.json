@@ -62,8 +62,8 @@
       1501
     ]
   },
-  "source_code_sha256": "0b7ff2f4bb2cf0ab069403064370d5f5f2ff30e8afad4ac66dd64d85fb49a375",
-  "code_revision_date": "2026-08-15",
+  "source_code_sha256": "13893dda339b1dc0a46ca094cd0c582f52fc4a05c8f4c3716a1437b37ef0f50c",
+  "code_revision_date": "2026-08-21",
   "rng_streams": "Stable SHA-256-named NumPy SeedSequence streams; each procedure is independent of unrelated random calls",
   "paired_bootstrap_replicates": 50000,
   "site_cluster_bootstrap": {
@@ -72,9 +72,9 @@
     "empty_period_handling": "reject complete draw and redraw",
     "marker_diagnostics": {
       "mtDNA": {
-        "n_clusters": 133,
+        "n_clusters": 132,
         "accepted_replicates": 2000,
-        "rejected_empty_period_draws": 1
+        "rejected_empty_period_draws": 2
       },
       "Y": {
         "n_clusters": 101,
@@ -103,11 +103,11 @@
     }
   },
   "recomputed_from": {
-    "file": "results/aadr-v66p1_2026-07-25/tables/aadr_primary_analysis_catalogue.csv",
-    "sha256": "6a861cd38b4b9a531d1b9bac96fc4834f671e400c410fbad5cf3401fa80e873a",
+    "file": "data/derived/central_asia_analysis_input_v1.csv",
+    "sha256": "692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3",
     "script": "analysis/recompute_from_catalogue.py",
-    "script_sha256": "213b8f04d7de847714f0b335fb2ca00f1072d4b6b53c30bee34a0d8fbb887986",
-    "reason": "Corrected observed/bootstrap reporting, added sparse-table Monte Carlo diagnostics, and relabeled date assignment as scenario sensitivity; upstream catalogue unchanged"
+    "script_sha256": "4e5c89484f5cc25b6cda9e6b099ca9087aacf5f0d9a8cb6f3a4e06a58194b37d",
+    "reason": "Recomputed from the schema-locked project-coded AADR-derived analytical input; source identifiers, locality strings and terminal calls are absent; Figure 4 uses the observed site-balanced statistic as its point and cluster-bootstrap percentiles as its interval; date sensitivity uses 5,000 shared assignment scenarios"
   },
   "public_coordinate_policy": {
     "columns": [
@@ -141,5 +141,35 @@
     "direct_dates": "Normal in BP using catalogue mean and SD",
     "indirect_dates": "Uniform in BP over mean +/- sqrt(3) times catalogue SD",
     "interpretation": "Assumption-based chronological-bin boundary sensitivity; not calibrated radiocarbon posterior uncertainty"
+  },
+  "site_locality_normalization": {
+    "cluster_key": [
+      "country",
+      "locality"
+    ],
+    "raw_text_column": "locality_raw",
+    "aliases": [
+      {
+        "country": "Kazakhstan",
+        "source_locality": "Biestamak (Kostanay Region, Auliekol District)",
+        "normalized_locality": "Bestamak (Kostanay Region, Auliekol District)"
+      }
+    ]
+  },
+  "paired_surrogate_probability_policy": {
+    "removed_from_user_facing_outputs": true,
+    "removed_fields": [
+      "bootstrap_two_sided_sign_tail_probability",
+      "bootstrap_sign_tail_interpretation"
+    ],
+    "reason": "The ordinary uncentred bootstrap sign fraction is not a null-imposed hypothesis-test P value.",
+    "recoverable_from_saved_draws_in_extended_package": true
+  },
+  "public_project_coded_input": {
+    "used_for_this_run": true,
+    "contains_source_person_ids": false,
+    "contains_terminal_haplogroup_calls": false,
+    "site_identifier": "project code",
+    "linkage_warning": "Project-coded, not anonymous; public attribute combinations may be linkable to the AADR source."
   }
 }

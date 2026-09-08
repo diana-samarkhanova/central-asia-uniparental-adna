@@ -1,15 +1,16 @@
 # Reproducing the Central Asia uniparental aDNA analysis
 
 This directory contains the frozen scientific workflow for the evidence release
-dated 25 July 2026. The GitHub repository is aggregate-only: it includes the
-analysis code, figures and aggregate statistical outputs, but no individual
-catalogues, exact-ID crosswalks or singleton-revealing site-lineage profiles.
-The audited statistical revision and corrected derived outputs are dated
-15 August 2026.
+dated 25 July 2026. The GitHub repository includes one minimized, schema-
+locked AADR-derived analytical input with project-coded record/site/study
+keys and broad categories. It excludes source identifiers, locality strings,
+skeletal fields, terminal calls, exact-ID crosswalks and singleton-revealing
+site-lineage profiles. The audited statistical revision and corrected derived
+outputs were synchronized on 21 August 2026.
 
-Exact reproduction starts from the frozen AADR, AmtDB and aYChr-DB metadata
-files. The workflow extracts, deduplicates and harmonizes person-level working
-data locally, then produces the aggregate release. It does not reprocess FASTQ,
+The included project-coded input reproduces the headline statistical results.
+A separate upstream route starts from the frozen AADR, AmtDB and aYChr-DB
+metadata files and locally rebuilds the input. Neither route reprocesses FASTQ,
 BAM or other sequencing reads. The estimand is the composition of published
 individuals and equal-weighted published localities; it is not a past
 population-frequency estimate.
@@ -36,14 +37,16 @@ root, verify it and run the focused scientific and public-release checks:
 sha256sum -c SHA256SUMS.txt
 PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
 PYTHONDONTWRITEBYTECODE=1 python analysis/test_aggregate_release.py results/aadr-v66p1_2026-07-25
+PYTHONDONTWRITEBYTECODE=1 python analysis_extensions/statistical_extensions_v4/test_results.py
 python analysis/verify_release.py
 ```
 
 `verify_release.py` fails if a checksum is missing or stale; if raw databases,
 office/PDF documents, archives or cache files are present; if forbidden
-individual/site-lineage tables or transient absolute paths remain; if code
-hashes disagree with the manifests; or if the frozen counts and
-50,000-replicate paired bootstrap are inconsistent.
+source-identifier/site-lineage tables or transient absolute paths remain; if
+the public input violates its exact schema, counts, code patterns, sex rule or
+coordinate rounding; if code hashes disagree with the manifests; or if the
+frozen counts and 50,000-replicate paired bootstrap are inconsistent.
 
 Maintainers should generate checksums only after reviewing the intended release
 tree:
@@ -58,14 +61,54 @@ The generator excludes `SHA256SUMS.txt` itself, `.git` and cache files. It does
 not make an unsafe file acceptable: the independent verifier still rejects
 raw, document, archive, temporary and cache artifacts.
 
-## Reproduce from the three frozen source databases (blocked pending two locators)
+## Recompute from the included project-coded input
+
+Copy the released result directory, then regenerate every statistical table
+and figure used by the headline analysis:
+
+```bash
+cp -R results/aadr-v66p1_2026-07-25 work/reproduced
+MPLCONFIGDIR=.mplconfig python analysis/recompute_from_catalogue.py \
+  --catalogue data/derived/central_asia_analysis_input_v1.csv \
+  --analysis-output work/reproduced \
+  --bootstrap 2000 \
+  --paired-bootstrap 50000 \
+  --permutations 9999 \
+  --callability-resamples 99999 \
+  --date-draws 5000 \
+  --seed 20260725 \
+  --aggregate-only
+
+MPLCONFIGDIR=.mplconfig python analysis/run_global_sensitivities.py \
+  --catalogue data/derived/central_asia_analysis_input_v1.csv \
+  --analysis-output work/reproduced \
+  --permutations 1999 \
+  --seed 20260726
+
+python analysis/test_aggregate_release.py work/reproduced
+```
+
+Recompute and verify the revised >=2 primary-profile tests and related
+finite-sample/time-grid extensions from that same input:
+
+```bash
+python analysis_extensions/statistical_extensions_v4/run_stat_extensions.py
+python analysis_extensions/statistical_extensions_v4/test_results.py
+```
+
+The file is project-coded, not anonymous; publicly available attribute
+combinations may allow linkage to AADR. See `data/derived/README.md`.
+
+## Reproduce from the three frozen source databases (AmtDB archive still blocked)
 
 Follow `data/README.md` and `data/SOURCES.tsv` to obtain the exact files. Do not
-commit them. The hashes below remain authoritative, but the exact AADR
-Dataverse datafile locator and an immutable public AmtDB v1.009 archive URL
-have not been independently verified. The aYChr workbook is pinned to commit
-`bc770a59ace8cd4c042c6f903d620d93ee751eb0`. Expected local paths and SHA-256
-values are:
+commit them. The hashes below remain authoritative. AADR is pinned to Dataverse
+version 14.0 (version id 735358), datafile id 13994518 and
+`https://dataverse.harvard.edu/api/access/datafile/13994518`. The aYChr
+workbook is pinned to commit
+`bc770a59ace8cd4c042c6f903d620d93ee751eb0`. An immutable public AmtDB
+v1.009 archive URL remains unverified. Expected local paths and SHA-256 values
+are:
 
 | Resource | Expected local path | SHA-256 |
 |---|---|---|
@@ -116,19 +159,18 @@ cluster draw across mtDNA and Y. Named random streams make one procedure
 independent of unrelated replicate counts.
 
 Paired tables report the original-sample Δ as the point estimate and retain
-the bootstrap median only as a diagnostic.
-`bootstrap_two_sided_sign_tail_probability` measures ordinary-bootstrap sign
-stability and is not a null-hypothesis *P* value. The ISOGG-prefix analysis is
-a nomenclature sensitivity, not a phylogenetic re-call. Files retaining
+the bootstrap median only as a diagnostic. The ordinary-bootstrap sign
+fraction was removed from user-facing summaries because it is not a null-
+imposed hypothesis-test *P* value; inference is interval-based. The ISOGG-
+prefix analysis is a nomenclature sensitivity, not a phylogenetic re-call.
+Files retaining
 `date_uncertainty` in their names contain assumption-based bin-assignment
 scenarios shared across markers, not calibrated-date posterior draws.
 
-The generated working directory contains person-level intermediates and must
-not be committed. `recompute_from_catalogue.py`, `run_global_sensitivities.py`
-and `sanitize_release.py` are retained for maintainers who have a locally
-generated catalogue; their required person-level inputs are intentionally not
-included in GitHub. The post-v66 evidence map and literature audit also include
-manual curation steps and are not reconstructed by these commands.
+The full upstream route generates source-identified working intermediates and
+they must not be committed. The post-v66 evidence map and literature audit
+also include manual curation steps and are not reconstructed by either
+statistical command sequence.
 
 ## Input licensing and redistribution
 
@@ -162,7 +204,8 @@ MPLCONFIGDIR=.mplconfig python analysis/sanitize_release.py \
 
 The sanitizer also regenerates the sampling map and records the masking policy
 in `analysis_manifest.json`. Those catalogues still remain outside GitHub.
-`verify_release.py` instead enforces the aggregate-only table contract.
+`verify_release.py` instead enforces the minimized project-coded input contract
+and rejects source-identified granular tables.
 Person-level rows from the restricted post-freeze source must remain excluded;
 only citation-level summaries may be released.
 
@@ -171,14 +214,17 @@ only citation-level summaries may be released.
 - `verify_inputs.py`: check frozen upstream hashes before reading data.
 - `run_analysis.py`: extract, deduplicate, harmonize, analyze and mask public
   coordinates.
-- `recompute_from_catalogue.py`: reproduce statistical results from a locally
-  generated person-level analytical catalogue; the input is not committed.
+- `build_public_analysis_input.py`: author-side conversion from the excluded
+  source-identified primary catalogue to the schema-locked public input.
+- `recompute_from_catalogue.py`: reproduce statistical results from either the
+  excluded source catalogue or the included project-coded analytical input.
 - `run_global_sensitivities.py`: marker-wide sensitivity analyses.
 - `sanitize_release.py`: mask an existing output directory and regenerate its
   sampling map.
-- `test_aggregate_release.py`: aggregate-only release regression checks.
+- `test_aggregate_release.py`: public-input/aggregate release regression checks.
 - `test_full_outputs.py`: full/granular scientific regression checks.
 - `test_outputs.py`: backward-compatible alias for the aggregate check; new
   documentation uses the explicit filenames above.
 - `generate_checksums.py`: write deterministic GNU-compatible checksums.
-- `verify_release.py`: enforce the public-release contract.
+- `verify_release.py`: enforce the public-input and release-sanitization
+  contract.

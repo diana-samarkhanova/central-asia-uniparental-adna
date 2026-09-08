@@ -12,6 +12,8 @@ import numpy as np
 import pandas as pd
 
 from run_analysis import (
+    SITE_LOCALITY_ALIASES,
+    apply_site_locality_aliases,
     callability_table,
     major_haplogroup,
     valid_call,
@@ -43,7 +45,19 @@ def main() -> None:
     assert (primary.loc[primary["y_call"] != "", "molecular_sex"] == "M").all()
     assert int((primary["mt_call"] != "").sum()) == 438
     assert int((primary["y_call"] != "").sum()) == 229
-    assert summary["primary_sites"] == primary["locality"].nunique()
+    assert summary["primary_sites"] == primary[
+        ["country", "locality"]
+    ].drop_duplicates().shape[0]
+    assert summary["primary_sites"] == 136
+    assert "locality_raw" in primary.columns
+    bestamak = "Bestamak (Kostanay Region, Auliekol District)"
+    biestamak = "Biestamak (Kostanay Region, Auliekol District)"
+    bestamak_rows = primary[primary["individual_id"].isin(["NEO57", "DA26"])]
+    assert set(bestamak_rows["locality"]) == {bestamak}
+    assert set(bestamak_rows["locality_raw"]) == {bestamak, biestamak}
+    assert not (primary["locality"] == biestamak).any()
+    assert SITE_LOCALITY_ALIASES[("Kazakhstan", biestamak)] == bestamak
+    assert apply_site_locality_aliases(primary).equals(primary)
     hv = primary["mt_call"].str.upper().str.startswith("HV")
     assert hv.sum() == 36
     assert (primary.loc[hv, "mt_l1"] == "HV").all()
@@ -188,6 +202,7 @@ def main() -> None:
         turnover_summary["estimate"],
         turnover_summary["bootstrap_median"],
     )
+    assert (out / "figures" / "figure_4_diversity_turnover.png").is_file()
 
     crosswalk = pd.read_csv(tables / "cross_database_exact_id_audit.csv")
     assert len(crosswalk) == 119
@@ -209,21 +224,12 @@ def main() -> None:
         paired.loc[0, "delta_y_minus_mt"], -0.10638088568760834
     )
     assert paired.loc[0, "delta_ci_low"] < 0 < paired.loc[0, "delta_ci_high"]
-    assert "two_sided_tail_probability" not in paired
-    sign_tail_column = "bootstrap_two_sided_sign_tail_probability"
-    assert sign_tail_column in paired
-    assert "not a null-hypothesis p-value" in paired.loc[
-        0, "bootstrap_sign_tail_interpretation"
-    ]
-    expected_sign_tail = min(
-        1.0,
-        2
-        * min(
-            float((paired_draws["delta_y_minus_mt"] <= 0).mean()),
-            float((paired_draws["delta_y_minus_mt"] >= 0).mean()),
-        ),
-    )
-    assert np.isclose(paired.loc[0, sign_tail_column], expected_sign_tail)
+    for surrogate in (
+        "two_sided_tail_probability",
+        "bootstrap_two_sided_sign_tail_probability",
+        "bootstrap_sign_tail_interpretation",
+    ):
+        assert surrogate not in paired.columns
     assert np.isclose(
         paired.loc[0, "bootstrap_median_delta"],
         paired_draws["delta_y_minus_mt"].median(),
@@ -240,6 +246,8 @@ def main() -> None:
     resolution = pd.read_csv(
         tables / "paired_male_y_resolution_sensitivity.csv"
     )
+    assert "bootstrap_two_sided_sign_tail_probability" not in resolution
+    assert "bootstrap_sign_tail_interpretation" not in resolution
     assert list(resolution["y_encoding"]) == [
         "broad_L1",
         "AADR_ISOGG_prefix_family",
@@ -385,16 +393,42 @@ def main() -> None:
     assert (tests["repeated_sites"] > 0).all()
     assert set(tests["leverage_adjustment"]) == {"HC2"}
     assert not (tables / "global_composition_permutation_tests.csv").exists()
+    mt_test = tests.loc[tests["marker"] == "mtDNA"].iloc[0]
+    assert int(mt_test["n_site_clusters"]) == 132
+    assert int(mt_test["repeated_site_profiles"]) == 69
+    assert int(mt_test["repeated_sites"]) == 31
+    assert np.isclose(mt_test["repeated_site_permutation_p"], 0.1194)
+    assert np.isclose(mt_test["holm_repeated_site_p"], 0.2388)
 
     dispersion = pd.read_csv(
         tables / "composition_dispersion_cluster_tests.csv"
     )
     assert set(dispersion["marker"]) == {"mtDNA", "Y"}
+    mt_dispersion = dispersion.loc[dispersion["marker"] == "mtDNA"].iloc[0]
+    assert int(mt_dispersion["n_site_clusters"]) == 127
+    assert np.isclose(mt_dispersion["cluster_wild_p"], 0.0275)
+    assert np.isclose(mt_dispersion["holm_cluster_wild_p"], 0.0275)
     diagnostics = pd.read_csv(
         tables / "cluster_model_diagnostic_summary.csv"
     )
     assert set(diagnostics["marker"]) == {"mtDNA", "Y"}
     assert (diagnostics["max_full_leverage"] < 1).all()
+
+    turnover_sensitivity = pd.read_csv(tables / "turnover_sensitivity.csv")
+    mt_all = turnover_sensitivity[
+        (turnover_sensitivity["marker"] == "mtDNA")
+        & (turnover_sensitivity["analysis"] == "All marker-qualified calls")
+    ].iloc[0]
+    assert int(mt_all["n_sites"]) == 132
+
+    mt_site_composition = pd.read_csv(
+        tables / "composition_mtdna_site_balanced.csv"
+    )
+    b7 = mt_site_composition.loc[
+        mt_site_composition["analysis_bin"] == "B7 651-1000 CE"
+    ].iloc[0]
+    assert np.isclose(b7["D"], 0.25)
+    assert np.isclose(b7["A"], 0.25)
 
     sensitivity = pd.read_csv(
         tables / "global_composition_sensitivity_tests.csv"
@@ -421,12 +455,16 @@ def main() -> None:
     run_sensitivity = Path(__file__).with_name(
         "run_global_sensitivities.py"
     )
+    recompute = Path(__file__).with_name("recompute_from_catalogue.py")
     assert analysis_manifest["source_code_sha256"] == sha256(run_analysis)
     assert sensitivity_manifest["source_code_sha256"] == sha256(
         run_sensitivity
     )
     assert sensitivity_manifest["primary_analysis_code_sha256"] == sha256(
         run_analysis
+    )
+    assert analysis_manifest["recomputed_from"]["script_sha256"] == sha256(
+        recompute
     )
     assert analysis_manifest["paired_bootstrap_replicates"] == 50000
     assert (

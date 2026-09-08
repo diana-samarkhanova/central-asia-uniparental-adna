@@ -16,12 +16,35 @@ import numpy as np
 import pandas as pd
 
 from run_analysis import (
+    apply_site_locality_aliases,
     named_rng,
     repeated_site_period_test,
     site_cluster_wild_period_test,
     site_profile_table,
     unrelated_subset,
 )
+
+
+# The public analytical input replaces source-study labels with stable project
+# codes.  These non-person study labels are retained only as RNG stream keys so
+# that the public and source-labelled routes draw identical exploratory wild-
+# bootstrap signs.  They are not an individual-ID crosswalk.
+PUBLIC_STUDY_RNG_LABELS = {
+    "STUDY001": "AkbariReichNature2026",
+    "STUDY002": "AllentoftWillerslevNature2015",
+    "STUDY003": "AllentoftWillerslevNature2024",
+    "STUDY004": "DamgaardWillerslevNature2018",
+    "STUDY005": "DamgaardWillerslevScience2018",
+    "STUDY007": "Gnecchi-RusconeKrauseSciAdv2021",
+    "STUDY008": "Guarino-VignonBonFrontGenet2022",
+    "STUDY009": "JärveVillemsCurrBiol2019",
+    "STUDY010": "KumarFuMolBiolEvol2021",
+    "STUDY011": "LazaridisReichNature2025",
+    "STUDY012": "NarasimhanReichScience2019",
+    "STUDY013": "RymbekovaKuhlwilmBioRxiv2025",
+    "STUDY014": "SpyrouKrauseNature2022",
+    "STUDY015": "UnterländerBurgerNatComm2017",
+}
 
 
 def sha256(path: Path) -> str:
@@ -35,6 +58,15 @@ def sha256(path: Path) -> str:
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser()
     p.add_argument("--analysis-output", required=True, type=Path)
+    p.add_argument(
+        "--catalogue",
+        type=Path,
+        help=(
+            "Analytical input CSV. When omitted, use the source-labelled "
+            "catalogue under --analysis-output; the public route passes "
+            "data/derived/central_asia_analysis_input_v1.csv."
+        ),
+    )
     p.add_argument("--permutations", type=int, default=1999)
     p.add_argument("--seed", type=int, default=20260726)
     return p.parse_args()
@@ -148,9 +180,45 @@ def figure_global_sensitivities(table: pd.DataFrame, path: Path) -> None:
 def main() -> None:
     args = parse_args()
     tables = args.analysis_output / "tables"
-    df = pd.read_csv(
-        tables / "aadr_primary_analysis_catalogue.csv", keep_default_na=False
+    catalogue_path = (
+        args.catalogue
+        if args.catalogue is not None
+        else tables / "aadr_primary_analysis_catalogue.csv"
     )
+    df = pd.read_csv(catalogue_path, keep_default_na=False)
+    public_input = "project_record_id" in df.columns
+    if public_input:
+        expected_public_columns = {
+            "project_record_id", "country", "site_key", "analysis_bin",
+            "study_key", "molecular_sex", "mt_category", "y_category",
+            "y_prefix_category", "mt_called", "y_called", "strict_qc",
+            "population_outlier", "direct_date", "date_bp", "date_sd_bp",
+            "kin_representative_mt", "kin_representative_y",
+            "latitude_0_1deg", "longitude_0_1deg",
+        }
+        if set(df.columns) != expected_public_columns:
+            raise ValueError(
+                "Public analytical input schema mismatch: "
+                f"{sorted(set(df.columns) ^ expected_public_columns)}"
+            )
+        df = df.rename(
+            columns={
+                "project_record_id": "individual_id",
+                "site_key": "locality",
+                "study_key": "publication",
+                "mt_category": "mt_l1_pooled",
+                "y_category": "y_l1_pooled",
+            }
+        )
+        for col in (
+            "mt_called", "y_called", "kin_representative_mt",
+            "kin_representative_y",
+        ):
+            df[col] = df[col].astype(str).str.lower().eq("true")
+        df["mt_call"] = df["mt_l1_pooled"].where(df["mt_called"], "")
+        df["y_call"] = df["y_l1_pooled"].where(df["y_called"], "")
+    else:
+        df = apply_site_locality_aliases(df)
     for col in ("strict_qc", "population_outlier", "direct_date"):
         df[col] = df[col].astype(str).str.lower().eq("true")
     summary = json.loads(
@@ -168,28 +236,53 @@ def main() -> None:
         ("Y", "y_call", "y_l1_pooled", summary["y_l1_categories"]),
     ]:
         filters = dict(base_filters)
-        filters["One representative per <=2d kin component"] = unrelated_subset(
-            df, call_col
+        rng_labels = {name: name for name in filters}
+        representative_flag = (
+            "kin_representative_mt"
+            if marker == "mtDNA"
+            else "kin_representative_y"
         )
+        if representative_flag in df.columns:
+            filters["One representative per <=2d kin component"] = df[
+                df[representative_flag] & (df[pooled_col] != "")
+            ]
+        else:
+            filters["One representative per <=2d kin component"] = (
+                unrelated_subset(df, call_col)
+            )
         filters["Kazakhstan only"] = df[df["country"] == "Kazakhstan"]
+        rng_labels["Kazakhstan only"] = "Kazakhstan only"
         filters["Exclude sparse late bins B7-B8"] = df[
             ~df["analysis_bin"].isin(
                 ["B7 651-1000 CE", "B8 1001-1500 CE"]
             )
         ]
+        rng_labels[
+            "Exclude sparse late bins B7-B8"
+        ] = "Exclude sparse late bins B7-B8"
+        rng_labels[
+            "One representative per <=2d kin component"
+        ] = "One representative per <=2d kin component"
         for country in sorted(df["country"].unique()):
-            filters[f"Leave out country: {country}"] = df[
+            name = f"Leave out country: {country}"
+            filters[name] = df[
                 df["country"] != country
             ]
+            rng_labels[name] = name
         for publication in sorted(df["publication"].unique()):
             has_marker_call = (
                 df.loc[df["publication"] == publication, pooled_col] != ""
             ).any()
             if not has_marker_call:
                 continue
-            filters[f"Leave out publication: {publication}"] = df[
+            name = f"Leave out publication: {publication}"
+            filters[name] = df[
                 df["publication"] != publication
             ]
+            rng_publication = PUBLIC_STUDY_RNG_LABELS.get(
+                publication, publication
+            )
+            rng_labels[name] = f"Leave out publication: {rng_publication}"
         repeated_sensitivity_names = set(base_filters) | {
             "One representative per <=2d kin component"
         }
@@ -198,7 +291,10 @@ def main() -> None:
             result = site_cluster_wild_period_test(
                 table,
                 args.permutations,
-                named_rng(args.seed, f"{marker}:{name}:cluster-wild"),
+                named_rng(
+                    args.seed,
+                    f"{marker}:{rng_labels[name]}:cluster-wild",
+                ),
             )
             if name in repeated_sensitivity_names:
                 result.update(
@@ -207,7 +303,7 @@ def main() -> None:
                         args.permutations,
                         named_rng(
                             args.seed,
-                            f"{marker}:{name}:repeated-site-permutation",
+                            f"{marker}:{rng_labels[name]}:repeated-site-permutation",
                         ),
                     )
                 )
@@ -216,9 +312,10 @@ def main() -> None:
                     "analysis": name,
                     "marker": marker,
                     "n_calls": int((subset[pooled_col] != "").sum()),
-                    "n_sites": subset.loc[
-                        subset[pooled_col] != "", "locality"
-                    ].nunique(),
+                    "n_sites": len(
+                        subset.loc[subset[pooled_col] != ""]
+                        .drop_duplicates(["country", "locality"])
+                    ),
                     **result,
                     "permutations": args.permutations,
                 }
@@ -275,6 +372,11 @@ def main() -> None:
         "cluster_wild_resamples_per_test": args.permutations,
         "repeated_site_permutations_per_test": args.permutations,
         "number_of_tests": len(out),
+        "analytical_input": {
+            "file": str(catalogue_path.as_posix()),
+            "sha256": sha256(catalogue_path),
+            "public_project_coded_input": public_input,
+        },
         "source_code_sha256": sha256(Path(__file__)),
         "primary_analysis_code_sha256": sha256(
             Path(__file__).with_name("run_analysis.py")

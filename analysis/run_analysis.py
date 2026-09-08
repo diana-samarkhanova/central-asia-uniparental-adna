@@ -82,6 +82,16 @@ MANUAL_CROSSWALK = {
     ("aYChr-DB v5", "I0563/Be11"): "I0563",
 }
 
+# Archaeologically verified spelling aliases used to define the
+# country-locality cluster.  The source spelling is retained separately in
+# ``locality_raw`` so that normalization is transparent and reversible.
+SITE_LOCALITY_ALIASES = {
+    (
+        "Kazakhstan",
+        "Biestamak (Kostanay Region, Auliekol District)",
+    ): "Bestamak (Kostanay Region, Auliekol District)",
+}
+
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser()
@@ -115,6 +125,28 @@ def named_rng(seed: int, name: str) -> np.random.Generator:
         for index in range(0, 16, 4)
     )
     return np.random.default_rng(np.random.SeedSequence(entropy))
+
+
+def apply_site_locality_aliases(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply documented site aliases while preserving source locality text."""
+    if not {"country", "locality"}.issubset(df.columns):
+        raise ValueError("Site normalization requires country and locality columns")
+    result = df.copy()
+    if "locality_raw" not in result.columns:
+        locality_position = result.columns.get_loc("locality") + 1
+        result.insert(
+            locality_position,
+            "locality_raw",
+            result["locality"].astype(str),
+        )
+    for (country, source_locality), normalized_locality in (
+        SITE_LOCALITY_ALIASES.items()
+    ):
+        mask = result["country"].eq(country) & result["locality"].eq(
+            source_locality
+        )
+        result.loc[mask, "locality"] = normalized_locality
+    return result
 
 
 def validate_frozen_inputs(args: argparse.Namespace) -> dict[str, str]:
@@ -1707,6 +1739,13 @@ def figure_composition(
 def figure_diversity_turnover(
     div_summary: pd.DataFrame, tv_summary: pd.DataFrame, path: Path
 ) -> None:
+    required = {"estimate", "bootstrap_median", "ci_low", "ci_high", "marker"}
+    for name, table in (("diversity", div_summary), ("turnover", tv_summary)):
+        missing = required - set(table.columns)
+        if missing:
+            raise ValueError(
+                f"Figure 4 {name} summary lacks columns: {sorted(missing)}"
+            )
     sns.set_theme(style="whitegrid", font_scale=0.9)
     fig, axes = plt.subplots(1, 2, figsize=(13.5, 5.4), constrained_layout=True)
     colors = {"mtDNA": "#D95F02", "Y": "#1B9E77"}
@@ -1726,7 +1765,9 @@ def figure_diversity_turnover(
     axes[0].set_xticks(np.arange(len(BIN_LABELS)))
     axes[0].set_xticklabels(BIN_LABELS, rotation=43, ha="right")
     axes[0].set_ylabel("Effective number of L1 lineages (Hill q=1)")
-    axes[0].set_title("Observed site-balanced diversity; cluster-bootstrap interval")
+    axes[0].set_title(
+        "Point = observed site-balanced diversity; band = cluster-bootstrap 95% CI"
+    )
     axes[0].legend(frameon=False)
 
     transitions = [f"{a} -> {b}" for a, b in zip(BIN_LABELS[:-1], BIN_LABELS[1:])]
@@ -1751,7 +1792,9 @@ def figure_diversity_turnover(
     axes[1].set_xticks(np.arange(len(transitions)))
     axes[1].set_xticklabels(transitions, rotation=43, ha="right")
     axes[1].set_ylabel("Total-variation turnover (0-1)")
-    axes[1].set_title("Observed adjacent-bin turnover; cluster-bootstrap interval")
+    axes[1].set_title(
+        "Point = observed adjacent-bin turnover; lines = cluster-bootstrap 95% CI"
+    )
     axes[1].legend(frameon=False)
     fig.savefig(path, dpi=300, bbox_inches="tight")
     plt.close(fig)
@@ -1814,6 +1857,7 @@ def main() -> None:
     amtdb = pd.read_csv(args.amtdb, dtype=str, keep_default_na=False)
     aychr = pd.read_excel(args.aychr, dtype=str).fillna("")
     canonical, dedup_audit = choose_canonical_aadr(aadr)
+    canonical = apply_site_locality_aliases(canonical)
     analysis = canonical[canonical["analysis_included"]].copy()
 
     analysis["mt_l1_pooled"], mt_categories = pool_rare(analysis["mt_l1"], 5)
@@ -2028,14 +2072,15 @@ def main() -> None:
         ]
         marker_filters["Male-paired subset"] = paired
         for name, subset in marker_filters.items():
+            called = subset[subset[pooled_col] != ""]
             sensitivity_rows.append(
                 {
                     "analysis": name,
                     "marker": marker,
-                    "n_calls": int((subset[pooled_col] != "").sum()),
-                    "n_sites": subset.loc[
-                        subset[pooled_col] != "", "locality"
-                    ].nunique(),
+                    "n_calls": len(called),
+                    "n_sites": len(
+                        called.drop_duplicates(["country", "locality"])
+                    ),
                     "mean_adjacent_tv": mean_adjacent_tv(
                         subset, pooled_col, cats
                     ),
@@ -2043,14 +2088,15 @@ def main() -> None:
             )
         for country in COUNTRIES:
             subset = analysis[analysis["country"] != country]
+            called = subset[subset[pooled_col] != ""]
             sensitivity_rows.append(
                 {
                     "analysis": f"Leave out country: {country}",
                     "marker": marker,
-                    "n_calls": int((subset[pooled_col] != "").sum()),
-                    "n_sites": subset.loc[
-                        subset[pooled_col] != "", "locality"
-                    ].nunique(),
+                    "n_calls": len(called),
+                    "n_sites": len(
+                        called.drop_duplicates(["country", "locality"])
+                    ),
                     "mean_adjacent_tv": mean_adjacent_tv(
                         subset, pooled_col, cats
                     ),
@@ -2138,6 +2184,16 @@ def main() -> None:
         0.0,
         delta_change_draws.quantile(0.975),
     ]
+    surrogate_probability_columns = [
+        "bootstrap_two_sided_sign_tail_probability",
+        "bootstrap_sign_tail_interpretation",
+    ]
+    paired_summary = paired_summary.drop(
+        columns=surrogate_probability_columns, errors="ignore"
+    )
+    paired_resolution_sensitivity = paired_resolution_sensitivity.drop(
+        columns=surrogate_probability_columns, errors="ignore"
+    )
 
     date_draw_summaries = []
     for marker, col, cats in [
@@ -2281,7 +2337,9 @@ def main() -> None:
         "primary_analysis_unique_individuals_3500BCE_to_1500CE": int(
             len(analysis)
         ),
-        "primary_sites": int(analysis["locality"].nunique()),
+        "primary_sites": int(
+            analysis[["country", "locality"]].drop_duplicates().shape[0]
+        ),
         "primary_publication_labels": int(analysis["publication"].nunique()),
         "primary_mt_calls": mt_calls,
         "primary_y_calls_in_molecular_males": y_calls,
@@ -2347,7 +2405,7 @@ def main() -> None:
     )
     manifest = {
         "analysis_date": "2026-07-25",
-        "code_revision_date": "2026-08-15",
+        "code_revision_date": "2026-08-21",
         "random_seed": args.seed,
         "rng_streams": (
             "Stable SHA-256-named NumPy SeedSequence streams; each analysis "
@@ -2391,6 +2449,15 @@ def main() -> None:
                 "not calibrated radiocarbon posterior uncertainty"
             ),
         },
+        "paired_surrogate_probability_policy": {
+            "removed_from_user_facing_outputs": True,
+            "removed_fields": surrogate_probability_columns,
+            "reason": (
+                "The ordinary uncentred bootstrap sign fraction is not a "
+                "null-imposed hypothesis-test P value."
+            ),
+            "recoverable_from_saved_draws_in_extended_package": True,
+        },
         "primary_inference": {
             "response": "Hellinger-transformed broad-lineage proportions",
             "unit": "country-locality-period profile",
@@ -2429,6 +2496,18 @@ def main() -> None:
                 "reduce archaeological site-location precision; coordinates "
                 "are not used in statistical models"
             ),
+        },
+        "site_locality_normalization": {
+            "cluster_key": ["country", "locality"],
+            "raw_text_column": "locality_raw",
+            "aliases": [
+                {
+                    "country": country,
+                    "source_locality": source,
+                    "normalized_locality": normalized,
+                }
+                for (country, source), normalized in SITE_LOCALITY_ALIASES.items()
+            ],
         },
         "temporal_bins": {
             label: [int(start), int(end)]

@@ -5,6 +5,8 @@
   approval.
 - original figures and curated derived tables: intended CC BY 4.0 after
   coauthor approval, except where THIRD_PARTY_NOTICES.md states otherwise.
+- the minimized project-coded analytical input is derived from the CC0 1.0
+  AADR v66.p1 annotation; cite AADR and the original component studies.
 - unpublished manuscript: excluded from this repository until author approval.
 - third-party source databases and publication supplements: governed by their
   own licenses and are not relicensed here.

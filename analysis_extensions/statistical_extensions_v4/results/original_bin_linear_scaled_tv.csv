@@ -1,0 +1,29 @@
+marker,minimum_calls,transition,midpoint_gap_years,tv,tv_per_100_years_linear_scaling,warning
+mtDNA,1,B1 3500-2501 BCE -> B2 2500-1801 BCE,850.0,0.47519043456543464,0.055904757007698196,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,1,B2 2500-1801 BCE -> B3 1800-901 BCE,800.0,0.3123962842712843,0.03904953553391054,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,1,B3 1800-901 BCE -> B4 900-201 BCE,800.0,0.42805805305805306,0.05350725663225664,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,1,B4 900-201 BCE -> B5 200 BCE-300 CE,600.5,0.296958348556814,0.04945184821928627,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,1,B5 200 BCE-300 CE -> B6 301-650 CE,425.5,0.5795289855072464,0.1361995265586948,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,1,B6 301-650 CE -> B7 651-1000 CE,350.0,0.553125,0.15803571428571428,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,1,B7 651-1000 CE -> B8 1001-1500 CE,425.0,0.33214285714285713,0.07815126050420168,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B1 3500-2501 BCE -> B2 2500-1801 BCE,850.0,0.27792540792540793,0.03269710681475387,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B2 2500-1801 BCE -> B3 1800-901 BCE,800.0,0.5090303215303215,0.06362879019129018,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B3 1800-901 BCE -> B4 900-201 BCE,800.0,0.33772599233125544,0.04221574904140693,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B4 900-201 BCE -> B5 200 BCE-300 CE,600.5,0.3013471177944862,0.05018270071515174,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B5 200 BCE-300 CE -> B6 301-650 CE,425.5,0.43432539682539684,0.10207412381325424,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B6 301-650 CE -> B7 651-1000 CE,350.0,0.6023809523809524,0.17210884353741496,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+mtDNA,2,B7 651-1000 CE -> B8 1001-1500 CE,425.0,0.3611111111111111,0.08496732026143791,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B1 3500-2501 BCE -> B2 2500-1801 BCE,850.0,0.44206349206349205,0.05200746965452848,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B2 2500-1801 BCE -> B3 1800-901 BCE,800.0,0.5949074074074074,0.07436342592592593,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B3 1800-901 BCE -> B4 900-201 BCE,800.0,0.2453703703703704,0.0306712962962963,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B4 900-201 BCE -> B5 200 BCE-300 CE,600.5,0.19662309368191722,0.03274322958899537,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B5 200 BCE-300 CE -> B6 301-650 CE,425.5,0.2913165266106442,0.06846451859239581,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B6 301-650 CE -> B7 651-1000 CE,350.0,0.6488095238095238,0.18537414965986396,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,1,B7 651-1000 CE -> B8 1001-1500 CE,425.0,0.638888888888889,0.1503267973856209,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B1 3500-2501 BCE -> B2 2500-1801 BCE,850.0,0.3958333333333333,0.04656862745098039,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B2 2500-1801 BCE -> B3 1800-901 BCE,800.0,0.7361111111111113,0.09201388888888891,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B3 1800-901 BCE -> B4 900-201 BCE,800.0,0.2319444444444445,0.028993055555555564,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B4 900-201 BCE -> B5 200 BCE-300 CE,600.5,0.48703703703703705,0.08110525179634255,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B5 200 BCE-300 CE -> B6 301-650 CE,425.5,0.28703703703703703,0.06745876311093701,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B6 301-650 CE -> B7 651-1000 CE,350.0,0.6805555555555556,0.19444444444444445,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.
+Y,2,B7 651-1000 CE -> B8 1001-1500 CE,425.0,0.5,0.1176470588235294,Descriptive linear scaling only; assumes TV accumulates linearly and must not be called a biological rate.

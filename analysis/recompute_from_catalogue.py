@@ -16,11 +16,18 @@ from pathlib import Path
 import pandas as pd
 
 from run_analysis import (
+    COUNTRIES,
+    SITE_LOCALITY_ALIASES,
     add_y_resolution_sensitivity_encoding,
+    analysis_cell_adequacy,
+    apply_site_locality_aliases,
     callability_table,
+    count_matrix,
     date_uncertainty,
     dispersion_distance_table,
+    figure_composition,
     figure_diversity_turnover,
+    figure_sampling,
     holm_adjust,
     mean_adjacent_tv,
     model_residual_diagnostics,
@@ -29,11 +36,13 @@ from run_analysis import (
     paired_marker_turnover_bootstrap,
     profile,
     repeated_site_period_test,
+    site_dominance,
     site_cluster_effect_jackknife,
     site_cluster_wild_period_test,
     site_profile_table,
     summarize_bootstrap,
     bootstrap_site_profiles,
+    unrelated_subset,
 )
 
 
@@ -48,6 +57,15 @@ def sha256(path: Path) -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--analysis-output", required=True, type=Path)
+    parser.add_argument(
+        "--catalogue",
+        type=Path,
+        help=(
+            "Analytical input CSV. Defaults to the extended-package primary "
+            "catalogue; the public route passes data/derived/"
+            "central_asia_analysis_input_v1.csv."
+        ),
+    )
     parser.add_argument("--bootstrap", type=int, default=2000)
     parser.add_argument("--paired-bootstrap", type=int, default=50000)
     parser.add_argument("--permutations", type=int, default=9999)
@@ -55,6 +73,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--date-draws", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=20260725)
     parser.add_argument("--save-draws", action="store_true")
+    parser.add_argument(
+        "--aggregate-only",
+        action="store_true",
+        help="Do not write coded site-profile/residual/dispersion row tables.",
+    )
     return parser.parse_args()
 
 
@@ -64,10 +87,82 @@ def main() -> None:
     tables = out / "tables"
     figures = out / "figures"
     figures.mkdir(parents=True, exist_ok=True)
-    catalogue_path = tables / "aadr_primary_analysis_catalogue.csv"
+    catalogue_path = (
+        args.catalogue
+        if args.catalogue is not None
+        else tables / "aadr_primary_analysis_catalogue.csv"
+    )
     data = pd.read_csv(catalogue_path, keep_default_na=False)
+    public_input = "project_record_id" in data.columns
+    if public_input:
+        expected_public_columns = {
+            "project_record_id",
+            "country",
+            "site_key",
+            "analysis_bin",
+            "study_key",
+            "molecular_sex",
+            "mt_category",
+            "y_category",
+            "y_prefix_category",
+            "mt_called",
+            "y_called",
+            "strict_qc",
+            "population_outlier",
+            "direct_date",
+            "date_bp",
+            "date_sd_bp",
+            "kin_representative_mt",
+            "kin_representative_y",
+            "latitude_0_1deg",
+            "longitude_0_1deg",
+        }
+        if set(data.columns) != expected_public_columns:
+            raise ValueError(
+                "Public analytical input schema mismatch: "
+                f"{sorted(set(data.columns) ^ expected_public_columns)}"
+            )
+        data = data.rename(
+            columns={
+                "project_record_id": "individual_id",
+                "site_key": "locality",
+                "study_key": "publication",
+                "mt_category": "mt_l1_pooled",
+                "y_category": "y_l1_pooled",
+                "y_prefix_category": "y_isogg_prefix_family_pooled",
+                "latitude_0_1deg": "latitude",
+                "longitude_0_1deg": "longitude",
+            }
+        )
+        for flag in (
+            "mt_called",
+            "y_called",
+            "strict_qc",
+            "population_outlier",
+            "direct_date",
+            "kin_representative_mt",
+            "kin_representative_y",
+        ):
+            data[flag] = data[flag].astype(str).str.lower().eq("true")
+        data["mt_call"] = data["mt_l1_pooled"].where(data["mt_called"], "")
+        data["y_call"] = data["y_l1_pooled"].where(data["y_called"], "")
+    else:
+        data = apply_site_locality_aliases(data)
+        data.to_csv(catalogue_path, index=False)
+        complete_catalogue_path = (
+            tables / "aadr_central_asia_unique_individual_catalogue.csv"
+        )
+        if complete_catalogue_path.exists():
+            complete_catalogue = pd.read_csv(
+                complete_catalogue_path, keep_default_na=False
+            )
+            apply_site_locality_aliases(complete_catalogue).to_csv(
+                complete_catalogue_path, index=False
+            )
     for column in ("strict_qc", "population_outlier", "direct_date"):
         data[column] = data[column].astype(str).str.lower().eq("true")
+    for column in ("date_bp", "date_sd_bp", "latitude", "longitude"):
+        data[column] = pd.to_numeric(data[column], errors="coerce")
     summary_path = out / "results_summary.json"
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     categories = {
@@ -75,8 +170,117 @@ def main() -> None:
         "Y": summary["y_l1_categories"],
     }
     columns = {"mtDNA": "mt_l1_pooled", "Y": "y_l1_pooled"}
-    resolution_data, y_family_categories, y_family_source_column = (
-        add_y_resolution_sensitivity_encoding(data, 5)
+    if public_input:
+        resolution_data = data.copy()
+        observed_y_family_categories = (
+            resolution_data.loc[
+                resolution_data["y_isogg_prefix_family_pooled"] != "",
+                "y_isogg_prefix_family_pooled",
+            ]
+            .value_counts()
+            .sort_values(ascending=False)
+            .index.tolist()
+        )
+        previous_resolution = summary.get(
+            "paired_male_y_resolution_sensitivity", []
+        )
+        previous_family = next(
+            (
+                row
+                for row in previous_resolution
+                if row.get("y_encoding") == "AADR_ISOGG_prefix_family"
+            ),
+            None,
+        )
+        y_family_categories = (
+            str(previous_family["categories"]).split(";")
+            if previous_family and previous_family.get("categories")
+            else observed_y_family_categories
+        )
+        if set(y_family_categories) != set(observed_y_family_categories):
+            raise ValueError("Public Y-prefix category set does not match summary")
+        y_family_source_column = "project-coded y_prefix_category"
+    else:
+        resolution_data, y_family_categories, y_family_source_column = (
+            add_y_resolution_sensitivity_encoding(data, 5)
+        )
+
+    # The derived-data route must refresh every table whose site counts or
+    # site-balanced values depend on the normalized locality key.  Earlier
+    # versions refreshed the inferential tables but accidentally left these
+    # descriptive tables at their pre-alias values.
+    count_matrix(data).to_csv(tables / "counts_country_by_bin.csv", index=False)
+    analysis_cell_adequacy(data).to_csv(
+        tables / "country_period_marker_adequacy.csv", index=False
+    )
+    site_dominance(data).to_csv(
+        tables / "site_and_country_dominance.csv", index=False
+    )
+
+    sensitivity_rows = []
+    filters = {
+        "All marker-qualified calls": data,
+        "AADR assessment-positive subset": data[data["strict_qc"]],
+        "Exclude population-outlier labels": data[~data["population_outlier"]],
+        "Direct dates only": data[data["direct_date"]],
+    }
+    paired = data[
+        data["molecular_sex"].astype(str).str.startswith("M")
+        & (data["mt_call"] != "")
+        & (data["y_call"] != "")
+    ]
+    for marker, call_col, pooled_col in (
+        ("mtDNA", "mt_call", "mt_l1_pooled"),
+        ("Y", "y_call", "y_l1_pooled"),
+    ):
+        marker_filters = dict(filters)
+        representative_flag = (
+            "kin_representative_mt"
+            if marker == "mtDNA"
+            else "kin_representative_y"
+        )
+        if representative_flag in data.columns:
+            marker_filters["One representative per <=2d kin component"] = (
+                data[data[representative_flag] & (data[pooled_col] != "")]
+            )
+        else:
+            marker_filters["One representative per <=2d kin component"] = (
+                unrelated_subset(data, call_col)
+            )
+        marker_filters["Male-paired subset"] = paired
+        for name, subset in marker_filters.items():
+            called = subset[subset[pooled_col] != ""]
+            sensitivity_rows.append(
+                {
+                    "analysis": name,
+                    "marker": marker,
+                    "n_calls": len(called),
+                    "n_sites": len(
+                        called.drop_duplicates(["country", "locality"])
+                    ),
+                    "mean_adjacent_tv": mean_adjacent_tv(
+                        subset, pooled_col, categories[marker]
+                    ),
+                }
+            )
+        for country in COUNTRIES:
+            subset = data[data["country"] != country]
+            called = subset[subset[pooled_col] != ""]
+            sensitivity_rows.append(
+                {
+                    "analysis": f"Leave out country: {country}",
+                    "marker": marker,
+                    "n_calls": len(called),
+                    "n_sites": len(
+                        called.drop_duplicates(["country", "locality"])
+                    ),
+                    "mean_adjacent_tv": mean_adjacent_tv(
+                        subset, pooled_col, categories[marker]
+                    ),
+                }
+            )
+    pd.DataFrame(sensitivity_rows).to_csv(
+        tables / "turnover_sensitivity.csv", index=False
     )
 
     diversity_parts = []
@@ -87,6 +291,7 @@ def main() -> None:
     residual_parts = []
     residual_summaries = []
     bootstrap_diagnostics = {}
+    observed_site_profiles = {}
 
     for marker in ("mtDNA", "Y"):
         column = columns[marker]
@@ -114,6 +319,16 @@ def main() -> None:
             marker_categories,
             site_balanced=True,
         )
+        observed_site_profiles[marker] = observed_site_profile
+        profile(data, column, marker_categories, site_balanced=False).to_csv(
+            tables
+            / f"composition_{marker.lower()}_individual_weighted.csv",
+            index=False,
+        )
+        observed_site_profile.to_csv(
+            tables / f"composition_{marker.lower()}_site_balanced.csv",
+            index=False,
+        )
         observed_diversity, observed_turnover = observed_profile_statistics(
             observed_site_profile, marker_categories
         )
@@ -137,9 +352,10 @@ def main() -> None:
         profiles = site_profile_table(
             data, column, marker_categories, min_calls=1
         )
-        profiles.to_csv(
-            tables / f"site_profiles_{marker.lower()}.csv", index=False
-        )
+        if not args.aggregate_only:
+            profiles.to_csv(
+                tables / f"site_profiles_{marker.lower()}.csv", index=False
+            )
         result = site_cluster_wild_period_test(
             profiles,
             args.permutations,
@@ -165,9 +381,10 @@ def main() -> None:
         residual_summaries.append(residual_summary)
 
         dispersion = dispersion_distance_table(profiles)
-        dispersion.to_csv(
-            tables / f"dispersion_profiles_{marker.lower()}.csv", index=False
-        )
+        if not args.aggregate_only:
+            dispersion.to_csv(
+                tables / f"dispersion_profiles_{marker.lower()}.csv", index=False
+            )
         dispersion_result = site_cluster_wild_period_test(
             dispersion,
             args.permutations,
@@ -226,9 +443,10 @@ def main() -> None:
     dispersion_summary_table.to_csv(
         tables / "composition_dispersion_by_period.csv", index=False
     )
-    residual_table.to_csv(
-        tables / "cluster_model_residual_diagnostics.csv", index=False
-    )
+    if not args.aggregate_only:
+        residual_table.to_csv(
+            tables / "cluster_model_residual_diagnostics.csv", index=False
+        )
     residual_summary_table.to_csv(
         tables / "cluster_model_diagnostic_summary.csv", index=False
     )
@@ -321,6 +539,16 @@ def main() -> None:
             tables / "paired_male_y_resolution_family_bootstrap_draws.csv",
             index=False,
         )
+    surrogate_probability_columns = [
+        "bootstrap_two_sided_sign_tail_probability",
+        "bootstrap_sign_tail_interpretation",
+    ]
+    paired_summary = paired_summary.drop(
+        columns=surrogate_probability_columns, errors="ignore"
+    )
+    paired_resolution_sensitivity = paired_resolution_sensitivity.drop(
+        columns=surrogate_probability_columns, errors="ignore"
+    )
     paired_summary.to_csv(
         tables / "paired_male_turnover_bootstrap_summary.csv", index=False
     )
@@ -387,6 +615,24 @@ def main() -> None:
     date_summary_table.to_csv(
         tables / "date_uncertainty_summary.csv", index=False
     )
+    if {"latitude", "longitude"}.issubset(data.columns):
+        figure_sampling(
+            data,
+            count_matrix(data),
+            figures / "figure_1_sampling.png",
+        )
+    figure_composition(
+        observed_site_profiles["mtDNA"],
+        categories["mtDNA"],
+        "mtDNA",
+        figures / "figure_2_mtdna_composition.png",
+    )
+    figure_composition(
+        observed_site_profiles["Y"],
+        categories["Y"],
+        "Y chromosome",
+        figures / "figure_3_y_composition.png",
+    )
     figure_diversity_turnover(
         diversity_table,
         turnover_table,
@@ -410,6 +656,9 @@ def main() -> None:
     summary["date_assignment_scenario_sensitivity"] = (
         date_summary_table.to_dict("records")
     )
+    summary["primary_sites"] = int(
+        data[["country", "locality"]].drop_duplicates().shape[0]
+    )
     summary_path.write_text(
         json.dumps(summary, indent=2, ensure_ascii=False, default=str),
         encoding="utf-8",
@@ -427,7 +676,7 @@ def main() -> None:
     )
     manifest.update(
         {
-            "code_revision_date": "2026-08-15",
+            "code_revision_date": "2026-08-21",
             "random_seed": args.seed,
             "rng_streams": (
                 "Stable SHA-256-named NumPy SeedSequence streams; each "
@@ -451,6 +700,41 @@ def main() -> None:
                     "Assumption-based chronological-bin boundary sensitivity; "
                     "not calibrated radiocarbon posterior uncertainty"
                 ),
+            },
+            "paired_surrogate_probability_policy": {
+                "removed_from_user_facing_outputs": True,
+                "removed_fields": surrogate_probability_columns,
+                "reason": (
+                    "The ordinary uncentred bootstrap sign fraction is not a "
+                    "null-imposed hypothesis-test P value."
+                ),
+                "recoverable_from_saved_draws_in_extended_package": True,
+            },
+            "public_project_coded_input": {
+                "used_for_this_run": public_input,
+                "contains_source_person_ids": False if public_input else None,
+                "contains_terminal_haplogroup_calls": False if public_input else None,
+                "site_identifier": "project code" if public_input else "normalized locality",
+                "linkage_warning": (
+                    "Project-coded, not anonymous; public attribute combinations "
+                    "may be linkable to the AADR source."
+                    if public_input
+                    else None
+                ),
+            },
+            "site_locality_normalization": {
+                "cluster_key": ["country", "locality"],
+                "raw_text_column": "locality_raw",
+                "aliases": [
+                    {
+                        "country": country,
+                        "source_locality": source,
+                        "normalized_locality": normalized,
+                    }
+                    for (country, source), normalized in (
+                        SITE_LOCALITY_ALIASES.items()
+                    )
+                ],
             },
             "site_cluster_bootstrap": {
                 "cluster": "country + locality",
@@ -477,9 +761,17 @@ def main() -> None:
                 "script": "analysis/recompute_from_catalogue.py",
                 "script_sha256": sha256(Path(__file__)),
                 "reason": (
-                    "Corrected observed/bootstrap reporting, added sparse-table "
-                    "Monte Carlo diagnostics, and relabeled date assignment as "
-                    "scenario sensitivity; upstream catalogue unchanged"
+                    (
+                        "Recomputed from the schema-locked project-coded AADR-"
+                        "derived analytical input; source identifiers, locality "
+                        "strings and terminal calls are absent"
+                        if public_input
+                        else "Normalized one verified Bestamak spelling alias "
+                        "while preserving locality_raw"
+                    )
+                    + "; Figure 4 uses the observed site-balanced statistic as "
+                    "its point and cluster-bootstrap percentiles as its interval; "
+                    "date sensitivity uses 5,000 shared assignment scenarios"
                 ),
             },
             "source_code_sha256": sha256(

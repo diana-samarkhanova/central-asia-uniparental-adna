@@ -4,7 +4,12 @@
   "cluster_wild_resamples_per_test": 1999,
   "repeated_site_permutations_per_test": 1999,
   "number_of_tests": 57,
-  "source_code_sha256": "3d72ed296b8cd5e3f4565e4bf6d553a8829b034ee7366204788c27bc3dfd8659",
-  "primary_analysis_code_sha256": "0b7ff2f4bb2cf0ab069403064370d5f5f2ff30e8afad4ac66dd64d85fb49a375",
+  "analytical_input": {
+    "file": "data/derived/central_asia_analysis_input_v1.csv",
+    "sha256": "692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3",
+    "public_project_coded_input": true
+  },
+  "source_code_sha256": "de5094088d142dc3050c1e1f2f607c81bd8044cf92347393d1173a2a92a8cb36",
+  "primary_analysis_code_sha256": "13893dda339b1dc0a46ca094cd0c582f52fc4a05c8f4c3716a1437b37ef0f50c",
   "interpretation": "Exploratory sensitivity analyses. Cluster-wild tests preserve country-locality dependence; repeated-site tests use site fixed effects and within-site period-label permutations."
 }

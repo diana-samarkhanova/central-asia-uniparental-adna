@@ -1,0 +1,27 @@
+{
+  "input": "data/derived/central_asia_analysis_input_v1.csv",
+  "input_sha256": "692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3",
+  "analysis_script_sha256": "414af4a7d5762477186786e4044744a8972d0019e74d53f93176aa01a0614ce9",
+  "readme_sha256": "ac80f63c3a978ff4e968b833446237ff5e749d24e3c221a1d7e62575d76b405f",
+  "test_script_sha256": "0671fc1687244f4df48db30f0820097fd68d73ad417caf19b3feba9ea6ce9a76",
+  "seed": 20260821,
+  "wild_resamples": 9999,
+  "parametric_tv_draws_per_transition": 10000,
+  "paired_cluster_bootstrap_replicates": 10000,
+  "n_catalogue_rows": 489,
+  "n_paired_males": 216,
+  "outputs": {
+    "continuous_time_cluster_tests.csv": "7933550a378cbec98814b577a16ebd305bed173d58dce8eff419d804552a75f5",
+    "equal_500y_composition.csv": "d36353383b308f5ee9e5d3dca67484dcf3b912a0198e7721a46289a23bcb0fea",
+    "equal_500y_turnover.csv": "902a4629041920a5293b2ee2ea3edba66e1b0504662995064cb7d5d6ff49954d",
+    "hierarchical_model_identifiability_audit.csv": "e5648561c8329d21bf268e66d27a4a3779d14382ade2a1e804f27c3a5fb4ed9c",
+    "multinomial_predictive_sensitivity.csv": "175e6360d9f7cdd1c662b557db0461020d404b2db60347d734602651e18da0ec",
+    "original_bin_linear_scaled_tv.csv": "bcf7d8add0af420404b92e0167ac133ca64a4e5297152e6e59f4f13df00dea43",
+    "paired_male_tv_adjusted_cluster_bootstrap_draws_broad.csv": "8c5629c7f9f22f7ef12e7654abd97ef09f56e046a40bc1bec27d9bd1fa21c990",
+    "paired_male_tv_adjusted_cluster_bootstrap_draws_isogg_prefix.csv": "4c919b631ebacec8c5ff698cc60209df95b583d69b1a666f4095aa214e10a646",
+    "paired_male_tv_adjusted_cluster_bootstrap_summary.csv": "c42a4d6d0b9900bbb953d6d627df69e4372c9effce870df82547d5a894114cd0",
+    "paired_male_tv_finite_sample_adjustments.csv": "8018feba9746751cc6e363b0ffc0d49a51093b3dd0fee3330df0b94348dd1846",
+    "stable_profile_cluster_tests.csv": "495ec7a8115a7a6956eb7a91a1eff4aee0d426e598e385a008ab4393655c935c",
+    "stable_profile_vectors.csv": "f8b45c35720e43131167b9faab609176bf560e8ece4ac03fa3b0f4ab09b4ee7d"
+  }
+}
