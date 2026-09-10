@@ -64,10 +64,13 @@ a merged release, tag or DOI. Detailed raw catalogues are generated only into
 external work directories and are not automatically published. The project-
 coded analytical input remains byte-identical to v4.
 
-## Code-only public update
+## Figure publication — 10 September 2026
 
-The updated scripts, documentation and code provenance are provided while all
-existing public data tables and figures are preserved byte for byte. Newly
-rendered figures and their figure-specific provenance remain in the locally
-verified candidate pending explicit publication approval after automatic
-review rejected a public figure upload.
+Following explicit owner approval, this update adds the verified regenerated
+Figure 5 PNGs and the v4 figure's provenance to the public draft PR. The v4
+figure generator records input-table, script and output hashes, raw P values
+and rendering settings. All statistical CSVs remain byte-identical to v4.
+
+The earlier code-only commit preserved the old figures while figure publication
+awaited approval. This update completes that deferred figure publication; the
+remaining AmtDB and final-release requirements above still apply.

@@ -439,9 +439,10 @@
     }
   },
   "figure_5_v4": {
-    "status": "regenerated_and_visually_checked_locally",
-    "publication_status": "The newly rendered PNG and its provenance are withheld from this code-only GitHub update pending publication approval. Existing public figures are preserved byte for byte.",
-    "execution": "Additional rendering step after the statistical run; included in reproduce.py for future local runs."
+    "status": "regenerated_and_visually_checked",
+    "execution": "Additional rendering step after the statistical run; now included in reproduce.py for future runs.",
+    "provenance": "results/aadr-v66p1_2026-07-25/figures/figure_5_sensitivity_v4.provenance.json",
+    "publication_status": "Explicit owner approval received on 2026-09-10 for adding the prepared figures to public draft PR #1."
   },
   "inherited_not_recomputed": [
     "AmtDB/aYChr cross-database coverage table and Figure 6",
