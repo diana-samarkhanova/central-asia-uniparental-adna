@@ -74,3 +74,25 @@ and rendering settings. All statistical CSVs remain byte-identical to v4.
 The earlier code-only commit preserved the old figures while figure publication
 awaited approval. This update completes that deferred figure publication; the
 remaining AmtDB and final-release requirements above still apply.
+
+## As-is completion — 11 September 2026
+
+The owner selected completion using the verified existing analysis, without
+requesting a historical export from database maintainers. The current package
+therefore retains its AADR v66.p1 analytical input and the historical AmtDB
+v1.009 secondary audit. It does not adopt AmtDB v1.010.
+
+Independent extraction from original AADR and the recorded complete statistical
+rerun remain the evidence for the primary analysis and v4 extensions. The
+historical cross-database coverage table, Figure 6 and AmtDB matching summary
+are retained with an explicit inherited status. The missing original AmtDB
+CSV prevents a fresh three-source audit; it is not a prerequisite for completing
+this scoped reproducibility package. No full three-source rerun is claimed.
+
+This finalization changes documentation and checksums only. Source hashes,
+analysis code, statistical CSVs and approved figures remain unchanged from
+commit `31c8df35a4f4f6599a0113da4697f2ddfaf1641f`. Both regenerated Figure 5
+PNGs are already included in the public draft PR.
+
+See `AS_IS_STATUS.md` for the retained scope and the remaining scholarly
+release steps.

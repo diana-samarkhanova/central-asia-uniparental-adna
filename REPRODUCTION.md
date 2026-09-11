@@ -1,15 +1,20 @@
-# Reproduction routes (v4.1 candidate)
+# Reproduction routes (v4.1; scope finalized 11 September 2026)
 
 Use Python 3.12 and install `requirements.txt`. Outputs and raw sources should
 be placed outside the release tree. All routes preserve the original 25 July
 2026 analysis freeze. A database update is a new analysis version, never a
-replacement for a missing historical input.
+replacement for a missing historical input. This package is finalized with
+the existing verified primary analysis and extensions. The supplementary
+AmtDB cross-database audit remains historical and inherited. No AmtDB update
+or new three-source run is claimed, and requesting a file from database
+authors is not required for this verified scope. See `AS_IS_STATUS.md` for
+the final scope decision and publication requirements.
 
 | Route | Starting point | What is regenerated | What remains inherited |
 | --- | --- | --- | --- |
 | `derived` | Included 489-row project-coded CSV | Main statistical tables/figures 1–5, global sensitivities and v4 extensions | Category definitions, original catalogue metadata and database-coverage audit |
 | `aadr` | Exact AADR v66.p1 annotation | Source parsing, marker-specific deduplication, locality normalization, project-coded input, then the same statistical analyses | AmtDB/aYChr cross-database audit and Figure 6; definition/metadata initialization is explicitly logged |
-| `raw` | Exact AADR, AmtDB and aYChr files | Three-source pipeline, source catalogues, database audit, main/global analyses, rebuilt input and v4 extensions | Literature/source-scope review and separate calibration simulation are not rerun |
+| `raw` (currently blocked) | Exact AADR, AmtDB v1.009 and aYChr files | Optional future three-source pipeline, source catalogues, database audit, main/global analyses, rebuilt input and v4 extensions | Requires the missing original AmtDB CSV; literature/source-scope review and separate calibration simulation are not rerun |
 
 ## Verified on 8 September 2026
 
@@ -22,10 +27,17 @@ replacement for a missing historical input.
   The inherited database-coverage table is excluded from that count.
 - All 39 local tests passed with the verified AADR fixture enabled.
 
-The complete three-source route has not passed: the exact AmtDB v1.009 CSV
-is still missing. Independent AADR extraction and the full statistical rerun
-do not reproduce that separate cross-database audit. Recorded validation is
-in `validation/reproduction_v4_1.json`.
+The primary and extension calculations are therefore verified from the
+included input, with an independent exact-source reconstruction of that same
+input. Both regenerated Figure 5 PNGs and the v4 provenance were published
+on 10 September 2026.
+
+The complete three-source route has not passed because the exact AmtDB
+v1.009 CSV is missing. Independent AADR extraction and the full statistical
+rerun do not reproduce the separate cross-database audit. Its saved coverage
+table, matching summaries and Figure 6 are retained as historical inherited
+results, outside the completed primary-analysis verification. Recorded
+validation is in `validation/reproduction_v4_1.json`.
 
 ## Download or import frozen sources
 
@@ -39,7 +51,10 @@ are discarded. A preexisting file with different bytes is left unchanged and
 reported as a conflict. Only transient network errors are retried. Selecting
 two ready sources does not report that all three sources are ready.
 
-AmtDB v1.009 has no verified historical export URL. To import the original:
+AmtDB v1.009 has no verified historical export URL. Importing it is needed
+only for the optional full three-source route; no author request is part of
+finishing the current primary-analysis package. If the original becomes
+available:
 
     python analysis/fetch_sources.py --resource amtdb \
       --output-root ../central-asia-sources \
@@ -72,7 +87,7 @@ The extractor saves the primary source-labelled catalogue and its extraction
 manifest. Its working directory must be absent or empty, and its final output
 must be a new external file.
 
-## Reproduce all three sources once AmtDB is available
+## Optional future three-source reproduction
 
     python analysis/reproduce.py --mode raw --fetch \
       --source-root ../central-asia-sources \
@@ -136,6 +151,8 @@ Project-coded records and site-profile vectors remain potentially linkable
 to the public source. The v4.1 candidate preserves the same analytical input
 and profile material already present in the public draft PR. Raw catalogues
 remain in external working directories. Author approval, archaeological
-interpretation review, the AmtDB snapshot and archival DOI remain pending;
-this update does not merge the draft or create a release.
+interpretation review and archival release metadata remain pending. Recovering
+the AmtDB snapshot is an optional extension of reproducibility scope; it is
+mandatory only before claiming a fresh complete three-source reproduction.
+This scope clarification does not merge the draft or create a release.
 See `PUBLIC_RELEASE_CHECKLIST.md`.

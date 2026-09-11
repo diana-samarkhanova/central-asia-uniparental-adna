@@ -2,6 +2,11 @@
 
 Audit date: **2026-08-21** (Asia/Almaty)
 
+Historical audit record. For the owner's 11 September 2026 decision to
+complete the verified existing package with the AmtDB audit explicitly
+inherited, see `../../AS_IS_STATUS.md`. The missing v1.009 export still limits
+fresh three-source reconstruction; recovery is optional future work.
+
 Scope: read-only resolution of review points A2, C11, and B10 against the
 current frozen catalogue. No manuscript, analysis code, or release-package
 file was changed.
@@ -22,4 +27,3 @@ Detailed evidence is in:
 - `source_resolution.md`
 - `russian_language_search.md`
 - `locality_audit.md`
-

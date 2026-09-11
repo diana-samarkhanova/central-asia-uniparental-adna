@@ -74,6 +74,13 @@ Recommended availability wording:
 
 ### Consequence
 
+**Status note, 11 September 2026:** the options below record the earlier
+source-recovery review. The owner has selected completion of the existing
+verified AADR analysis, with the historical AmtDB audit explicitly inherited.
+No maintainer request is part of the current task. No new AmtDB export or
+source-identified regional derivative is added to the public package; see
+`../../AS_IS_STATUS.md` for the exact current scope.
+
 The missing-file blocker is a provenance/recoverability problem, not chiefly a
 licensing problem. CC BY 4.0 does not make an absent historical byte stream
 reproducible.
@@ -105,4 +112,3 @@ Recommended limitation wording if route 3 is used:
 > we release and checksum only the regional derivative and do not claim that
 > the complete historical database export can be reconstructed from the live
 > service.
-

@@ -7,15 +7,23 @@ Turkmenistan and Uzbekistan.
 Status: public repository with an unmerged pre-submission candidate. Evidence
 is frozen on 25 July 2026; statistical/literature/site-normalization corrections
 are synchronized to 21 August 2026. Reproduction tooling was updated on
-8 September 2026 (v4.1 candidate).
-This is not yet a citable public release.
+8 September 2026 (v4.1 candidate); its reproducibility scope was finalized
+on 11 September 2026 using the existing verified inputs and results. Both
+regenerated Figure 5 PNGs and their v4 provenance were published on
+10 September 2026. This is not yet a citable public release. See
+`AS_IS_STATUS.md` for the completed reproducibility scope and remaining
+publication steps.
 
 ## Scope
 
-The project harmonizes AADR v66.p1 metadata, audits marker-specific databases,
-and describes the composition of published archaeological individuals and
-equal-weighted published localities. The estimand is the published evidence
-base, not the population frequency of lineages in ancient Central Asia.
+The project harmonizes AADR v66.p1 metadata and describes the composition of
+published archaeological individuals and equal-weighted published localities.
+The primary analysis and statistical extensions are reproducible from the
+included input, independently rebuilt from the exact AADR source. The
+marker-specific database audit is retained as a historical supplementary
+result; its AmtDB component has not been freshly reproduced. The estimand is
+the published evidence base, not the population frequency of lineages in
+ancient Central Asia.
 
 The frozen AADR catalogue contains 501 unique archaeological individuals.
 The primary interval, 3500 BCE to 1500 CE, contains 489 individuals from
@@ -34,7 +42,7 @@ encoding supports faster Y-chromosome turnover.
 
 The revised primary site-profile estimand requires at least two marker calls
 per profile and uses 9,999 null-imposed HC2 cluster-wild resamples. The mtDNA
-association is not reproduced (71 profiles; Holm *P*=0.2224), whereas the Y
+association is not supported (71 profiles; Holm *P*=0.2224), whereas the Y
 association persists (48 analyzed profiles; Holm *P*=0.0140). The >=3 results
 are stringent, low-information sensitivities. Figure 5 v4 visually
 distinguishes the 9,999-resample revised profile-size rows from 1,999-resample
@@ -88,10 +96,13 @@ The 8 September 2026 local validation passed all 39 tests with the verified
 AADR fixture enabled. Independent AADR extraction reproduced the frozen
 489-row input byte for byte, and a complete isolated `derived` run reproduced
 all 32 compared CSVs byte for byte: 20 main tables and 12 extension tables.
-Live AADR and aYChr downloads also matched their frozen hashes. The complete
-three-source route remains blocked by the missing AmtDB v1.009 export.
-See `validation/reproduction_v4_1.json` for the recorded validation and
-`REPRODUCTION.md` for the optional AADR fixture test.
+Live AADR and aYChr downloads also matched their frozen hashes. These checks
+complete the verified primary-analysis and extension scope of this package.
+The missing original AmtDB v1.009 CSV limits fresh reproduction of the
+separate cross-database audit; its coverage table and Figure 6 remain
+historical, inherited outputs. No new AmtDB version or completed three-source
+rerun is claimed. See `validation/reproduction_v4_1.json` for the recorded
+validation and `REPRODUCTION.md` for the optional AADR fixture test.
 
 ## Reproduce in an isolated output directory
 
@@ -121,8 +132,10 @@ runner explicitly records inherited category definitions, summary metadata
 and database-coverage counts. It does not copy previously calculated
 statistical CSVs or figures into a new run. Literature/source-scope audits and
 the separate wild-bootstrap calibration simulation are outside these reruns.
-See `REPRODUCTION.md` for the complete three-source route and remaining AmtDB
-requirement. A passing local release verifier is not publication approval.
+A request to database maintainers is not required to use or finish this
+verified primary-analysis package. See `REPRODUCTION.md` for the optional
+three-source route and its unresolved source requirement. A passing local
+release verifier is not publication approval.
 
 ## Run the statistical extensions separately
 
@@ -146,7 +159,14 @@ The included file is project-coded, not anonymous: combinations of public
 AADR-derived attributes can remain linkable to the source resource. It is
 therefore limited to fields actually needed by the released analyses.
 
-## Complete three-source reproduction
+## Optional three-source reproduction
+
+This broader route is retained for future recovery of the historical source.
+It is not a prerequisite for reproducing the primary analysis or extensions.
+The saved AmtDB audit and Figure 6 must continue to be identified as
+historical inherited results until that source is recovered and checked.
+Contacting database authors is an optional recovery method, not a condition
+of completing the current package. No newer AmtDB export was adopted.
 
 Follow data/README.md to obtain the exact frozen inputs and verify their
 SHA-256 hashes. AADR is pinned to Dataverse version 14.0 (version id 735358),
