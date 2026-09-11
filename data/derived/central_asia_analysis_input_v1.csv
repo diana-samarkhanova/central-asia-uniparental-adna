@@ -1,0 +1,490 @@
+project_record_id,country,site_key,analysis_bin,study_key,molecular_sex,mt_category,y_category,y_prefix_category,mt_called,y_called,strict_qc,population_outlier,direct_date,date_bp,date_sd_bp,kin_representative_mt,kin_representative_y,latitude_0_1deg,longitude_0_1deg
+CAU000001,Kazakhstan,SITE0018,B1 3500-2501 BCE,STUDY005,F,Other,,,True,False,True,False,True,5396,42,True,False,53.3,67.6
+CAU000002,Kazakhstan,SITE0018,B1 3500-2501 BCE,STUDY005,M,K,R,R1b,True,True,True,False,True,5337,102,True,True,53.3,67.6
+CAU000003,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY012,F,C,,,True,False,True,False,True,5164,77,False,False,49.5,58.5
+CAU000004,Kazakhstan,SITE0018,B1 3500-2501 BCE,STUDY005,M,R,N,N,True,True,True,False,True,5143,95,True,True,53.3,67.6
+CAU000005,Kazakhstan,SITE0070,B1 3500-2501 BCE,STUDY012,F,U,,,True,False,True,False,True,5021,87,True,False,50.8,49.3
+CAU000006,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY012,F,C,,,True,False,True,False,True,4937,46,False,False,49.5,58.5
+CAU000007,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY012,F,H,,,True,False,True,False,True,4921,38,True,False,49.5,58.5
+CAU000008,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY012,M,U,Q,Q1b,True,True,True,False,True,4918,37,False,True,49.5,58.5
+CAU000009,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,F,,,,False,False,True,True,False,4900,29,False,False,49.5,58.5
+CAU000010,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,F,U,,,True,False,True,False,False,4900,29,False,False,49.5,58.5
+CAU000011,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,M,U,R,R1b,True,True,True,False,False,4900,29,False,True,49.5,58.5
+CAU000012,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,M,C,Q,Q1b,True,True,True,False,False,4900,29,True,True,49.5,58.5
+CAU000013,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,F,H,,,True,False,True,False,False,4900,29,True,False,49.5,58.5
+CAU000014,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,F,,,,False,False,True,False,False,4900,29,False,False,49.5,58.5
+CAU000015,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,M,W,Q,Q1b,True,True,True,False,False,4900,29,True,True,49.5,58.5
+CAU000016,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,M,U,R,R1b,True,True,True,False,False,4900,29,True,False,49.5,58.5
+CAU000017,Kazakhstan,SITE0058,B1 3500-2501 BCE,STUDY011,F,,,,False,False,False,False,False,4900,29,False,False,49.5,58.5
+CAU000018,Kazakhstan,SITE0037,B1 3500-2501 BCE,STUDY005,M,R,R,R1b,True,True,True,False,True,4890,44,True,True,49.1,75.9
+CAU000019,Kazakhstan,SITE0012,B1 3500-2501 BCE,STUDY003,F,A,,,True,False,True,False,True,4858,24,True,False,52.2,64.5
+CAU000020,Kazakhstan,SITE0023,B1 3500-2501 BCE,STUDY012,F,R,,,True,False,True,False,True,4577,88,True,False,45.1,79.4
+CAU000021,Kazakhstan,SITE0090,B1 3500-2501 BCE,STUDY005,F,C,,,True,False,True,False,True,4480,46,True,False,52.6,76.7
+CAU000022,Kazakhstan,SITE0070,B2 2500-1801 BCE,STUDY012,M,I,N,N,True,True,True,False,True,4328,51,True,True,50.8,49.3
+CAU000023,Kazakhstan,SITE0088,B2 2500-1801 BCE,STUDY003,M,U,N,N,True,True,True,False,True,4185,20,True,True,52.4,76.8
+CAU000024,Kazakhstan,SITE0028,B2 2500-1801 BCE,STUDY005,F,C,,,True,False,True,False,True,4108,68,True,False,51.6,74.7
+CAU000025,Kazakhstan,SITE0070,B2 2500-1801 BCE,STUDY012,M,U,N,N,True,True,True,False,True,4046,45,True,True,50.8,49.3
+CAU000026,Kazakhstan,SITE0036,B2 2500-1801 BCE,STUDY012,M,T,C,C2a,True,True,True,False,True,4042,43,True,True,48.8,83.9
+CAU000027,Kazakhstan,SITE0089,B2 2500-1801 BCE,STUDY003,F,C,,,True,False,True,False,True,4038,42,True,False,51.7,74.7
+CAU000028,Kazakhstan,SITE0027,B2 2500-1801 BCE,STUDY003,F,U,,,True,False,True,False,True,3994,20,True,False,52.6,76.7
+CAU000029,Kazakhstan,SITE0100,B2 2500-1801 BCE,STUDY012,M,T,R,R1a,True,True,True,False,True,3968,54,True,True,50.2,81.8
+CAU000030,Kazakhstan,SITE0096,B2 2500-1801 BCE,STUDY002,F,N,,,True,False,True,True,True,3924,55,True,False,50.6,56.8
+CAU000031,Kazakhstan,SITE0035,B2 2500-1801 BCE,STUDY012,F,T,,,True,False,True,False,True,3796,48,True,False,48.7,77.0
+CAU000032,Kazakhstan,SITE0067,B2 2500-1801 BCE,STUDY012,F,T,,,True,False,True,False,True,3761,43,True,False,50.1,74.4
+CAU000033,Kazakhstan,SITE0038,B3 1800-901 BCE,STUDY012,M,K,R,R1a,True,True,True,False,True,3743,54,True,True,48.8,76.5
+CAU000034,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,M,T,R,R1a,True,True,True,False,True,3732,57,True,True,50.1,74.4
+CAU000035,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3724,58,True,False,50.1,74.4
+CAU000036,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3715,59,True,True,50.1,74.4
+CAU000037,Kazakhstan,SITE0080,B3 1800-901 BCE,STUDY012,M,T,R,R1a,True,True,True,False,True,3715,59,True,True,49.1,75.8
+CAU000038,Kazakhstan,SITE0023,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,False,3700,87,True,False,45.1,79.4
+CAU000039,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3695,57,True,False,42.7,73.1
+CAU000040,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3695,57,True,False,50.1,74.4
+CAU000041,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3695,57,True,False,50.1,74.4
+CAU000042,Kazakhstan,SITE0025,B3 1800-901 BCE,STUDY012,M,N,R,R1a,True,True,True,False,True,3684,55,True,True,50.5,57.0
+CAU000043,Kazakhstan,SITE0002,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3684,55,True,True,47.8,72.0
+CAU000044,Kazakhstan,SITE0065,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3674,52,True,False,52.6,62.7
+CAU000045,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3674,52,True,False,50.1,74.4
+CAU000046,Kazakhstan,SITE0023,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3668,61,True,True,45.1,79.4
+CAU000047,Kazakhstan,SITE0038,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3658,53,True,True,48.8,76.5
+CAU000048,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,F,J,,,True,False,True,False,True,3656,46,True,False,48.7,77.0
+CAU000049,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3656,46,True,False,48.7,77.0
+CAU000050,Kazakhstan,SITE0065,B3 1800-901 BCE,STUDY012,F,H,,,True,False,True,False,True,3656,46,True,False,52.6,62.7
+CAU000051,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,True,True,3649,44,True,False,48.7,77.0
+CAU000052,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3642,41,True,False,50.1,74.4
+CAU000053,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,M,,,,False,False,True,True,True,3632,43,False,False,48.7,77.0
+CAU000054,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,M,H,R,R1a,True,True,False,False,True,3631,38,True,True,48.7,77.0
+CAU000055,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,F,H,,,True,False,True,False,True,3631,38,True,False,48.7,77.0
+CAU000056,Kazakhstan,SITE0067,B3 1800-901 BCE,STUDY012,M,HV,R,R1a,True,True,True,False,True,3631,38,True,True,50.1,74.4
+CAU000057,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,False,False,True,3626,37,True,True,48.7,77.0
+CAU000058,Kazakhstan,SITE0062,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3622,36,True,False,43.2,77.8
+CAU000059,Kazakhstan,SITE0021,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3614,37,True,False,50.7,57.7
+CAU000060,Kazakhstan,SITE0052,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3609,38,True,False,46.9,80.0
+CAU000061,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,M,R,R,R1a,True,True,True,True,True,3603,41,True,True,42.7,73.1
+CAU000062,Kazakhstan,SITE0006,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,False,3575,72,True,True,47.0,80.0
+CAU000063,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,F,Other,,,True,False,True,True,True,3573,47,True,False,48.7,77.0
+CAU000064,Kazakhstan,SITE0091,B3 1800-901 BCE,STUDY012,F,R,,,True,False,True,False,True,3562,46,True,False,49.6,50.8
+CAU000065,Kazakhstan,SITE0038,B3 1800-901 BCE,STUDY012,M,H,R,R1a,True,True,True,False,True,3562,46,False,False,48.8,76.5
+CAU000066,Kazakhstan,SITE0006,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3551,49,True,False,47.0,80.0
+CAU000067,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3536,35,True,True,42.7,73.1
+CAU000068,Kazakhstan,SITE0006,B3 1800-901 BCE,STUDY012,M,N,R,R1a,True,True,True,False,True,3522,29,True,True,47.0,80.0
+CAU000069,Kazakhstan,SITE0052,B3 1800-901 BCE,STUDY012,F,J,,,True,False,True,False,True,3522,29,True,False,46.9,80.0
+CAU000070,Kazakhstan,SITE0006,B3 1800-901 BCE,STUDY001,M,U,R,R1a,True,True,True,False,True,3508,32,True,True,47.0,80.0
+CAU000071,Kazakhstan,SITE0062,B3 1800-901 BCE,STUDY001,M,G,Q,Q1b,True,True,True,False,True,3508,32,True,True,43.2,77.8
+CAU000072,Kazakhstan,SITE0006,B3 1800-901 BCE,STUDY012,M,J,R,R1a,True,True,True,False,True,3503,33,True,True,47.0,80.0
+CAU000073,Kazakhstan,SITE0035,B3 1800-901 BCE,STUDY012,M,,,,False,False,True,False,False,3500,29,False,False,48.7,77.0
+CAU000074,Kazakhstan,SITE0085,B3 1800-901 BCE,STUDY012,M,H,R,R1a,True,True,True,False,True,3497,34,True,True,50.8,75.6
+CAU000075,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3487,37,True,False,42.7,73.1
+CAU000076,Kazakhstan,SITE0052,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3484,33,True,True,46.9,80.0
+CAU000077,Kazakhstan,SITE0052,B3 1800-901 BCE,STUDY012,M,H,R,R1a,True,True,True,False,True,3456,29,True,True,46.9,80.0
+CAU000078,Kazakhstan,SITE0095,B3 1800-901 BCE,STUDY012,M,C,J,J2a,True,True,True,False,False,3450,58,True,True,50.2,56.0
+CAU000079,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,M,J,R,R1a,True,True,False,False,True,3449,28,True,True,42.7,73.1
+CAU000080,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3445,32,True,True,50.2,81.8
+CAU000081,Kazakhstan,SITE0071,B3 1800-901 BCE,STUDY004,F,U,,,True,False,True,False,True,3439,46,True,False,52.5,76.8
+CAU000082,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3439,30,True,False,42.7,73.1
+CAU000083,Kazakhstan,SITE0020,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3432,24,True,False,49.7,73.9
+CAU000084,Kazakhstan,SITE0078,B3 1800-901 BCE,STUDY012,M,W,R,R1a,True,True,True,False,True,3425,22,True,True,42.7,73.1
+CAU000085,Kazakhstan,SITE0085,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3396,27,True,True,50.8,75.6
+CAU000086,Kazakhstan,SITE0023,B3 1800-901 BCE,STUDY012,F,J,,,True,False,True,False,True,3343,49,True,False,45.1,79.4
+CAU000087,Kazakhstan,SITE0061,B3 1800-901 BCE,STUDY007,F,H,,,True,False,True,False,True,3318,41,True,False,48.3,75.4
+CAU000088,Kazakhstan,SITE0030,B3 1800-901 BCE,STUDY012,F,J,,,True,False,True,False,False,3250,115,True,False,51.0,57.9
+CAU000089,Kazakhstan,SITE0068,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3234,55,True,False,49.2,84.2
+CAU000090,Kazakhstan,SITE0095,B3 1800-901 BCE,STUDY012,M,H,R,R1a,True,True,True,False,True,3216,51,True,True,50.2,56.0
+CAU000091,Kazakhstan,SITE0093,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,False,3150,115,True,False,43.4,76.6
+CAU000092,Kazakhstan,SITE0085,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,False,3100,144,True,False,50.8,75.6
+CAU000093,Kazakhstan,SITE0097,B3 1800-901 BCE,STUDY012,F,,,,False,False,False,False,False,3100,87,False,False,45.1,79.4
+CAU000094,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,M,A,R,R1a,True,True,True,False,True,3090,47,True,True,50.2,81.8
+CAU000095,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,M,I,R,R1a,True,True,True,False,True,3042,46,True,True,50.2,81.8
+CAU000096,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,M,U,Q,Q1b,True,True,True,True,True,3035,45,True,True,50.2,81.8
+CAU000097,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,M,U,R,R1b,True,True,True,False,True,3015,41,True,True,50.2,81.8
+CAU000098,Kazakhstan,SITE0097,B3 1800-901 BCE,STUDY012,M,H,,,True,False,False,False,True,2994,42,True,False,45.1,79.4
+CAU000099,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,M,K,R,R1a,True,True,True,False,True,2977,44,True,True,50.2,81.8
+CAU000100,Kazakhstan,SITE0100,B3 1800-901 BCE,STUDY012,F,W,,,True,False,True,False,True,2911,36,True,False,50.2,81.8
+CAU000101,Kazakhstan,SITE0097,B4 900-201 BCE,STUDY012,F,D,,,True,False,True,False,True,2816,36,True,False,45.1,79.4
+CAU000102,Kazakhstan,SITE0048,B4 900-201 BCE,STUDY007,F,T,,,True,False,True,False,True,2739,16,True,False,44.5,78.3
+CAU000103,Kazakhstan,SITE0014,B4 900-201 BCE,STUDY004,M,H,R,R1a,True,True,True,False,True,2704,64,True,True,51.1,75.7
+CAU000104,Kazakhstan,SITE0100,B4 900-201 BCE,STUDY015,F,C,,,True,False,True,False,False,2700,87,True,False,50.2,81.8
+CAU000105,Kazakhstan,SITE0003,B4 900-201 BCE,STUDY007,M,H,R,R1a,True,True,True,False,True,2677,84,False,True,48.9,74.8
+CAU000106,Kazakhstan,SITE0072,B4 900-201 BCE,STUDY012,M,,,,False,False,False,False,True,2675,80,False,False,52.9,76.5
+CAU000107,Kazakhstan,SITE0048,B4 900-201 BCE,STUDY007,M,I,R,R1a,True,True,True,False,True,2654,399,True,True,44.5,78.3
+CAU000108,Kazakhstan,SITE0045,B4 900-201 BCE,STUDY004,M,U,E,E1b,True,True,True,False,True,2631,87,True,True,43.1,68.2
+CAU000109,Kazakhstan,SITE0004,B4 900-201 BCE,STUDY009,M,A,J,J1a,True,True,True,False,True,2621,78,True,True,48.7,73.7
+CAU000110,Kazakhstan,SITE0094,B4 900-201 BCE,STUDY007,M,H,C,C2a,True,True,True,False,True,2618,75,True,True,49.1,75.8
+CAU000111,Kazakhstan,SITE0064,B4 900-201 BCE,STUDY007,F,HV,,,True,False,True,False,True,2616,76,True,False,50.4,75.9
+CAU000112,Kazakhstan,SITE0024,B4 900-201 BCE,STUDY007,M,J,R,R1a,True,True,True,False,True,2612,74,True,True,49.5,77.8
+CAU000113,Kazakhstan,SITE0014,B4 900-201 BCE,STUDY007,F,,,,False,False,True,False,True,2606,71,False,False,51.1,75.7
+CAU000114,Kazakhstan,SITE0033,B4 900-201 BCE,STUDY015,M,HV,Q,Q1b,True,True,True,False,True,2603,69,True,True,50.3,81.4
+CAU000115,Kazakhstan,SITE0042,B4 900-201 BCE,STUDY007,U,U,,,True,False,True,False,True,2603,72,True,False,49.1,75.2
+CAU000116,Kazakhstan,SITE0024,B4 900-201 BCE,STUDY007,F,J,,,True,False,True,False,False,2600,29,False,False,49.5,77.8
+CAU000117,Kazakhstan,SITE0061,B4 900-201 BCE,STUDY007,F,I,,,True,False,True,False,False,2600,115,False,False,48.3,75.4
+CAU000118,Kazakhstan,SITE0082,B4 900-201 BCE,STUDY007,F,D,,,True,False,True,False,False,2600,87,True,False,49.2,75.2
+CAU000119,Kazakhstan,SITE0076,B4 900-201 BCE,STUDY007,M,H,R,R1a,True,True,True,False,True,2596,71,False,False,49.1,75.2
+CAU000120,Kazakhstan,SITE0015,B4 900-201 BCE,STUDY007,M,T,R,R1a,True,True,True,False,True,2592,71,True,True,50.7,57.2
+CAU000121,Kazakhstan,SITE0009,B4 900-201 BCE,STUDY007,M,C,R,R1a,True,True,True,False,True,2587,80,True,True,47.4,74.8
+CAU000122,Kazakhstan,SITE0047,B4 900-201 BCE,STUDY007,F,W,,,True,False,True,False,True,2584,79,True,False,44.5,78.3
+CAU000123,Kazakhstan,SITE0024,B4 900-201 BCE,STUDY007,F,A,,,True,False,True,False,True,2583,80,True,False,49.5,77.8
+CAU000124,Kazakhstan,SITE0016,B4 900-201 BCE,STUDY004,F,F,,,True,False,True,False,True,2578,88,True,False,50.9,73.9
+CAU000125,Kazakhstan,SITE0014,B4 900-201 BCE,STUDY007,F,Other,,,True,False,True,False,False,2575,101,True,False,51.1,75.7
+CAU000126,Kazakhstan,SITE0061,B4 900-201 BCE,STUDY007,F,I,,,True,False,True,False,False,2575,101,True,False,48.3,75.4
+CAU000127,Kazakhstan,SITE0094,B4 900-201 BCE,STUDY009,M,U,R,R1a,True,True,True,False,False,2575,101,False,False,49.1,75.8
+CAU000128,Kazakhstan,SITE0094,B4 900-201 BCE,STUDY004,M,A,R,R1a,True,True,True,False,True,2568,91,False,True,49.1,75.8
+CAU000129,Kazakhstan,SITE0046,B4 900-201 BCE,STUDY004,M,J,Q,Q1b,True,True,True,False,True,2563,97,True,True,43.2,76.4
+CAU000130,Kazakhstan,SITE0042,B4 900-201 BCE,STUDY007,F,H,,,True,False,True,False,True,2557,98,True,False,49.1,75.2
+CAU000131,Kazakhstan,SITE0043,B4 900-201 BCE,STUDY007,M,C,R,R1a,True,True,True,False,True,2557,99,True,True,48.5,74.4
+CAU000132,Kazakhstan,SITE0021,B4 900-201 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,2554,99,True,True,50.7,57.7
+CAU000133,Kazakhstan,SITE0074,B4 900-201 BCE,STUDY004,M,U,R,R1a,True,True,True,False,True,2553,98,True,True,48.5,74.4
+CAU000134,Kazakhstan,SITE0014,B4 900-201 BCE,STUDY009,F,F,,,True,False,True,False,True,2551,101,True,False,51.1,75.7
+CAU000135,Kazakhstan,SITE0086,B4 900-201 BCE,STUDY004,F,C,,,True,False,True,False,False,2550,115,True,False,49.1,72.9
+CAU000136,Kazakhstan,SITE0040,B4 900-201 BCE,STUDY007,M,H,R,R1a,True,True,True,False,False,2550,58,True,True,48.9,79.3
+CAU000137,Kazakhstan,SITE0042,B4 900-201 BCE,STUDY007,M,U,R,R1a,True,True,True,False,False,2550,58,False,False,49.1,75.2
+CAU000138,Kazakhstan,SITE0094,B4 900-201 BCE,STUDY007,M,U,R,R1a,True,True,True,False,False,2550,58,True,False,49.1,75.8
+CAU000139,Kazakhstan,SITE0084,B4 900-201 BCE,STUDY004,F,U,,,True,False,True,True,True,2549,102,True,False,51.7,74.7
+CAU000140,Kazakhstan,SITE0060,B4 900-201 BCE,STUDY007,M,H,Q,Q1b,True,True,True,False,True,2537,103,True,True,48.4,74.5
+CAU000141,Kazakhstan,SITE0069,B4 900-201 BCE,STUDY007,M,C,J,J1a,True,True,True,False,False,2500,87,True,True,49.4,84.2
+CAU000142,Kazakhstan,SITE0098,B4 900-201 BCE,STUDY001,F,U,,,True,False,True,False,True,2476,125,True,False,46.0,53.4
+CAU000143,Kazakhstan,SITE0064,B4 900-201 BCE,STUDY007,M,D,R,R1a,True,True,True,False,True,2475,99,True,True,50.4,75.9
+CAU000144,Kazakhstan,SITE0022,B4 900-201 BCE,STUDY007,M,A,R,R1a,True,True,False,False,False,2400,87,True,True,50.6,51.8
+CAU000145,Kazakhstan,SITE0001,B4 900-201 BCE,STUDY007,M,U,Other,Other,True,True,True,False,False,2350,58,True,True,44.4,51.3
+CAU000146,Kazakhstan,SITE0001,B4 900-201 BCE,STUDY007,M,D,R,R1a,True,True,True,False,False,2350,58,True,True,44.4,51.3
+CAU000147,Kazakhstan,SITE0001,B4 900-201 BCE,STUDY007,M,U,R,R1a,True,True,True,False,False,2350,58,True,True,44.4,51.3
+CAU000148,Kazakhstan,SITE0048,B4 900-201 BCE,STUDY007,M,,R,R1a,False,True,True,False,False,2350,115,False,True,44.5,78.3
+CAU000149,Kazakhstan,SITE0079,B4 900-201 BCE,STUDY007,F,Other,,,True,False,True,False,False,2350,115,True,False,49.9,56.4
+CAU000150,Kazakhstan,SITE0081,B4 900-201 BCE,STUDY007,F,A,,,True,False,True,False,False,2350,58,True,False,49.2,54.4
+CAU000151,Kazakhstan,SITE0063,B4 900-201 BCE,STUDY004,M,W,R,R1a,True,True,True,False,True,2333,81,True,True,43.1,76.2
+CAU000152,Kazakhstan,SITE0099,B4 900-201 BCE,STUDY004,M,J,R,R1a,True,True,True,False,True,2311,57,True,True,43.2,77.8
+CAU000153,Kazakhstan,SITE0088,B4 900-201 BCE,STUDY003,M,J,Q,Q1b,True,True,True,False,True,2304,18,True,True,52.4,76.8
+CAU000154,Kazakhstan,SITE0015,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,False,2300,87,True,False,50.7,57.2
+CAU000155,Kazakhstan,SITE0015,B4 900-201 BCE,STUDY007,F,T,,,True,False,True,False,False,2300,87,False,False,50.7,57.2
+CAU000156,Kazakhstan,SITE0015,B4 900-201 BCE,STUDY007,M,,C,C2a,False,True,True,False,False,2300,87,False,True,50.7,57.2
+CAU000157,Kazakhstan,SITE0012,B4 900-201 BCE,STUDY004,F,U,,,True,False,True,False,False,2300,260,True,False,52.2,64.5
+CAU000158,Kazakhstan,SITE0011,B4 900-201 BCE,STUDY015,F,A,,,True,False,True,False,False,2300,29,True,False,49.3,86.4
+CAU000159,Kazakhstan,SITE0011,B4 900-201 BCE,STUDY015,M,C,R,R1a,True,True,True,False,False,2300,29,True,True,49.3,86.4
+CAU000160,Kazakhstan,SITE0051,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,False,2300,87,True,False,50.5,57.4
+CAU000161,Kazakhstan,SITE0051,B4 900-201 BCE,STUDY007,F,I,,,True,False,True,False,False,2300,87,True,False,50.5,57.4
+CAU000162,Kazakhstan,SITE0051,B4 900-201 BCE,STUDY007,M,I,R,R1a,True,True,True,False,False,2300,87,True,True,50.5,57.4
+CAU000163,Kazakhstan,SITE0057,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,False,2300,87,True,False,52.0,69.2
+CAU000164,Kazakhstan,SITE0041,B4 900-201 BCE,STUDY007,M,G,Q,Q1b,True,True,True,False,True,2297,58,True,True,51.1,78.2
+CAU000165,Kazakhstan,SITE0013,B4 900-201 BCE,STUDY007,F,D,,,True,False,True,False,True,2255,62,True,False,49.3,75.1
+CAU000166,Kazakhstan,SITE0076,B4 900-201 BCE,STUDY009,M,U,Basal/unresolved,Basal/unresolved,True,True,True,False,False,2250,58,True,True,49.1,75.2
+CAU000167,Kazakhstan,SITE0047,B4 900-201 BCE,STUDY007,M,G,Basal/unresolved,Basal/unresolved,True,True,True,True,True,2241,65,True,True,44.5,78.3
+CAU000168,Kazakhstan,SITE0001,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,True,2234,54,True,False,44.4,51.3
+CAU000169,Kazakhstan,SITE0014,B4 900-201 BCE,STUDY007,M,D,Q,Q1a,True,True,True,False,True,2226,50,True,True,51.1,75.7
+CAU000170,Kazakhstan,SITE0081,B4 900-201 BCE,STUDY007,F,K,,,True,False,True,False,True,2226,49,True,False,49.2,54.4
+CAU000171,Kazakhstan,SITE0013,B4 900-201 BCE,STUDY007,F,D,,,True,False,True,False,True,2225,50,True,False,49.3,75.1
+CAU000172,Kazakhstan,SITE0011,B4 900-201 BCE,STUDY007,F,H,,,True,False,True,False,True,2224,55,True,False,49.3,86.4
+CAU000173,Kazakhstan,SITE0083,B4 900-201 BCE,STUDY004,M,C,Q,Q1b,True,True,True,False,True,2224,55,True,True,51.7,74.7
+CAU000174,Kazakhstan,SITE0011,B4 900-201 BCE,STUDY007,M,D,Q,Q1b,True,True,True,False,True,2223,64,True,True,49.3,86.4
+CAU000175,Kazakhstan,SITE0077,B4 900-201 BCE,STUDY004,M,G,R,Other,True,True,True,False,True,2221,60,True,True,43.4,77.4
+CAU000176,Kazakhstan,SITE0099,B4 900-201 BCE,STUDY004,M,HV,N,N,True,True,True,False,False,2201,144,True,True,43.2,77.8
+CAU000177,Kazakhstan,SITE0099,B5 200 BCE-300 CE,STUDY004,F,U,,,True,False,True,True,False,2150,58,True,False,43.2,77.8
+CAU000178,Kazakhstan,SITE0013,B5 200 BCE-300 CE,STUDY007,M,A,R,R1a,True,True,True,False,True,2123,79,True,True,49.3,75.1
+CAU000179,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,F,J,,,True,False,True,False,False,2100,144,True,False,49.3,86.4
+CAU000180,Kazakhstan,SITE0099,B5 200 BCE-300 CE,STUDY004,F,C,,,True,False,True,False,True,2069,67,True,False,43.2,77.8
+CAU000181,Kazakhstan,SITE0017,B5 200 BCE-300 CE,STUDY007,F,N,,,True,False,True,False,False,2000,87,True,False,53.0,70.2
+CAU000182,Kazakhstan,SITE0073,B5 200 BCE-300 CE,STUDY004,M,U,Other,Other,True,True,False,False,True,1948,45,True,True,51.6,64.7
+CAU000183,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,M,J,Q,Q1b,True,True,True,False,True,1905,30,True,True,49.3,86.4
+CAU000184,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,F,Other,,,True,False,True,False,False,1900,87,True,False,49.3,86.4
+CAU000185,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,F,Other,,,True,False,True,False,False,1900,29,True,False,49.3,86.4
+CAU000186,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,F,A,,,True,False,True,False,False,1900,29,True,False,49.3,86.4
+CAU000187,Kazakhstan,SITE0053,B5 200 BCE-300 CE,STUDY004,M,J,R,R1b,True,True,False,False,True,1899,63,True,True,52.2,77.0
+CAU000188,Kazakhstan,SITE0001,B5 200 BCE-300 CE,STUDY007,M,K,R,R1b,True,True,True,False,True,1790,34,True,True,44.4,51.3
+CAU000189,Kazakhstan,SITE0050,B5 200 BCE-300 CE,STUDY004,M,A,R,R1a,True,True,True,False,True,1765,32,True,True,42.5,69.7
+CAU000190,Kazakhstan,SITE0025,B5 200 BCE-300 CE,STUDY012,M,A,R,R1a,True,True,True,False,True,1723,35,True,True,50.5,57.0
+CAU000191,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,M,D,Q,Q1b,True,True,True,False,True,1716,38,True,True,49.3,86.4
+CAU000192,Kazakhstan,SITE0054,B5 200 BCE-300 CE,STUDY004,F,C,,,True,False,True,False,False,1700,115,True,False,42.8,68.3
+CAU000193,Kazakhstan,SITE0056,B5 200 BCE-300 CE,STUDY004,F,U,,,True,False,True,False,False,1700,115,True,False,41.4,68.8
+CAU000194,Kazakhstan,SITE0056,B5 200 BCE-300 CE,STUDY004,M,HV,R,R1a,True,True,True,False,True,1697,67,True,True,41.4,68.8
+CAU000195,Kazakhstan,SITE0054,B5 200 BCE-300 CE,STUDY004,M,U,Other,Other,True,True,True,False,True,1688,44,True,True,42.8,68.3
+CAU000196,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,F,C,,,True,False,True,False,True,1667,31,True,False,49.3,86.4
+CAU000197,Kazakhstan,SITE0056,B5 200 BCE-300 CE,STUDY007,M,HV,Other,Other,True,True,True,True,True,1653,28,True,True,41.4,68.8
+CAU000198,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY007,F,U,,,True,False,True,False,False,1650,87,True,False,49.3,86.4
+CAU000199,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000200,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000201,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000202,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000203,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,False,True,False,1650,115,False,False,49.3,86.4
+CAU000204,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000205,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000206,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000207,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000208,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000209,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000210,Kazakhstan,SITE0011,B5 200 BCE-300 CE,STUDY006,U,,,,False,False,True,False,False,1650,115,False,False,49.3,86.4
+CAU000211,Kazakhstan,SITE0056,B5 200 BCE-300 CE,STUDY007,F,T,,,True,False,True,False,False,1650,115,True,False,41.4,68.8
+CAU000212,Kazakhstan,SITE0056,B5 200 BCE-300 CE,STUDY007,M,W,J,J2a,True,True,True,False,False,1650,115,True,True,41.4,68.8
+CAU000213,Kazakhstan,SITE0056,B6 301-650 CE,STUDY007,M,I,E,E1b,True,True,True,False,True,1641,37,True,True,41.4,68.8
+CAU000214,Kazakhstan,SITE0011,B6 301-650 CE,STUDY007,M,A,R,R1a,True,True,True,False,True,1630,42,True,True,49.3,86.4
+CAU000215,Kazakhstan,SITE0011,B6 301-650 CE,STUDY007,F,F,,,True,False,True,False,True,1629,42,True,False,49.3,86.4
+CAU000216,Kazakhstan,SITE0011,B6 301-650 CE,STUDY007,M,A,Q,Q1a,True,True,True,False,True,1627,42,True,True,49.3,86.4
+CAU000217,Kazakhstan,SITE0008,B6 301-650 CE,STUDY004,M,H,R,R1a,True,True,False,False,True,1627,43,True,True,43.1,68.2
+CAU000218,Kazakhstan,SITE0056,B6 301-650 CE,STUDY007,M,U,L,Other,True,True,True,True,True,1622,43,True,True,41.4,68.8
+CAU000219,Kazakhstan,SITE0005,B6 301-650 CE,STUDY004,M,D,Q,Other,True,True,True,True,True,1616,64,True,True,42.7,80.1
+CAU000220,Kazakhstan,SITE0011,B6 301-650 CE,STUDY007,M,W,Q,Q1a,True,True,True,False,True,1615,47,True,True,49.3,86.4
+CAU000221,Kazakhstan,SITE0055,B6 301-650 CE,STUDY004,F,D,,,True,False,True,False,False,1600,87,True,False,52.0,77.2
+CAU000222,Kazakhstan,SITE0026,B6 301-650 CE,STUDY004,M,D,N,Other,True,True,True,False,True,1596,61,True,True,52.6,76.8
+CAU000223,Kazakhstan,SITE0054,B6 301-650 CE,STUDY004,F,H,,,True,False,True,False,True,1588,56,True,False,42.8,68.3
+CAU000224,Kazakhstan,SITE0059,B6 301-650 CE,STUDY007,M,D,R,R1a,True,True,True,False,True,1552,26,True,True,50.5,57.1
+CAU000225,Kazakhstan,SITE0031,B6 301-650 CE,STUDY004,M,C,R,R1a,True,True,False,False,True,1508,58,True,True,52.8,62.9
+CAU000226,Kazakhstan,SITE0019,B6 301-650 CE,STUDY004,M,A,Other,Other,True,True,True,False,False,1350,173,True,True,43.1,68.2
+CAU000227,Kazakhstan,SITE0029,B7 651-1000 CE,STUDY004,M,A,R,R1b,True,True,True,False,True,1259,49,True,True,52.6,76.7
+CAU000228,Kazakhstan,SITE0039,B7 651-1000 CE,STUDY007,M,C,R,R1a,True,True,True,False,False,1250,58,True,True,49.2,84.5
+CAU000229,Kazakhstan,SITE0032,B7 651-1000 CE,STUDY004,M,HV,J,J2a,True,True,True,False,True,1245,42,True,True,43.4,77.4
+CAU000230,Kazakhstan,SITE0010,B7 651-1000 CE,STUDY004,M,A,R,R1a,True,True,True,False,True,1231,47,True,True,43.1,68.2
+CAU000231,Kazakhstan,SITE0087,B7 651-1000 CE,STUDY003,F,D,,,True,False,True,False,True,1157,53,True,False,52.4,76.8
+CAU000232,Kazakhstan,SITE0092,B7 651-1000 CE,STUDY004,M,D,R,R1b,True,True,True,False,True,1126,72,True,True,43.1,68.2
+CAU000233,Kazakhstan,SITE0039,B7 651-1000 CE,STUDY007,M,T,J,J2a,True,True,True,False,True,1109,37,True,True,49.2,84.5
+CAU000234,Kazakhstan,SITE0049,B7 651-1000 CE,STUDY007,M,D,C,C2a,True,True,True,False,False,1050,115,True,True,45.6,80.2
+CAU000235,Kazakhstan,SITE0019,B7 651-1000 CE,STUDY004,M,G,J,J2a,True,True,True,False,False,1025,72,True,False,43.1,68.2
+CAU000236,Kazakhstan,SITE0019,B7 651-1000 CE,STUDY004,M,A,J,J2a,True,True,False,False,True,1017,30,False,True,43.1,68.2
+CAU000237,Kazakhstan,SITE0019,B7 651-1000 CE,STUDY004,F,J,,,True,False,True,False,False,1000,87,True,False,43.1,68.2
+CAU000238,Kazakhstan,SITE0019,B7 651-1000 CE,STUDY004,M,A,J,J2a,True,True,True,False,False,1000,87,True,True,43.1,68.2
+CAU000239,Kazakhstan,SITE0092,B7 651-1000 CE,STUDY004,M,Other,R,R1a,True,True,True,False,False,1000,202,True,True,43.1,68.2
+CAU000240,Kazakhstan,SITE0007,B7 651-1000 CE,STUDY004,M,F,R,R1a,True,True,False,False,True,991,44,True,True,43.4,77.5
+CAU000241,Kazakhstan,SITE0019,B8 1001-1500 CE,STUDY004,M,F,J,J2a,True,True,True,False,True,883,45,True,True,43.1,68.2
+CAU000242,Kazakhstan,SITE0075,B8 1001-1500 CE,STUDY004,M,D,Other,Other,True,True,True,False,False,850,58,True,True,49.0,73.6
+CAU000243,Kazakhstan,SITE0066,B8 1001-1500 CE,STUDY004,M,F,C,C2a,True,True,True,False,True,840,47,True,True,52.7,62.6
+CAU000244,Kazakhstan,SITE0034,B8 1001-1500 CE,STUDY004,F,D,,,True,False,True,False,True,692,18,True,False,43.5,77.8
+CAU000245,Kazakhstan,SITE0044,B8 1001-1500 CE,STUDY004,M,D,C,C2a,True,True,True,False,False,550,115,True,True,43.1,68.2
+CAU000246,Kazakhstan,SITE0044,B8 1001-1500 CE,STUDY004,M,I,R,R1a,True,True,True,False,False,550,115,True,True,43.1,68.2
+CAU000247,Kyrgyzstan,SITE0102,B2 2500-1801 BCE,STUDY012,M,R,Q,Q1b,True,True,True,False,True,4079,54,True,True,41.4,75.9
+CAU000248,Kyrgyzstan,SITE0102,B2 2500-1801 BCE,STUDY012,M,HV,J,J2a,True,True,True,False,True,3943,42,True,True,41.4,75.9
+CAU000249,Kyrgyzstan,SITE0105,B4 900-201 BCE,STUDY007,F,,,,False,False,True,False,True,2539,103,False,False,42.5,78.4
+CAU000250,Kyrgyzstan,SITE0105,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,True,2522,105,True,False,42.5,78.4
+CAU000251,Kyrgyzstan,SITE0101,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,True,2507,104,True,False,41.4,71.5
+CAU000252,Kyrgyzstan,SITE0111,B4 900-201 BCE,STUDY007,F,U,,,True,False,True,False,True,2406,51,True,False,42.2,75.5
+CAU000253,Kyrgyzstan,SITE0105,B4 900-201 BCE,STUDY007,F,H,,,True,False,True,False,True,2373,35,True,False,42.5,78.4
+CAU000254,Kyrgyzstan,SITE0115,B4 900-201 BCE,STUDY004,F,U,,,True,False,True,False,True,2372,58,True,False,41.4,75.3
+CAU000255,Kyrgyzstan,SITE0101,B4 900-201 BCE,STUDY007,F,D,,,True,False,True,True,True,2346,17,True,False,41.4,71.5
+CAU000256,Kyrgyzstan,SITE0115,B4 900-201 BCE,STUDY004,F,U,,,True,False,True,False,False,2300,173,True,False,41.4,75.3
+CAU000257,Kyrgyzstan,SITE0115,B4 900-201 BCE,STUDY004,M,H,R,R1a,True,True,True,False,True,2229,58,True,True,41.4,75.3
+CAU000258,Kyrgyzstan,SITE0115,B4 900-201 BCE,STUDY004,M,T,R,R1a,True,True,True,False,True,2209,69,True,True,41.4,75.3
+CAU000259,Kyrgyzstan,SITE0109,B4 900-201 BCE,STUDY007,M,A,J,J2a,True,True,True,False,True,2202,73,True,True,42.2,75.5
+CAU000260,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000261,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,M,,R,R1a,False,True,True,False,False,2200,87,False,True,,
+CAU000262,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000263,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000264,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000265,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,M,,R,R1a,False,True,True,False,False,2200,87,False,True,,
+CAU000266,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000267,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,M,,R,R1a,False,True,True,False,False,2200,87,False,True,,
+CAU000268,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000269,Kyrgyzstan,SITE0103,B4 900-201 BCE,STUDY013,F,,,,False,False,True,False,False,2200,87,False,False,,
+CAU000270,Kyrgyzstan,SITE0115,B4 900-201 BCE,STUDY004,M,H,R,R1a,True,True,True,False,False,2200,202,True,True,41.4,75.3
+CAU000271,Kyrgyzstan,SITE0110,B4 900-201 BCE,STUDY007,M,G,R,R1a,True,True,False,False,False,2151,115,True,True,42.2,75.5
+CAU000272,Kyrgyzstan,SITE0113,B5 200 BCE-300 CE,STUDY004,M,D,J,J2a,True,True,False,False,True,2149,86,True,False,41.5,75.8
+CAU000273,Kyrgyzstan,SITE0113,B5 200 BCE-300 CE,STUDY004,M,D,J,J2a,True,True,True,False,True,2065,57,False,True,41.5,75.8
+CAU000274,Kyrgyzstan,SITE0115,B5 200 BCE-300 CE,STUDY004,M,C,Q,Q1b,True,True,True,False,True,2063,73,True,True,41.4,75.3
+CAU000275,Kyrgyzstan,SITE0113,B5 200 BCE-300 CE,STUDY004,M,W,J,J2a,True,True,True,False,True,2060,57,True,True,41.5,75.8
+CAU000276,Kyrgyzstan,SITE0105,B5 200 BCE-300 CE,STUDY007,F,U,,,True,False,True,False,False,2050,115,True,False,42.5,78.4
+CAU000277,Kyrgyzstan,SITE0116,B5 200 BCE-300 CE,STUDY004,M,HV,R,R1a,True,True,True,False,True,2043,55,True,True,43.1,68.2
+CAU000278,Kyrgyzstan,SITE0115,B5 200 BCE-300 CE,STUDY004,M,HV,R,R1a,True,True,True,False,True,1976,49,False,False,41.4,75.3
+CAU000279,Kyrgyzstan,SITE0112,B5 200 BCE-300 CE,STUDY004,F,C,,,True,False,True,True,True,1802,56,True,False,41.5,75.8
+CAU000280,Kyrgyzstan,SITE0107,B5 200 BCE-300 CE,STUDY004,F,J,,,True,False,True,True,True,1802,58,True,False,42.2,77.4
+CAU000281,Kyrgyzstan,SITE0106,B5 200 BCE-300 CE,STUDY004,F,K,,,True,False,True,False,True,1779,57,True,False,41.6,75.0
+CAU000282,Kyrgyzstan,SITE0107,B5 200 BCE-300 CE,STUDY004,F,F,,,True,False,True,False,False,1750,87,True,False,42.2,77.4
+CAU000283,Kyrgyzstan,SITE0107,B5 200 BCE-300 CE,STUDY004,M,F,Q,Q1a,True,True,True,False,True,1739,49,False,True,42.2,77.4
+CAU000284,Kyrgyzstan,SITE0101,B5 200 BCE-300 CE,STUDY007,M,,R,R1a,False,True,False,False,True,1719,44,False,True,41.4,71.5
+CAU000285,Kyrgyzstan,SITE0101,B5 200 BCE-300 CE,STUDY007,M,U,Q,Q1b,True,True,True,False,False,1700,87,True,True,41.4,71.5
+CAU000286,Kyrgyzstan,SITE0101,B5 200 BCE-300 CE,STUDY007,M,D,E,E1b,True,True,True,False,False,1700,87,True,True,41.4,71.5
+CAU000287,Kyrgyzstan,SITE0101,B5 200 BCE-300 CE,STUDY007,F,F,,,True,False,True,False,False,1700,87,True,False,41.4,71.5
+CAU000288,Kyrgyzstan,SITE0106,B5 200 BCE-300 CE,STUDY004,M,,L,Other,False,True,True,True,True,1666,57,False,True,41.6,75.0
+CAU000289,Kyrgyzstan,SITE0107,B5 200 BCE-300 CE,STUDY004,M,,R,R1a,False,True,True,False,True,1664,38,False,True,42.2,77.4
+CAU000290,Kyrgyzstan,SITE0106,B5 200 BCE-300 CE,STUDY004,M,A,R,R1b,True,True,True,True,True,1656,59,True,True,41.6,75.0
+CAU000291,Kyrgyzstan,SITE0101,B6 301-650 CE,STUDY007,M,U,Q,Q1a,True,True,True,True,True,1632,42,True,True,41.4,71.5
+CAU000292,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,F,A,,,True,False,True,False,True,1627,46,True,False,41.5,75.8
+CAU000293,Kyrgyzstan,SITE0101,B6 301-650 CE,STUDY007,M,,Basal/unresolved,Basal/unresolved,False,True,True,True,True,1621,45,False,True,41.4,71.5
+CAU000294,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,M,G,Q,Q1b,True,True,True,False,True,1618,57,True,True,41.5,75.8
+CAU000295,Kyrgyzstan,SITE0107,B6 301-650 CE,STUDY004,M,C,R,R1a,True,True,True,False,True,1615,57,True,True,42.2,77.4
+CAU000296,Kyrgyzstan,SITE0107,B6 301-650 CE,STUDY004,M,D,Q,Q1b,True,True,True,False,True,1608,50,True,True,42.2,77.4
+CAU000297,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,F,A,,,True,False,True,False,True,1600,65,True,False,41.5,75.8
+CAU000298,Kyrgyzstan,SITE0115,B6 301-650 CE,STUDY004,M,C,Q,Q1a,True,True,False,False,True,1594,50,True,True,41.4,75.3
+CAU000299,Kyrgyzstan,SITE0101,B6 301-650 CE,STUDY007,M,H,R,R1a,True,True,True,False,True,1592,45,True,True,41.4,71.5
+CAU000300,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,F,M,,,True,False,True,False,True,1575,67,True,False,41.5,75.8
+CAU000301,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,F,U,,,True,False,True,False,True,1509,57,True,False,41.5,75.8
+CAU000302,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,M,N,E,E1b,True,True,True,False,True,1494,58,True,True,41.5,75.8
+CAU000303,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,M,H,Q,Q1a,True,True,True,False,True,1492,61,True,True,41.5,75.8
+CAU000304,Kyrgyzstan,SITE0115,B6 301-650 CE,STUDY004,M,G,R,R1a,True,True,True,False,True,1472,41,True,True,41.4,75.3
+CAU000305,Kyrgyzstan,SITE0114,B6 301-650 CE,STUDY004,M,C,Q,Q1a,True,True,True,False,True,1461,46,True,True,42.1,77.0
+CAU000306,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,M,H,R,R1a,True,True,True,False,True,1458,46,False,True,41.5,75.8
+CAU000307,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,F,H,,,True,False,True,False,True,1435,48,True,False,41.5,75.8
+CAU000308,Kyrgyzstan,SITE0112,B6 301-650 CE,STUDY004,F,M,,,True,False,True,False,True,1354,28,True,False,41.5,75.8
+CAU000309,Kyrgyzstan,SITE0105,B7 651-1000 CE,STUDY007,M,F,J,J2a,True,True,False,True,True,1129,40,True,True,42.5,78.4
+CAU000310,Kyrgyzstan,SITE0114,B8 1001-1500 CE,STUDY004,F,F,,,True,False,True,False,True,851,39,True,False,42.1,77.0
+CAU000311,Kyrgyzstan,SITE0114,B8 1001-1500 CE,STUDY004,F,G,,,True,False,True,False,True,761,48,True,False,42.1,77.0
+CAU000312,Kyrgyzstan,SITE0114,B8 1001-1500 CE,STUDY004,F,C,,,True,False,True,False,True,757,58,True,False,42.1,77.0
+CAU000313,Kyrgyzstan,SITE0114,B8 1001-1500 CE,STUDY004,M,C,C,C2a,True,True,False,True,True,735,37,True,True,42.1,77.0
+CAU000314,Kyrgyzstan,SITE0108,B8 1001-1500 CE,STUDY014,U,,,,False,False,False,False,False,675,43,False,False,42.8,74.7
+CAU000315,Kyrgyzstan,SITE0108,B8 1001-1500 CE,STUDY014,F,Other,,,True,False,True,False,True,657,25,True,False,42.8,74.7
+CAU000316,Kyrgyzstan,SITE0108,B8 1001-1500 CE,STUDY014,U,,,,False,False,False,False,True,652,29,False,False,42.8,74.7
+CAU000317,Kyrgyzstan,SITE0104,B8 1001-1500 CE,STUDY014,M,,,,False,False,True,False,False,650,29,False,False,42.7,75.2
+CAU000318,Kyrgyzstan,SITE0104,B8 1001-1500 CE,STUDY014,F,,,,False,False,True,False,False,650,29,False,False,42.7,75.2
+CAU000319,Kyrgyzstan,SITE0108,B8 1001-1500 CE,STUDY014,F,HV,,,True,False,True,False,False,612,1,True,False,42.8,74.7
+CAU000320,Kyrgyzstan,SITE0108,B8 1001-1500 CE,STUDY014,M,T,Q,Q1b,True,True,True,False,False,612,1,True,True,42.8,74.7
+CAU000321,Tajikistan,SITE0120,B1 3500-2501 BCE,STUDY012,F,W,,,True,False,True,False,False,5450,115,True,False,39.5,67.5
+CAU000322,Tajikistan,SITE0118,B2 2500-1801 BCE,STUDY012,M,,E,Other,False,True,True,False,False,4450,289,False,True,37.5,69.4
+CAU000323,Tajikistan,SITE0117,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3504,35,True,False,39.4,68.0
+CAU000324,Tajikistan,SITE0117,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,False,3475,72,True,False,39.4,68.0
+CAU000325,Tajikistan,SITE0117,B3 1800-901 BCE,STUDY012,F,T,,,True,False,False,False,True,3423,21,True,False,39.4,68.0
+CAU000326,Tajikistan,SITE0119,B5 200 BCE-300 CE,STUDY012,M,U,Other,Other,True,True,True,False,False,2051,57,False,False,37.4,68.2
+CAU000327,Tajikistan,SITE0119,B5 200 BCE-300 CE,STUDY012,M,U,R,Other,True,True,True,False,True,2036,37,True,True,37.4,68.2
+CAU000328,Tajikistan,SITE0119,B5 200 BCE-300 CE,STUDY012,M,J,,,True,False,True,False,False,2000,87,True,False,37.4,68.2
+CAU000329,Tajikistan,SITE0119,B5 200 BCE-300 CE,STUDY012,M,U,Other,Other,True,True,True,False,False,2000,87,True,True,37.4,68.2
+CAU000330,Tajikistan,SITE0119,B5 200 BCE-300 CE,STUDY012,M,H,R,R1a,True,True,True,False,True,1958,29,True,True,37.4,68.2
+CAU000331,Turkmenistan,SITE0127,B1 3500-2501 BCE,STUDY012,M,H,R,R2,True,True,False,False,False,5450,289,True,True,37.9,58.2
+CAU000332,Turkmenistan,SITE0127,B1 3500-2501 BCE,STUDY012,F,U,,,True,False,True,False,False,5450,289,True,False,37.9,58.2
+CAU000333,Turkmenistan,SITE0127,B1 3500-2501 BCE,STUDY012,M,W,R,R2,True,True,True,False,False,5450,289,True,True,37.9,58.2
+CAU000334,Turkmenistan,SITE0124,B1 3500-2501 BCE,STUDY001,F,HV,,,True,False,True,False,False,5450,115,True,False,38.3,56.2
+CAU000335,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY005,M,J,J,J2a,True,True,False,False,True,5174,86,True,True,37.2,61.0
+CAU000336,Turkmenistan,SITE0123,B1 3500-2501 BCE,STUDY005,F,U,,,True,False,True,False,True,5173,86,True,False,37.6,59.3
+CAU000337,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,I,,,True,False,False,False,True,5163,78,True,False,37.2,61.0
+CAU000338,Turkmenistan,SITE0123,B1 3500-2501 BCE,STUDY005,M,,J,J2a,False,True,True,False,True,5160,102,False,True,37.6,59.3
+CAU000339,Turkmenistan,SITE0126,B1 3500-2501 BCE,STUDY005,F,W,,,True,False,True,True,False,5150,115,True,False,38.7,61.7
+CAU000340,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,HV,J,J1a,True,True,True,False,False,5150,115,True,True,37.2,61.0
+CAU000341,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,R,,,True,False,True,False,False,5100,202,True,False,37.2,61.0
+CAU000342,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,HV,,,True,False,True,False,False,5050,173,True,False,37.2,61.0
+CAU000343,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,I,,,True,False,True,False,False,5050,173,True,False,37.2,61.0
+CAU000344,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,HV,,,True,False,True,False,False,5050,173,True,False,37.2,61.0
+CAU000345,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,I,J,J2a,True,True,True,False,False,5050,173,True,True,37.2,61.0
+CAU000346,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,J,,,True,False,True,False,False,5050,173,True,False,37.2,61.0
+CAU000347,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,T,J,J1a,True,True,True,False,False,5050,173,True,True,37.2,61.0
+CAU000348,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,J,,,True,False,False,False,False,5050,173,True,False,37.2,61.0
+CAU000349,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,J,R,R2,True,True,False,False,False,5050,173,True,True,37.2,61.0
+CAU000350,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,,J,Other,False,True,False,False,False,5050,173,False,True,37.2,61.0
+CAU000351,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,I,,,True,False,False,False,False,5050,173,True,False,37.2,61.0
+CAU000352,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,U,Other,Other,True,True,False,False,False,5050,173,True,True,37.2,61.0
+CAU000353,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,I,,,True,False,False,False,False,5050,173,True,False,37.2,61.0
+CAU000354,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,H,,,True,False,False,False,False,5050,173,False,False,37.2,61.0
+CAU000355,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,,,,False,False,False,False,False,5050,173,False,False,37.2,61.0
+CAU000356,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,HV,,,True,False,True,False,False,5025,130,True,False,37.2,61.0
+CAU000357,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,H,J,Other,True,True,False,False,False,5025,130,False,False,37.2,61.0
+CAU000358,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,U,J,J1a,True,True,False,False,False,5025,130,True,True,37.2,61.0
+CAU000359,Turkmenistan,SITE0124,B1 3500-2501 BCE,STUDY012,F,HV,,,True,False,True,False,True,5021,87,True,False,38.3,56.2
+CAU000360,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,U,,,True,False,False,False,True,5013,94,False,False,37.2,61.0
+CAU000361,Turkmenistan,SITE0124,B1 3500-2501 BCE,STUDY001,F,I,,,True,False,True,False,True,4998,87,True,False,38.3,56.2
+CAU000362,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,M,T,J,J1a,True,True,True,False,True,4963,67,True,True,37.2,61.0
+CAU000363,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,U,H,,,True,False,False,False,True,4943,50,True,False,37.2,61.0
+CAU000364,Turkmenistan,SITE0124,B1 3500-2501 BCE,STUDY012,F,HV,,,True,False,True,False,True,4924,43,True,False,38.3,56.2
+CAU000365,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,J,,,True,False,False,False,True,4862,27,False,False,37.2,61.0
+CAU000366,Turkmenistan,SITE0121,B1 3500-2501 BCE,STUDY012,F,J,,,True,False,True,False,False,4850,58,True,False,37.2,61.0
+CAU000367,Turkmenistan,SITE0124,B1 3500-2501 BCE,STUDY012,F,HV,,,True,False,True,False,False,4550,231,True,False,38.3,56.2
+CAU000368,Turkmenistan,SITE0124,B2 2500-1801 BCE,STUDY012,M,,,,False,False,False,False,False,4450,115,False,False,38.3,56.2
+CAU000369,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,T,J,Other,True,True,False,False,True,4254,75,True,True,38.2,62.0
+CAU000370,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,HV,Basal/unresolved,Basal/unresolved,True,True,True,False,False,4225,14,True,True,38.2,62.0
+CAU000371,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,M,,,True,False,True,False,True,4211,70,True,False,38.2,62.0
+CAU000372,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,U,J,J2a,True,True,True,False,False,4200,29,True,True,38.2,62.0
+CAU000373,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,HV,,,True,False,True,False,True,4188,43,True,False,38.2,62.0
+CAU000374,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,True,False,True,4163,48,True,False,38.2,62.0
+CAU000375,Turkmenistan,SITE0124,B2 2500-1801 BCE,STUDY012,F,,,,False,False,True,False,True,4148,75,False,False,38.3,56.2
+CAU000376,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,J,,,True,False,True,False,True,4139,50,True,False,38.2,62.0
+CAU000377,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,R,Other,Other,True,True,True,False,True,4113,58,True,True,38.2,62.0
+CAU000378,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,U,Other,Other,True,True,False,False,True,4082,65,True,True,38.2,62.0
+CAU000379,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,HV,,,True,False,True,False,True,4079,54,True,False,38.2,62.0
+CAU000380,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,U,,,True,False,True,False,True,4068,62,True,False,38.2,62.0
+CAU000381,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,U,J,J1a,True,True,True,False,True,4060,56,True,True,38.2,62.0
+CAU000382,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,W,J,Other,True,True,True,False,True,4056,50,True,True,38.2,62.0
+CAU000383,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,HV,Basal/unresolved,Basal/unresolved,True,True,True,False,True,4051,48,True,True,38.2,62.0
+CAU000384,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,,,,False,False,True,False,False,4050,231,False,False,38.2,62.0
+CAU000385,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,U,,,True,False,True,False,False,4050,231,True,False,38.2,62.0
+CAU000386,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,HV,,,True,False,True,False,False,4050,231,True,False,38.2,62.0
+CAU000387,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,U,HV,,,True,False,False,False,False,4050,231,True,False,38.2,62.0
+CAU000388,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,H,,,True,False,True,False,True,4042,43,True,False,38.2,62.0
+CAU000389,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,T,,,True,False,True,False,True,4038,42,True,False,38.2,62.0
+CAU000390,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,N,,,True,False,True,False,True,4023,45,True,False,38.2,62.0
+CAU000391,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,J,,,True,False,False,False,True,4023,45,True,False,38.2,62.0
+CAU000392,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,R,R,R2,True,True,True,False,True,4015,51,True,True,38.2,62.0
+CAU000393,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,True,False,True,4011,50,True,False,38.2,62.0
+CAU000394,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,J,,,True,False,False,False,False,4000,260,True,False,38.2,62.0
+CAU000395,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,R,,,True,False,False,False,False,4000,260,True,False,38.2,62.0
+CAU000396,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,N,,,True,False,True,False,False,4000,260,True,False,38.2,62.0
+CAU000397,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,True,False,False,4000,260,True,False,38.2,62.0
+CAU000398,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,N,,,True,False,True,False,False,4000,260,True,False,38.2,62.0
+CAU000399,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,,,,False,False,False,False,False,4000,260,False,False,38.2,62.0
+CAU000400,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,U,,,True,False,False,False,False,4000,260,True,False,38.2,62.0
+CAU000401,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,I,,,True,False,True,False,False,4000,260,True,False,38.2,62.0
+CAU000402,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,R,,,True,False,True,False,False,4000,260,True,False,38.2,62.0
+CAU000403,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,H,,,True,False,True,False,False,4000,260,True,False,38.2,62.0
+CAU000404,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,True,False,True,3994,54,True,False,38.2,62.0
+CAU000405,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,J,Basal/unresolved,Basal/unresolved,True,True,True,False,True,3975,53,True,True,38.2,62.0
+CAU000406,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,True,False,True,3966,50,True,False,38.2,62.0
+CAU000407,Turkmenistan,SITE0128,B2 2500-1801 BCE,STUDY008,F,HV,,,True,False,True,False,False,3950,173,True,False,37.2,60.0
+CAU000408,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,H,,,True,False,True,False,True,3947,54,True,False,38.2,62.0
+CAU000409,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,U,,,True,False,True,False,True,3916,56,True,False,38.2,62.0
+CAU000410,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,HV,E,E1b,True,True,True,False,True,3881,37,True,True,38.2,62.0
+CAU000411,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,False,False,False,3850,58,True,False,38.2,62.0
+CAU000412,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,T,,,True,False,False,False,False,3850,87,False,False,38.2,62.0
+CAU000413,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,HV,,,True,False,True,False,False,3850,58,True,False,38.2,62.0
+CAU000414,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,HV,,,True,False,True,False,False,3850,58,True,False,38.2,62.0
+CAU000415,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,M,T,Other,Other,True,True,True,False,True,3832,58,True,True,38.2,62.0
+CAU000416,Turkmenistan,SITE0122,B2 2500-1801 BCE,STUDY012,F,T,,,True,False,False,False,False,3800,87,True,False,38.2,62.0
+CAU000417,Turkmenistan,SITE0122,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,False,3750,58,True,False,38.2,62.0
+CAU000418,Turkmenistan,SITE0124,B3 1800-901 BCE,STUDY012,F,HV,,,True,False,True,True,True,3400,26,True,False,38.3,56.2
+CAU000419,Turkmenistan,SITE0124,B3 1800-901 BCE,STUDY012,F,H,,,True,False,True,False,False,3250,173,True,False,38.3,56.2
+CAU000420,Turkmenistan,SITE0125,B3 1800-901 BCE,STUDY012,M,W,R,Other,True,True,True,False,False,3250,173,True,True,37.9,58.4
+CAU000421,Turkmenistan,SITE0126,B4 900-201 BCE,STUDY005,M,T,R,R1a,True,True,True,False,True,2802,36,True,True,38.7,61.7
+CAU000422,Uzbekistan,SITE0130,B1 3500-2501 BCE,STUDY001,M,W,J,J2a,True,True,True,False,True,5099,108,True,True,37.7,67.0
+CAU000423,Uzbekistan,SITE0133,B2 2500-1801 BCE,STUDY012,M,U,R,R1a,True,True,False,False,False,3950,289,True,True,40.5,65.0
+CAU000424,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY001,F,HV,,,True,False,True,False,True,3925,37,True,False,37.4,66.8
+CAU000425,Uzbekistan,SITE0132,B2 2500-1801 BCE,STUDY012,F,H,,,True,False,True,False,False,3900,87,True,False,37.8,67.0
+CAU000426,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,M,HV,J,J2a,True,True,True,False,True,3875,37,True,True,37.4,66.8
+CAU000427,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY001,M,K,R,R2,True,True,True,False,True,3853,42,True,True,37.4,66.8
+CAU000428,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,F,H,,,True,False,True,False,True,3853,42,True,False,37.4,66.8
+CAU000429,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,F,U,,,True,False,True,False,True,3824,49,True,False,37.4,66.8
+CAU000430,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,F,U,,,True,False,True,False,True,3790,49,True,False,37.4,66.8
+CAU000431,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY001,M,J,J,J2a,True,True,True,False,True,3790,49,True,True,37.4,66.8
+CAU000432,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,F,W,,,True,False,True,False,False,3775,130,True,False,37.4,66.8
+CAU000433,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY001,M,W,Other,Other,True,True,True,False,True,3775,44,True,True,37.4,66.8
+CAU000434,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,M,U,Q,Other,True,True,True,True,False,3775,130,True,True,37.4,66.8
+CAU000435,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,F,I,,,True,False,True,False,True,3768,40,True,False,37.4,66.8
+CAU000436,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,F,HV,,,True,False,True,False,True,3766,40,True,False,37.4,66.8
+CAU000437,Uzbekistan,SITE0132,B2 2500-1801 BCE,STUDY012,F,,,,False,False,False,False,True,3756,47,False,False,37.8,67.0
+CAU000438,Uzbekistan,SITE0135,B2 2500-1801 BCE,STUDY012,M,J,R,Other,True,True,True,False,True,3754,47,True,True,37.4,66.8
+CAU000439,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,F,J,,,True,False,True,False,False,3750,87,True,False,37.7,67.0
+CAU000440,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,K,L,Other,True,True,True,False,True,3745,52,True,True,37.7,67.0
+CAU000441,Uzbekistan,SITE0135,B3 1800-901 BCE,STUDY012,M,U,L,Other,True,True,False,False,True,3685,60,True,True,37.4,66.8
+CAU000442,Uzbekistan,SITE0132,B3 1800-901 BCE,STUDY012,F,H,,,True,False,True,False,True,3642,41,True,False,37.8,67.0
+CAU000443,Uzbekistan,SITE0133,B3 1800-901 BCE,STUDY012,M,T,Q,Q1a,True,True,False,False,True,3614,37,True,True,40.5,65.0
+CAU000444,Uzbekistan,SITE0132,B3 1800-901 BCE,STUDY012,F,HV,,,True,False,True,False,True,3609,38,True,False,37.8,67.0
+CAU000445,Uzbekistan,SITE0132,B3 1800-901 BCE,STUDY012,F,T,,,True,False,True,False,True,3542,39,True,False,37.8,67.0
+CAU000446,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,T,J,J2a,True,True,True,False,True,3526,34,True,True,37.7,67.0
+CAU000447,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,HV,R,R2,True,True,True,False,True,3497,34,True,True,37.7,67.0
+CAU000448,Uzbekistan,SITE0132,B3 1800-901 BCE,STUDY001,M,R,R,Other,True,True,True,False,True,3461,22,True,True,37.8,67.0
+CAU000449,Uzbekistan,SITE0132,B3 1800-901 BCE,STUDY012,F,J,,,True,False,True,False,True,3458,35,True,False,37.8,67.0
+CAU000450,Uzbekistan,SITE0132,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,True,3421,21,True,False,37.8,67.0
+CAU000451,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,F,N,,,True,False,True,False,False,3400,87,True,False,37.7,67.0
+CAU000452,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,F,U,,,True,False,True,False,False,3400,87,True,False,37.7,67.0
+CAU000453,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,F,R,,,True,False,True,False,False,3400,87,True,False,37.7,67.0
+CAU000454,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,H,Other,Other,True,True,True,False,False,3400,87,True,True,37.7,67.0
+CAU000455,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,T,J,Other,True,True,True,False,False,3400,87,True,True,37.7,67.0
+CAU000456,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,H,Basal/unresolved,Basal/unresolved,True,True,True,True,False,3400,87,True,True,37.7,67.0
+CAU000457,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,R,J,J2a,True,True,False,False,False,3400,87,True,True,37.7,67.0
+CAU000458,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,M,HV,J,J2a,True,True,True,False,False,3400,87,True,True,37.7,67.0
+CAU000459,Uzbekistan,SITE0130,B3 1800-901 BCE,STUDY012,F,W,,,True,False,True,False,False,3400,87,True,False,37.7,67.0
+CAU000460,Uzbekistan,SITE0133,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,True,False,True,3369,41,True,True,40.5,65.0
+CAU000461,Uzbekistan,SITE0129,B3 1800-901 BCE,STUDY012,M,U,R,R1a,True,True,False,False,False,3050,58,True,True,40.4,71.9
+CAU000462,Uzbekistan,SITE0129,B3 1800-901 BCE,STUDY012,M,N,R,R1a,True,True,True,False,False,3050,58,True,True,40.4,71.9
+CAU000463,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,,R,R1a,False,True,False,False,False,2051,57,False,True,38.1,67.3
+CAU000464,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,K,Basal/unresolved,Basal/unresolved,True,True,True,False,False,2000,58,True,True,38.1,67.3
+CAU000465,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,Other,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000466,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,U,U,,,True,False,False,False,False,2000,58,True,False,38.1,67.3
+CAU000467,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,U,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000468,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,H,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000469,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,Other,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000470,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,W,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000471,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,U,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000472,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,Other,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000473,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,H,R,R1a,True,True,True,False,False,2000,58,False,True,38.1,67.3
+CAU000474,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,T,L,Other,True,True,True,False,False,2000,58,True,True,38.1,67.3
+CAU000475,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,U,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000476,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,T,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000477,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,H,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000478,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,D,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000479,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,U,N,N,True,True,True,False,False,2000,58,True,True,38.1,67.3
+CAU000480,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,U,,,True,False,True,False,False,2000,58,True,False,38.1,67.3
+CAU000481,Uzbekistan,SITE0131,B5 200 BCE-300 CE,STUDY010,F,J,,,True,False,True,False,False,2000,58,True,False,38.4,68.1
+CAU000482,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,H,J,Other,True,True,True,False,True,1934,35,True,True,38.1,67.3
+CAU000483,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,D,Basal/unresolved,Basal/unresolved,True,True,True,False,False,1925,43,False,False,38.1,67.3
+CAU000484,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,F,H,,,True,False,True,False,False,1925,43,True,False,38.1,67.3
+CAU000485,Uzbekistan,SITE0134,B5 200 BCE-300 CE,STUDY010,M,K,C,Other,True,True,True,False,False,1800,58,True,True,38.1,67.3
+CAU000486,Uzbekistan,SITE0132,B5 200 BCE-300 CE,STUDY012,F,U,,,True,False,True,False,False,1750,288,True,False,37.8,67.0
+CAU000487,Uzbekistan,SITE0132,B5 200 BCE-300 CE,STUDY012,F,I,,,True,False,True,False,False,1750,288,True,False,37.8,67.0
+CAU000488,Uzbekistan,SITE0136,B6 301-650 CE,STUDY010,M,M,Other,Other,True,True,True,False,False,1425,72,False,True,38.3,68.1
+CAU000489,Uzbekistan,SITE0136,B6 301-650 CE,STUDY010,F,M,,,True,False,True,False,False,1425,101,True,False,38.3,68.1

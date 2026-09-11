@@ -1,0 +1,15 @@
+{
+  "seed": 20260726,
+  "rng_streams": "Stable SHA-256-named NumPy SeedSequence streams for each marker, sensitivity and resampling procedure",
+  "cluster_wild_resamples_per_test": 1999,
+  "repeated_site_permutations_per_test": 1999,
+  "number_of_tests": 57,
+  "analytical_input": {
+    "file": "data/derived/central_asia_analysis_input_v1.csv",
+    "sha256": "692a69cf38cc736f96ea5aa6b3b15024a9a49d50c03ae3e1470a8dc475504cc3",
+    "public_project_coded_input": true
+  },
+  "source_code_sha256": "de5094088d142dc3050c1e1f2f607c81bd8044cf92347393d1173a2a92a8cb36",
+  "primary_analysis_code_sha256": "ccc8a1e0f181fd75e676cb972ad3bb7e07d1e79e089cfe4733aef091cc597b57",
+  "interpretation": "Exploratory sensitivity analyses. Cluster-wild tests preserve country-locality dependence; repeated-site tests use site fixed effects and within-site period-label permutations."
+}

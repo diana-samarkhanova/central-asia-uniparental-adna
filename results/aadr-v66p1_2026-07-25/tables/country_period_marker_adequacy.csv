@@ -1,0 +1,81 @@
+country,analysis_bin,marker,n_calls,n_sites,meets_descriptive_frequency_threshold,threshold_rule
+Kazakhstan,B1 3500-2501 BCE,mtDNA,18,7,True,At least 10 calls from at least 3 sites
+Kazakhstan,B1 3500-2501 BCE,Y,8,3,False,At least 10 calls from at least 3 sites
+Kazakhstan,B2 2500-1801 BCE,mtDNA,11,10,True,At least 10 calls from at least 3 sites
+Kazakhstan,B2 2500-1801 BCE,Y,5,4,False,At least 10 calls from at least 3 sites
+Kazakhstan,B3 1800-901 BCE,mtDNA,65,24,True,At least 10 calls from at least 3 sites
+Kazakhstan,B3 1800-901 BCE,Y,33,14,True,At least 10 calls from at least 3 sites
+Kazakhstan,B4 900-201 BCE,mtDNA,72,44,True,At least 10 calls from at least 3 sites
+Kazakhstan,B4 900-201 BCE,Y,42,31,True,At least 10 calls from at least 3 sites
+Kazakhstan,B5 200 BCE-300 CE,mtDNA,24,11,True,At least 10 calls from at least 3 sites
+Kazakhstan,B5 200 BCE-300 CE,Y,12,9,True,At least 10 calls from at least 3 sites
+Kazakhstan,B6 301-650 CE,mtDNA,14,10,True,At least 10 calls from at least 3 sites
+Kazakhstan,B6 301-650 CE,Y,11,8,True,At least 10 calls from at least 3 sites
+Kazakhstan,B7 651-1000 CE,mtDNA,14,9,True,At least 10 calls from at least 3 sites
+Kazakhstan,B7 651-1000 CE,Y,12,8,True,At least 10 calls from at least 3 sites
+Kazakhstan,B8 1001-1500 CE,mtDNA,6,5,False,At least 10 calls from at least 3 sites
+Kazakhstan,B8 1001-1500 CE,Y,5,4,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B1 3500-2501 BCE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B1 3500-2501 BCE,Y,0,0,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B2 2500-1801 BCE,mtDNA,2,1,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B2 2500-1801 BCE,Y,2,1,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B3 1800-901 BCE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B3 1800-901 BCE,Y,0,0,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B4 900-201 BCE,mtDNA,12,6,True,At least 10 calls from at least 3 sites
+Kyrgyzstan,B4 900-201 BCE,Y,8,4,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B5 200 BCE-300 CE,mtDNA,16,8,True,At least 10 calls from at least 3 sites
+Kyrgyzstan,B5 200 BCE-300 CE,Y,13,6,True,At least 10 calls from at least 3 sites
+Kyrgyzstan,B6 301-650 CE,mtDNA,17,5,True,At least 10 calls from at least 3 sites
+Kyrgyzstan,B6 301-650 CE,Y,12,5,True,At least 10 calls from at least 3 sites
+Kyrgyzstan,B7 651-1000 CE,mtDNA,1,1,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B7 651-1000 CE,Y,1,1,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B8 1001-1500 CE,mtDNA,7,2,False,At least 10 calls from at least 3 sites
+Kyrgyzstan,B8 1001-1500 CE,Y,2,2,False,At least 10 calls from at least 3 sites
+Tajikistan,B1 3500-2501 BCE,mtDNA,1,1,False,At least 10 calls from at least 3 sites
+Tajikistan,B1 3500-2501 BCE,Y,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B2 2500-1801 BCE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B2 2500-1801 BCE,Y,1,1,False,At least 10 calls from at least 3 sites
+Tajikistan,B3 1800-901 BCE,mtDNA,3,1,False,At least 10 calls from at least 3 sites
+Tajikistan,B3 1800-901 BCE,Y,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B4 900-201 BCE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B4 900-201 BCE,Y,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B5 200 BCE-300 CE,mtDNA,5,1,False,At least 10 calls from at least 3 sites
+Tajikistan,B5 200 BCE-300 CE,Y,4,1,False,At least 10 calls from at least 3 sites
+Tajikistan,B6 301-650 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B6 301-650 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B7 651-1000 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B7 651-1000 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B8 1001-1500 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Tajikistan,B8 1001-1500 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B1 3500-2501 BCE,mtDNA,34,5,True,At least 10 calls from at least 3 sites
+Turkmenistan,B1 3500-2501 BCE,Y,13,3,True,At least 10 calls from at least 3 sites
+Turkmenistan,B2 2500-1801 BCE,mtDNA,45,2,False,At least 10 calls from at least 3 sites
+Turkmenistan,B2 2500-1801 BCE,Y,12,1,False,At least 10 calls from at least 3 sites
+Turkmenistan,B3 1800-901 BCE,mtDNA,4,3,False,At least 10 calls from at least 3 sites
+Turkmenistan,B3 1800-901 BCE,Y,1,1,False,At least 10 calls from at least 3 sites
+Turkmenistan,B4 900-201 BCE,mtDNA,1,1,False,At least 10 calls from at least 3 sites
+Turkmenistan,B4 900-201 BCE,Y,1,1,False,At least 10 calls from at least 3 sites
+Turkmenistan,B5 200 BCE-300 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B5 200 BCE-300 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B6 301-650 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B6 301-650 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B7 651-1000 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B7 651-1000 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B8 1001-1500 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Turkmenistan,B8 1001-1500 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Uzbekistan,B1 3500-2501 BCE,mtDNA,1,1,False,At least 10 calls from at least 3 sites
+Uzbekistan,B1 3500-2501 BCE,Y,1,1,False,At least 10 calls from at least 3 sites
+Uzbekistan,B2 2500-1801 BCE,mtDNA,15,3,True,At least 10 calls from at least 3 sites
+Uzbekistan,B2 2500-1801 BCE,Y,7,2,False,At least 10 calls from at least 3 sites
+Uzbekistan,B3 1800-901 BCE,mtDNA,24,5,True,At least 10 calls from at least 3 sites
+Uzbekistan,B3 1800-901 BCE,Y,14,5,True,At least 10 calls from at least 3 sites
+Uzbekistan,B4 900-201 BCE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Uzbekistan,B4 900-201 BCE,Y,0,0,False,At least 10 calls from at least 3 sites
+Uzbekistan,B5 200 BCE-300 CE,mtDNA,24,3,True,At least 10 calls from at least 3 sites
+Uzbekistan,B5 200 BCE-300 CE,Y,8,1,False,At least 10 calls from at least 3 sites
+Uzbekistan,B6 301-650 CE,mtDNA,2,1,False,At least 10 calls from at least 3 sites
+Uzbekistan,B6 301-650 CE,Y,1,1,False,At least 10 calls from at least 3 sites
+Uzbekistan,B7 651-1000 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Uzbekistan,B7 651-1000 CE,Y,0,0,False,At least 10 calls from at least 3 sites
+Uzbekistan,B8 1001-1500 CE,mtDNA,0,0,False,At least 10 calls from at least 3 sites
+Uzbekistan,B8 1001-1500 CE,Y,0,0,False,At least 10 calls from at least 3 sites

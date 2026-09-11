@@ -1,0 +1,496 @@
+{
+  "figure": "results/aadr-v66p1_2026-07-25/figures/figure_5_sensitivity_v4.png",
+  "figure_sha256": "087fef943d5d919651f11d05d90a8fb4d8739d014bc6ada41a3a58bc777d60d4",
+  "generator": "analysis/plot_v4_sensitivity.py",
+  "generator_sha256": "23edfdd646001fd9beca17e3f4766d17c143e6cc934844e3e2df5bb03cd79aa6",
+  "inputs": [
+    {
+      "path": "results/aadr-v66p1_2026-07-25/tables/global_composition_sensitivity_tests.csv",
+      "sha256": "9baf4d44d110c37dd1c8295803576fbc51ab8839543cee30be2ed508c5fe88db"
+    },
+    {
+      "path": "analysis_extensions/statistical_extensions_v4/results/stable_profile_cluster_tests.csv",
+      "sha256": "495ec7a8115a7a6956eb7a91a1eff4aee0d426e598e385a008ab4393655c935c"
+    }
+  ],
+  "environment": {
+    "python": "3.12.13",
+    "matplotlib": "3.10.8",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3"
+  },
+  "rendering": {
+    "format": "PNG",
+    "dpi": 300,
+    "width_inches": 16.8,
+    "height_inches": 10.2,
+    "notes_outside_data_axes": true
+  },
+  "design_points": [
+    {
+      "row": 0,
+      "analysis": "All marker-qualified calls",
+      "label": "All profiles (archive)",
+      "marker": "mtDNA",
+      "raw_p": 0.0001,
+      "black_outline": true,
+      "resamples": 9999,
+      "source": "stable_profile_cluster_tests.csv"
+    },
+    {
+      "row": 0,
+      "analysis": "All marker-qualified calls",
+      "label": "All profiles (archive)",
+      "marker": "Y",
+      "raw_p": 0.0009,
+      "black_outline": true,
+      "resamples": 9999,
+      "source": "stable_profile_cluster_tests.csv"
+    },
+    {
+      "row": 1,
+      "analysis": "AADR assessment-positive subset",
+      "label": "AADR assessment-positive",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 1,
+      "analysis": "AADR assessment-positive subset",
+      "label": "AADR assessment-positive",
+      "marker": "Y",
+      "raw_p": 0.002,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 2,
+      "analysis": "Exclude population-outlier labels",
+      "label": "Exclude outlier labels",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 2,
+      "analysis": "Exclude population-outlier labels",
+      "label": "Exclude outlier labels",
+      "marker": "Y",
+      "raw_p": 0.018,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 3,
+      "analysis": "Direct dates only",
+      "label": "Direct dates only",
+      "marker": "mtDNA",
+      "raw_p": 0.0015,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 3,
+      "analysis": "Direct dates only",
+      "label": "Direct dates only",
+      "marker": "Y",
+      "raw_p": 0.0015,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 4,
+      "analysis": "One representative per <=2d kin component",
+      "label": "One per ≤2d kin component",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 4,
+      "analysis": "One representative per <=2d kin component",
+      "label": "One per ≤2d kin component",
+      "marker": "Y",
+      "raw_p": 0.003,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 5,
+      "analysis": "Kazakhstan only",
+      "label": "Kazakhstan only",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 5,
+      "analysis": "Kazakhstan only",
+      "label": "Kazakhstan only",
+      "marker": "Y",
+      "raw_p": 0.0225,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 6,
+      "analysis": "Leave out country: Kazakhstan",
+      "label": "Leave out Kazakhstan",
+      "marker": "mtDNA",
+      "raw_p": 0.182,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 6,
+      "analysis": "Leave out country: Kazakhstan",
+      "label": "Leave out Kazakhstan",
+      "marker": "Y",
+      "raw_p": 0.073,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 7,
+      "analysis": "Exclude sparse late bins B7-B8",
+      "label": "Exclude B7–B8",
+      "marker": "mtDNA",
+      "raw_p": 0.002,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 7,
+      "analysis": "Exclude sparse late bins B7-B8",
+      "label": "Exclude B7–B8",
+      "marker": "Y",
+      "raw_p": 0.0155,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 8,
+      "analysis": "Site-period profiles with >= 2 calls",
+      "label": "Profiles with ≥2 calls\n(revised primary)",
+      "marker": "mtDNA",
+      "raw_p": 0.2224,
+      "black_outline": true,
+      "resamples": 9999,
+      "source": "stable_profile_cluster_tests.csv"
+    },
+    {
+      "row": 8,
+      "analysis": "Site-period profiles with >= 2 calls",
+      "label": "Profiles with ≥2 calls\n(revised primary)",
+      "marker": "Y",
+      "raw_p": 0.007,
+      "black_outline": true,
+      "resamples": 9999,
+      "source": "stable_profile_cluster_tests.csv"
+    },
+    {
+      "row": 9,
+      "analysis": "Site-period profiles with >= 3 calls",
+      "label": "Profiles with ≥3 calls\n(stringent sensitivity)",
+      "marker": "mtDNA",
+      "raw_p": 0.4203,
+      "black_outline": true,
+      "resamples": 9999,
+      "source": "stable_profile_cluster_tests.csv"
+    },
+    {
+      "row": 9,
+      "analysis": "Site-period profiles with >= 3 calls",
+      "label": "Profiles with ≥3 calls\n(stringent sensitivity)",
+      "marker": "Y",
+      "raw_p": 0.036,
+      "black_outline": true,
+      "resamples": 9999,
+      "source": "stable_profile_cluster_tests.csv"
+    },
+    {
+      "row": 10,
+      "analysis": "Site-period profiles with >= 5 calls",
+      "label": "Profiles with ≥5 calls",
+      "marker": "mtDNA",
+      "raw_p": 0.6565,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 10,
+      "analysis": "Site-period profiles with >= 5 calls",
+      "label": "Profiles with ≥5 calls",
+      "marker": "Y",
+      "raw_p": null,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 11,
+      "analysis": "HC3 leverage adjustment",
+      "label": "HC3 adjustment",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 11,
+      "analysis": "HC3 leverage adjustment",
+      "label": "HC3 adjustment",
+      "marker": "Y",
+      "raw_p": 0.001,
+      "black_outline": false,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    }
+  ],
+  "publication_points": [
+    {
+      "row": 13,
+      "analysis": "Leave out publication: STUDY001",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 12,
+      "analysis": "Leave out publication: STUDY002",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 11,
+      "analysis": "Leave out publication: STUDY003",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 10,
+      "analysis": "Leave out publication: STUDY004",
+      "marker": "mtDNA",
+      "raw_p": 0.0105,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 9,
+      "analysis": "Leave out publication: STUDY005",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 8,
+      "analysis": "Leave out publication: STUDY007",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 7,
+      "analysis": "Leave out publication: STUDY008",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 6,
+      "analysis": "Leave out publication: STUDY009",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 5,
+      "analysis": "Leave out publication: STUDY010",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 4,
+      "analysis": "Leave out publication: STUDY011",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 3,
+      "analysis": "Leave out publication: STUDY012",
+      "marker": "mtDNA",
+      "raw_p": 0.0305,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 1,
+      "analysis": "Leave out publication: STUDY014",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 0,
+      "analysis": "Leave out publication: STUDY015",
+      "marker": "mtDNA",
+      "raw_p": 0.0005,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 13,
+      "analysis": "Leave out publication: STUDY001",
+      "marker": "Y",
+      "raw_p": 0.0025,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 11,
+      "analysis": "Leave out publication: STUDY003",
+      "marker": "Y",
+      "raw_p": 0.002,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 10,
+      "analysis": "Leave out publication: STUDY004",
+      "marker": "Y",
+      "raw_p": 0.105,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 9,
+      "analysis": "Leave out publication: STUDY005",
+      "marker": "Y",
+      "raw_p": 0.0025,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 8,
+      "analysis": "Leave out publication: STUDY007",
+      "marker": "Y",
+      "raw_p": 0.003,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 6,
+      "analysis": "Leave out publication: STUDY009",
+      "marker": "Y",
+      "raw_p": 0.0015,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 5,
+      "analysis": "Leave out publication: STUDY010",
+      "marker": "Y",
+      "raw_p": 0.0025,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 4,
+      "analysis": "Leave out publication: STUDY011",
+      "marker": "Y",
+      "raw_p": 0.001,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 3,
+      "analysis": "Leave out publication: STUDY012",
+      "marker": "Y",
+      "raw_p": 0.0465,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 2,
+      "analysis": "Leave out publication: STUDY013",
+      "marker": "Y",
+      "raw_p": 0.003,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 1,
+      "analysis": "Leave out publication: STUDY014",
+      "marker": "Y",
+      "raw_p": 0.0015,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    },
+    {
+      "row": 0,
+      "analysis": "Leave out publication: STUDY015",
+      "marker": "Y",
+      "raw_p": 0.001,
+      "resamples": 1999,
+      "source": "global_composition_sensitivity_tests.csv"
+    }
+  ],
+  "p_values": "raw; no multiplicity adjustment applied in this figure",
+  "reference_line_p": 0.05,
+  "revised_primary_minimum_calls": 2,
+  "colors": {
+    "mtDNA": "#D55E00",
+    "Y": "#009E73"
+  },
+  "publication_order": [
+    "Leave out publication: STUDY015",
+    "Leave out publication: STUDY014",
+    "Leave out publication: STUDY013",
+    "Leave out publication: STUDY012",
+    "Leave out publication: STUDY011",
+    "Leave out publication: STUDY010",
+    "Leave out publication: STUDY009",
+    "Leave out publication: STUDY008",
+    "Leave out publication: STUDY007",
+    "Leave out publication: STUDY005",
+    "Leave out publication: STUDY004",
+    "Leave out publication: STUDY003",
+    "Leave out publication: STUDY002",
+    "Leave out publication: STUDY001"
+  ]
+}

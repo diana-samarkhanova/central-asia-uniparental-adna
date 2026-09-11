@@ -1,0 +1,7 @@
+marker,minimum_calls,n_profiles,n_sites,n_multiperiod_sites,proportion_single_period_sites,n_profile_publication_combinations,n_publications_after_splitting_combinations,rank_nuisance_country_publication_site,rank_increment_period_after_site_publication,nominal_period_df,interpretation
+mtDNA,1,170,132,31,0.7651515151515151,19,13,138,7,7,A full site-intercept model identifies period chiefly from the small set of multi-period sites; site and period are otherwise nested.
+mtDNA,2,71,60,8,0.8666666666666667,13,10,63,3,7,A full site-intercept model identifies period chiefly from the small set of multi-period sites; site and period are otherwise nested.
+mtDNA,3,40,38,1,0.9736842105263158,12,10,39,1,7,A full site-intercept model identifies period chiefly from the small set of multi-period sites; site and period are otherwise nested.
+Y,1,118,101,14,0.8613861386138614,18,12,105,6,7,A full site-intercept model identifies period chiefly from the small set of multi-period sites; site and period are otherwise nested.
+Y,2,49,42,5,0.8809523809523809,13,10,44,2,7,A full site-intercept model identifies period chiefly from the small set of multi-period sites; site and period are otherwise nested.
+Y,3,23,22,1,0.9545454545454546,10,9,22,1,7,A full site-intercept model identifies period chiefly from the small set of multi-period sites; site and period are otherwise nested.
